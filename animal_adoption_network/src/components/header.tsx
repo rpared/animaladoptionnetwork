@@ -15,7 +15,7 @@ export default function Header() {
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
-            <Link href="#" className="-m-1.5 p-1.5">
+            <Link href="/" className="-m-1.5 p-1.5">
               <span className="sr-only">Animal Adoption Network</span>
               <Image
                 className="w-auto"
@@ -60,7 +60,7 @@ export default function Header() {
               Search
             </Link>
             <Link
-              href="#"
+              href="/about"
               className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
             >
               About
