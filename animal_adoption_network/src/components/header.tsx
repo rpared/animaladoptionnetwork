@@ -26,8 +26,8 @@ export default function Header() {
                   filter: "drop-shadow(0px 0px 5px rgba(255, 255, 255, 1))",
                 }}
                 src="/isotype.png"
-                height={50} // Reduced height
-                width={50} // Reduced width
+                height={50}
+                width={50}
                 alt="Animal Adoption Network Logo"
               />
             </Link>
