@@ -3,15 +3,18 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50 bg-slate-100 bg-opacity-60">
         <nav
-          className="flex items-center justify-between p-6 lg:px-8"
+          className="flex items-center justify-between p-4 lg:px-6"
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
@@ -23,8 +26,8 @@ export default function Header() {
                   filter: "drop-shadow(0px 0px 5px rgba(255, 255, 255, 1))",
                 }}
                 src="/isotype.png"
-                height={60}
-                width={60}
+                height={50} // Reduced height
+                width={50} // Reduced width
                 alt="Animal Adoption Network Logo"
               />
             </Link>
@@ -52,35 +55,56 @@ export default function Header() {
               </svg>
             </button>
           </div>
-          <div className="hidden lg:flex lg:gap-x-12">
+          <div className="hidden lg:flex lg:gap-x-8">
             <Link
-              href="#"
-              className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
+              href="/search"
+              className={clsx(
+                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
+                {
+                  "bg-violet-100 text-slate-100": pathname === "/search",
+                }
+              )}
             >
               Search
             </Link>
             <Link
               href="/about"
-              className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
+              className={clsx(
+                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
+                {
+                  "bg-violet-100 opacity-30 text-slate-100":
+                    pathname === "/about",
+                }
+              )}
             >
               About
             </Link>
             <Link
-              href="#"
-              className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
+              href="/shelters"
+              className={clsx(
+                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
+                {
+                  "bg-violet-100 text-slate-100": pathname === "/shelters",
+                }
+              )}
             >
               Shelters
             </Link>
             <Link
-              href="#"
-              className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
+              href="/parents"
+              className={clsx(
+                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
+                {
+                  "bg-violet-100 text-slate-100": pathname === "/parents",
+                }
+              )}
             >
               Parents
             </Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
-              href="#"
+              href="/login"
               className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
             >
               Log in <span aria-hidden="true">&rarr;</span>
@@ -136,44 +160,6 @@ export default function Header() {
                     />
                   </svg>
                 </button>
-              </div>
-              <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-gray-500/10">
-                  <div className="space-y-2 py-6">
-                    <Link
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Search
-                    </Link>
-                    <Link
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      About
-                    </Link>
-                    <Link
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Shelters
-                    </Link>
-                    <Link
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Parents
-                    </Link>
-                  </div>
-                  <div className="py-6">
-                    <Link
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                    >
-                      Log in
-                    </Link>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
