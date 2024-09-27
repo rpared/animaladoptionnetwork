@@ -105,7 +105,7 @@ export default function Header() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
               href="/login"
-              className="text-lg font-semibold leading-6 text-brown hover:text-violet-100"
+              className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
             >
               Log in <span aria-hidden="true">&rarr;</span>
             </Link>
@@ -160,6 +160,44 @@ export default function Header() {
                     />
                   </svg>
                 </button>
+              </div>
+              <div className="mt-6 flow-root">
+                <div className="-my-6 divide-y divide-gray-500/10">
+                  <div className="space-y-2 py-6">
+                    <Link
+                      href="/search"
+                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      Search
+                    </Link>
+                    <Link
+                      href="/about"
+                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      About
+                    </Link>
+                    <Link
+                      href="/shelters"
+                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      Shelters
+                    </Link>
+                    <Link
+                      href="/parents"
+                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
+                    >
+                      Parents
+                    </Link>
+                  </div>
+                  <div className="py-6">
+                    <Link
+                      href="#"
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                    >
+                      Log in
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
