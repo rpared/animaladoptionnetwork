@@ -5,7 +5,7 @@ export default function Index() {
   return (
     <div className="bg-white">
       <div
-        className="bg-fixed bg-center bg-cover "
+        className="bg-fixed bg-cover sm:bg-center custom-bg-shift"
         style={{ backgroundImage: "url('/hero/dog2.png')" }}
       >
         <div className="relative isolate pt-14 bg-slate-100 bg-opacity-50">
@@ -22,12 +22,12 @@ export default function Index() {
             ></div>
           </div>
           <div className="mx-auto py-10 sm:py-10 lg:py-20">
-            <div className="hidden sm:mb-8 sm:flex sm:justify-center">
+            <div className="flex justify-center my-5 sm:mb-8 sm:flex sm:justify-center">
               <Image
-                className="filter"
+                className="filter max-w-[250px] sm:max-w-[300px]"
                 style={{
                   filter:
-                    "drop-shadow(0px 0px 10px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 30px rgba(255, 255, 255, 1))",
+                    "drop-shadow(0px 0px 10px rgba(255, 255, 255, 1)) drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.8)) drop-shadow(0px 0px 30px rgba(255, 255, 255, 1))",
                 }}
                 src="/logo.png"
                 alt="Animal Adoption Network logo"
@@ -46,13 +46,14 @@ export default function Index() {
                 Your new best friend is waiting for you!
               </h1>
               <p
-                className="mt-6 text-lg leading-8 text-gray-600 "
+                className="mt-6 text-lg leading-8 text-gray-600 max-w-[350px] text-center mx-auto"
                 style={{
-                  filter: "drop-shadow(1px 1px 5px rgba(255, 255, 255, 1))",
+                  filter:
+                    "drop-shadow(1px 1px 5px rgba(255, 255, 255, 1)) drop-shadow(1px 1px 8px rgba(255, 255, 255, 0.7)) ",
                 }}
               >
-                Search through many shelters and rescuers,
-                <br /> filter your preferences and location.
+                Search through many shelters and rescuers, filter your
+                preferences and location.
               </p>
               <div className="mt-5 flex items-center flex-col justify-center gap-x-6">
                 <Link

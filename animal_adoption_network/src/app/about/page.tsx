@@ -1,10 +1,10 @@
-import Header from "@/components/header";
-import Footer from "@/components/footer";
+// import Header from "@/components/header";
+// import Footer from "@/components/footer";
 
 export default function About() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <main className="bg-white my-16">
         <div className=" mx-auto max-w-[800px] relative isolate pt-14 px-8">
           {/* Mission and Vision in two columns on larger screens */}
@@ -85,7 +85,7 @@ export default function About() {
         </div>
       </main>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

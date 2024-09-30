@@ -61,7 +61,8 @@ export default function Header() {
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
-                  "bg-violet-100 text-slate-100": pathname === "/search",
+                  "bg-violet-100 opacity-30 text-slate-100":
+                    pathname === "/search",
                 }
               )}
             >
@@ -84,7 +85,8 @@ export default function Header() {
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
-                  "bg-violet-100 text-slate-100": pathname === "/shelters",
+                  "bg-violet-100 opacity-30 text-slate-100":
+                    pathname === "/shelters",
                 }
               )}
             >
@@ -95,7 +97,8 @@ export default function Header() {
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
-                  "bg-violet-100 text-slate-100": pathname === "/parents",
+                  "bg-violet-100 opacity-30 text-slate-100":
+                    pathname === "/parents",
                 }
               )}
             >
@@ -125,7 +128,7 @@ export default function Header() {
             ></div>
             <div className="fixed inset-y-0 right-0 z-50 w-64 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-brown/10">
               <div className="flex items-center justify-between">
-                <Link href="#" className="-m-1.5 p-1.5">
+                <Link href="/" className="-m-1.5 p-1.5">
                   <span className="sr-only">Animal Adoption Network</span>
                   <Image
                     className="w-auto"
