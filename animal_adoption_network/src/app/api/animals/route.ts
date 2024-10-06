@@ -1,28 +1,39 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/config/connectDB";
-import Animals from "@/models/animals"; // Assuming the animal model is imported correctly
+import Animals from "@/models/animals";
 import Shelters from "@/models/shelters";
 
+// Ensure database connection
 connectDB();
 
-export const getFilteredAnimals = async (req, res) => {
+export const getFilteredAnimals = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   try {
     const { species, gender, minWeight, maxWeight, location } = req.query;
 
-    // Build a query object
-    const query = {};
+    // Initialize an empty query object
+    const query: any = {};
 
+    // Add filtering conditions based on query parameters
     if (species) query.species = species;
     if (gender) query.gender = gender;
-    if (minWeight && maxWeight)
-      query.weight = { $gte: minWeight, $lte: maxWeight };
 
-    // If location is provided, filter animals by shelter location
+    // Handle weight range (both values are optional)
+    if (minWeight || maxWeight) {
+      query.weight = {};
+      if (minWeight) query.weight.$gte = Number(minWeight);
+      if (maxWeight) query.weight.$lte = Number(maxWeight);
+    }
+
+    // Filter by location, if provided
     if (location) {
       const shelters = await Shelters.find({
         $or: [
-          { city: { $regex: location, $options: "i" } },
-          { province: { $regex: location, $options: "i" } },
-          { country: { $regex: location, $options: "i" } },
+          { city: { $regex: location as string, $options: "i" } },
+          { province: { $regex: location as string, $options: "i" } },
+          { country: { $regex: location as string, $options: "i" } },
         ],
       }).select("_id");
 
@@ -30,12 +41,15 @@ export const getFilteredAnimals = async (req, res) => {
       query.shelter = { $in: shelterIds };
     }
 
-    // Fetch animals with the query
+    // Fetch animals based on the built query, and populate shelter data
     const animals = await Animals.find(query).populate("shelter");
 
-    res.json({ animals });
+    // Return the filtered animals as a response
+    res.status(200).json({ animals });
   } catch (error) {
-    console.error(error);
+    console.error("Error fetching animals:", error);
     res.status(500).json({ message: "Error fetching animals" });
   }
 };
+
+export default getFilteredAnimals;
