@@ -6,6 +6,13 @@ import Shelters from "@/models/shelters";
 // Ensure database connection
 connectDB();
 
+interface QueryParams {
+  species?: string;
+  gender?: string;
+  weight?: { $gte?: number; $lte?: number };
+  shelter?: { $in: string[] };
+}
+
 export const getFilteredAnimals = async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -13,12 +20,12 @@ export const getFilteredAnimals = async (
   try {
     const { species, gender, minWeight, maxWeight, location } = req.query;
 
-    // Initialize an empty query object
-    const query: any = {};
+    // Initialize a query object with a specific type
+    const query: QueryParams = {};
 
     // Add filtering conditions based on query parameters
-    if (species) query.species = species;
-    if (gender) query.gender = gender;
+    if (species) query.species = species as string;
+    if (gender) query.gender = gender as string;
 
     // Handle weight range (both values are optional)
     if (minWeight || maxWeight) {
@@ -37,7 +44,7 @@ export const getFilteredAnimals = async (
         ],
       }).select("_id");
 
-      const shelterIds = shelters.map((shelter) => shelter._id);
+      const shelterIds = shelters.map((shelter) => shelter._id.toString());
       query.shelter = { $in: shelterIds };
     }
 
