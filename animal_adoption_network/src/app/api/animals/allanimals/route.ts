@@ -15,9 +15,13 @@ export async function GET() {
     });
   } catch (e) {
     console.error("Database error:", e); // Log any database error
+
+    // Type assertion to tell TypeScript e is an Error
+    const error = e as Error;
+
     return NextResponse.json(
       {
-        error: e.message,
+        error: error.message,
       },
       { status: 500 }
     );
