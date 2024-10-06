@@ -93,16 +93,16 @@ export default function Header() {
               Shelters
             </Link>
             <Link
-              href="/parents"
+              href="/adopters"
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
                   "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/parents",
+                    pathname === "/adopters",
                 }
               )}
             >
-              Parents
+              Adopters
             </Link>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -186,10 +186,10 @@ export default function Header() {
                       Shelters
                     </Link>
                     <Link
-                      href="/parents"
+                      href="/adopters"
                       className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                     >
-                      Parents
+                      Adopters
                     </Link>
                   </div>
                   <div className="py-6">

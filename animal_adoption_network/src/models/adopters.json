@@ -1,0 +1,53 @@
+[
+  {
+    "fname": "Alice",
+    "lname": "Johnson",
+    "email": "alice.johnson@example.com",
+    "password": "securePassword123",
+    "date": "2024-01-10T00:00:00Z",
+    "country": "Canada",
+    "province": "Ontario",
+    "city": "Toronto",
+    "address": "123 Maple Street, Apt 456",
+    "phone": "+1-416-555-0199",
+    "adoptionHistory": [],
+    "householdSize": 3,
+    "hasOtherPets": false,
+    "otherPetDetails": "",
+    "adoptionStatus": "Pending"
+  },
+  {
+    "fname": "Bob",
+    "lname": "Smith",
+    "email": "bob.smith@example.com",
+    "password": "anotherSecurePassword456",
+    "date": "2024-02-15T00:00:00Z",
+    "country": "Canada",
+    "province": "Ontario",
+    "city": "Ottawa",
+    "address": "789 Oak Street",
+    "phone": "+1-613-555-0123",
+    "adoptionHistory": [],
+    "householdSize": 1,
+    "hasOtherPets": true,
+    "otherPetDetails": "One cat named Whiskers",
+    "adoptionStatus": "Pending"
+  },
+  {
+    "fname": "Charlie",
+    "lname": "Brown",
+    "email": "charlie.brown@example.com",
+    "password": "yetAnotherSecurePassword789",
+    "date": "2024-03-20T00:00:00Z",
+    "country": "Canada",
+    "province": "Ontario",
+    "city": "Mississauga",
+    "address": "456 Pine Avenue",
+    "phone": "+1-905-555-0345",
+    "adoptionHistory": [],
+    "householdSize": 4,
+    "hasOtherPets": false,
+    "otherPetDetails": "",
+    "adoptionStatus": "Pending"
+  }
+]

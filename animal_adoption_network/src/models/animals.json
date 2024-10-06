@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Buddy",
+    "species": "Dog",
+    "breed": "Golden Retriever",
+    "age": 3,
+    "weight": 30,
+    "gender": "Male",
+    "description": "A friendly and energetic dog looking for a loving home.",
+    "medicalHistory": "Up to date on vaccinations.",
+    "isAdopted": false,
+    "shelter": "66fff016d9e3ab349586d9e0",
+    "dateRescued": "2023-06-15T00:00:00Z",
+    "photos": ["https://example.com/photos/buddy.jpg"]
+  },
+  {
+    "name": "Whiskers",
+    "species": "Cat",
+    "breed": "Siamese",
+    "age": 2,
+    "weight": 10,
+    "gender": "Female",
+    "description": "A calm and affectionate cat who loves to cuddle.",
+    "medicalHistory": "Neutered and vaccinated.",
+    "isAdopted": false,
+    "shelter": "66fff016d9e3ab349586d9e1",
+    "dateRescued": "2023-07-10T00:00:00Z",
+    "photos": ["https://example.com/photos/whiskers.jpg"]
+  },
+  {
+    "name": "Fluffy",
+    "species": "Rabbit",
+    "breed": "Lionhead",
+    "age": 1,
+    "weight": 4,
+    "gender": "Female",
+    "description": "A playful rabbit who loves to explore.",
+    "medicalHistory": "Healthy and vaccinated.",
+    "isAdopted": false,
+    "shelter": "66fff016d9e3ab349586d9e2",
+    "dateRescued": "2023-05-05T00:00:00Z",
+    "photos": ["https://example.com/photos/fluffy.jpg"]
+  },
+  {
+    "name": "Tweety",
+    "species": "Bird",
+    "breed": "Canary",
+    "age": 2,
+    "weight": 0.02,
+    "gender": "Male",
+    "description": "A cheerful canary that sings beautifully.",
+    "medicalHistory": "Healthy and active.",
+    "isAdopted": false,
+    "shelter": "66fff016d9e3ab349586d9e2",
+    "dateRescued": "2023-08-20T00:00:00Z",
+    "photos": ["https://example.com/photos/tweety.jpg"]
+  },
+  {
+    "name": "Mittens",
+    "species": "Cat",
+    "breed": "Maine Coon",
+    "age": 4,
+    "weight": 15,
+    "gender": "Female",
+    "description": "A gentle giant who loves to play and be around people.",
+    "medicalHistory": "Vaccinated and spayed.",
+    "isAdopted": false,
+    "shelter": "66fff016d9e3ab349586d9e0",
+    "dateRescued": "2023-09-05T00:00:00Z",
+    "photos": ["https://example.com/photos/mittens.jpg"]
+  }
+]
