@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/connectDB";
 import Animals from "@/models/animals";
 import Shelters from "@/models/shelters";
@@ -6,6 +6,7 @@ import Shelters from "@/models/shelters";
 // Ensure database connection
 connectDB();
 
+// Interface for the query parameters
 interface QueryParams {
   species?: string;
   gender?: string;
@@ -13,19 +14,21 @@ interface QueryParams {
   shelter?: { $in: string[] };
 }
 
-export const getFilteredAnimals = async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
+// The GET handler for filtering animals
+export async function GET(req: NextRequest) {
   try {
-    const { species, gender, minWeight, maxWeight, location } = req.query;
+    const { searchParams } = new URL(req.url);
+    const species = searchParams.get("species");
+    const gender = searchParams.get("gender");
+    const minWeight = searchParams.get("minWeight");
+    const maxWeight = searchParams.get("maxWeight");
+    const location = searchParams.get("location");
 
-    // Initialize a query object with a specific type
+    // Initialize the query object
     const query: QueryParams = {};
 
-    // Add filtering conditions based on query parameters
-    if (species) query.species = species as string;
-    if (gender) query.gender = gender as string;
+    if (species) query.species = species;
+    if (gender) query.gender = gender;
 
     // Handle weight range (both values are optional)
     if (minWeight || maxWeight) {
@@ -34,13 +37,13 @@ export const getFilteredAnimals = async (
       if (maxWeight) query.weight.$lte = Number(maxWeight);
     }
 
-    // Filter by location, if provided
+    // Filter by shelter location, if provided
     if (location) {
       const shelters = await Shelters.find({
         $or: [
-          { city: { $regex: location as string, $options: "i" } },
-          { province: { $regex: location as string, $options: "i" } },
-          { country: { $regex: location as string, $options: "i" } },
+          { city: { $regex: location, $options: "i" } },
+          { province: { $regex: location, $options: "i" } },
+          { country: { $regex: location, $options: "i" } },
         ],
       }).select("_id");
 
@@ -48,15 +51,16 @@ export const getFilteredAnimals = async (
       query.shelter = { $in: shelterIds };
     }
 
-    // Fetch animals based on the built query, and populate shelter data
+    // Fetch animals based on the query and populate shelter data
     const animals = await Animals.find(query).populate("shelter");
 
-    // Return the filtered animals as a response
-    res.status(200).json({ animals });
+    // Return the animals in a NextResponse object
+    return NextResponse.json({ animals });
   } catch (error) {
     console.error("Error fetching animals:", error);
-    res.status(500).json({ message: "Error fetching animals" });
+    return NextResponse.json(
+      { message: "Error fetching animals" },
+      { status: 500 }
+    );
   }
-};
-
-export default getFilteredAnimals;
+}
