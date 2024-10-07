@@ -28,10 +28,6 @@ const shelterSchema = new Schema({
     type: String,
     required: true,
   },
-  country: {
-    type: String,
-    required: true,
-  },
   province: {
     type: String,
     required: true,
@@ -76,6 +72,6 @@ const shelterSchema = new Schema({
 });
 
 const Shelters =
-  mongoose.models.shelters || mongoose.model("shelters", shelterSchema);
+  mongoose.models.Shelters || mongoose.model("Shelters", shelterSchema);
 
 export default Shelters;

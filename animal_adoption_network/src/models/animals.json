@@ -9,9 +9,13 @@
     "description": "A friendly and energetic dog looking for a loving home.",
     "medicalHistory": "Up to date on vaccinations.",
     "isAdopted": false,
-    "shelter": "66fff016d9e3ab349586d9e0",
+    "shelter": {
+      "$oid": "66fff016d9e3ab349586d9e0"
+    },
     "dateRescued": "2023-06-15T00:00:00Z",
-    "photos": ["https://example.com/photos/buddy.jpg"]
+    "photos": [
+      "https://www.publicdomainpictures.net/pictures/50000/velka/golden-retriever-dog-1370773977VyS.jpg"
+    ]
   },
   {
     "name": "Whiskers",
@@ -23,9 +27,13 @@
     "description": "A calm and affectionate cat who loves to cuddle.",
     "medicalHistory": "Neutered and vaccinated.",
     "isAdopted": false,
-    "shelter": "66fff016d9e3ab349586d9e1",
+    "shelter": {
+      "$oid": "66fff016d9e3ab349586d9e1"
+    },
     "dateRescued": "2023-07-10T00:00:00Z",
-    "photos": ["https://example.com/photos/whiskers.jpg"]
+    "photos": [
+      "https://www.thesprucepets.com/thmb/Bg6YzA8DyidMSXUUnyHqhcCr9p4=/1080x1080/filters:no_upscale():max_bytes(150000):strip_icc()/37681550_492533041186443_7260811955290505216_n-5b69b24dc9e77c0025f04801.jpg"
+    ]
   },
   {
     "name": "Fluffy",
@@ -37,9 +45,11 @@
     "description": "A playful rabbit who loves to explore.",
     "medicalHistory": "Healthy and vaccinated.",
     "isAdopted": false,
-    "shelter": "66fff016d9e3ab349586d9e2",
+    "shelter": {
+      "$oid": "66fff016d9e3ab349586d9e2"
+    },
     "dateRescued": "2023-05-05T00:00:00Z",
-    "photos": ["https://example.com/photos/fluffy.jpg"]
+    "photos": ["https://hdqwalls.com/wallpapers/bunny-cute.jpg"]
   },
   {
     "name": "Tweety",
@@ -51,9 +61,13 @@
     "description": "A cheerful canary that sings beautifully.",
     "medicalHistory": "Healthy and active.",
     "isAdopted": false,
-    "shelter": "66fff016d9e3ab349586d9e2",
+    "shelter": {
+      "$oid": "66fff016d9e3ab349586d9e2"
+    },
     "dateRescued": "2023-08-20T00:00:00Z",
-    "photos": ["https://example.com/photos/tweety.jpg"]
+    "photos": [
+      "https://lafeber.com/pet-birds/wp-content/uploads/2018/06/Canary.jpg"
+    ]
   },
   {
     "name": "Mittens",
@@ -65,8 +79,12 @@
     "description": "A gentle giant who loves to play and be around people.",
     "medicalHistory": "Vaccinated and spayed.",
     "isAdopted": false,
-    "shelter": "66fff016d9e3ab349586d9e0",
+    "shelter": {
+      "$oid": "66fff016d9e3ab349586d9e0"
+    },
     "dateRescued": "2023-09-05T00:00:00Z",
-    "photos": ["https://example.com/photos/mittens.jpg"]
+    "photos": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg"
+    ]
   }
 ]

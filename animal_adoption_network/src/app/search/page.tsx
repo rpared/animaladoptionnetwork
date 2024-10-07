@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
+import { AnimalProvider, AnimalType } from "@/components/animals"; // Import AnimalType
 
 const AnimalSearch = () => {
   const [species, setSpecies] = useState("");
@@ -10,7 +11,7 @@ const AnimalSearch = () => {
   const [minWeight, setMinWeight] = useState(0);
   const [maxWeight, setMaxWeight] = useState(100);
   const [location, setLocation] = useState("");
-  const [animals, setAnimals] = useState([]);
+  const [animals, setAnimals] = useState<AnimalType[]>([]); // Specify type here
 
   const handleSearch = async () => {
     try {
@@ -22,7 +23,7 @@ const AnimalSearch = () => {
         location,
       };
       const response = await axios.get("/api/animals", { params: query });
-      setAnimals(response.data.animals);
+      setAnimals(response.data.animals); // Ensure this matches the expected structure
     } catch (error) {
       console.error("Error fetching filtered animals:", error);
     }
@@ -122,29 +123,29 @@ const AnimalSearch = () => {
         </form>
 
         {/* Render Animals */}
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
-          {animals.length > 0 ? (
-            animals.map((animal) => (
-              <div
-                key={animal._id}
-                className="bg-slate-100 p-6 rounded-lg shadow-md"
-              >
-                <h3 className="text-2xl font-bold">{animal.name}</h3>
-                <p>Species: {animal.species}</p>
-                <p>Gender: {animal.gender}</p>
-                <p>Weight: {animal.weight} kg</p>
-                <p>{animal.description}</p>
-                <p>
-                  {animal.shelter.city}, {animal.shelter.province}
-                </p>
-              </div>
-            ))
-          ) : (
-            <p>No animals found matching your criteria.</p>
-          )}
-        </div>
-
+        <AnimalProvider>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8">
+            {animals.length > 0 ? (
+              animals.map((animal) => (
+                <div
+                  key={animal._id}
+                  className="bg-slate-100 p-6 rounded-lg shadow-md"
+                >
+                  <h3 className="text-2xl font-bold">{animal.name}</h3>
+                  <p>Species: {animal.species}</p>
+                  <p>Gender: {animal.gender}</p>
+                  <p>Weight: {animal.weight} kg</p>
+                  <p>{animal.description}</p>
+                  <p>
+                    {animal.shelter?.city}, {animal.shelter?.province}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No animals found matching your criteria.</p>
+            )}
+          </div>
+        </AnimalProvider>
         <div>
           <button
             type="button"

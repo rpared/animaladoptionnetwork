@@ -38,8 +38,8 @@ const animalSchema = new Schema(
     medicalHistory: { type: String },
     isAdopted: { type: Boolean, default: false },
     shelter: {
-      type: Schema.Types.ObjectId,
-      ref: "shelter",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Shelters",
       required: true, // required field to link to shelter
     },
     dateRescued: { type: Date, default: Date.now },
