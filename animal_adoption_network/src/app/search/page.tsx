@@ -116,7 +116,7 @@ const AnimalSearch = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-violet-100 text-white px-4 py-2 rounded-md"
+            className="bg-violet-100 text-white px-4 py-2 rounded-md hover:bg-violet-70"
           >
             Search
           </button>
@@ -139,6 +139,15 @@ const AnimalSearch = () => {
                   <p>
                     {animal.shelter?.city}, {animal.shelter?.province}
                   </p>
+                  {animal.photos && animal.photos.length > 0 && (
+                    <img
+                      className="h-48 w-full object-cover rounded-lg mt-4"
+                      src={animal.photos[0]}
+                      alt={animal.name}
+                    />
+                  )}
+                  
+
                 </div>
               ))
             ) : (
@@ -149,7 +158,8 @@ const AnimalSearch = () => {
         <div>
           <button
             type="button"
-            className="bg-gray-500 text-white px-2 py-1 rounded-md"
+            className="bg-brown mt-4 text-white px-2 py-1 rounded-md hover:bg-gray-500"
+            
           >
             <Link href="search/allanimals">Display all animals</Link>
           </button>
