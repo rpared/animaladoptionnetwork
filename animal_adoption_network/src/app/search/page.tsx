@@ -3,7 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import React from "react";
-import { AnimalProvider, AnimalType } from "@/components/animals"; // Import AnimalType
+import { AnimalProvider, AnimalType } from "@/components/animals";
+// import Image from "next/image";
 
 const AnimalSearch = () => {
   const [species, setSpecies] = useState("");
@@ -139,6 +140,7 @@ const AnimalSearch = () => {
                   <p>
                     {animal.shelter?.city}, {animal.shelter?.province}
                   </p>
+                  {/* This should be an <Image></Image> but must specify props for that */}
                   {animal.photos && animal.photos.length > 0 && (
                     <img
                       className="h-48 w-full object-cover rounded-lg mt-4"
