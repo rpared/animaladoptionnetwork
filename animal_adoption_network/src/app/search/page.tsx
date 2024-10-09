@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/header";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
@@ -25,12 +26,15 @@ const AnimalSearch = () => {
       };
       const response = await axios.get("/api/animals", { params: query });
       setAnimals(response.data.animals); // Ensure this matches the expected structure
+    console.log(response);
     } catch (error) {
       console.error("Error fetching filtered animals:", error);
     }
   };
 
   return (
+    <>
+    <Header />
     <main className="bg-white my-16 text-gray-700">
       <div className=" mx-auto max-w-[800px] relative isolate pt-14 px-8">
         <h1 className="text-4xl font-semibold text-brown mb-4">
@@ -56,7 +60,8 @@ const AnimalSearch = () => {
               <option value="">All Species</option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
-              {/* Add other species options */}
+              <option value="Rabbit">Rabbit</option>
+              <option value="Bird">Bird</option>
             </select>
           </div>
 
@@ -109,7 +114,7 @@ const AnimalSearch = () => {
               id="location"
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              placeholder="Enter city, province, or country"
+              placeholder="Enter city or province"
               className="w-full p-2 border rounded-md"
             />
           </div>
@@ -168,6 +173,7 @@ const AnimalSearch = () => {
         </div>
       </div>
     </main>
+    </>
   );
 };
 

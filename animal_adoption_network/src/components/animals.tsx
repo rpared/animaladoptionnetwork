@@ -27,7 +27,10 @@ export type AnimalType = {
   description: string;
   medicalHistory: string;
   isAdopted: boolean;
-  shelter: string;
+  shelter: {
+    city: string;
+    province: string;
+  };
   dateRescued: Date;
   photos: string[];
 };

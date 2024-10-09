@@ -1,9 +1,8 @@
-
-
+import Header from "@/components/header";
 export default function Adopters() {
   return (
     <>
-
+      <Header />
       <main className="bg-white my-16 text-gray-600">
         <div className="mx-auto max-w-[800px] relative isolate pt-14 px-8">
           <h1 className="text-4xl font-semibold text-brown text-center">

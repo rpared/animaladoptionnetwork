@@ -1,22 +1,8 @@
-// import Animals from "@/components/animals";
-// import { AnimalProvider } from "@/components/animals";
-
-// export default function Page() {
-//   return (
-//     <main className="bg-white my-24">
-//       <p className="text-4xl font-semibold text-brown text-center">
-//         Search Page
-//       </p>
-//       <AnimalProvider>
-//         <Animals />
-//       </AnimalProvider>
-//     </main>
-//   );
-// }
 
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "@/components/header";
 
 type PropsAnimal = {
   animal: AnimalType;
@@ -56,6 +42,8 @@ const Animals = () => {
   };
 
   return (
+    <>
+    <Header />
     <main className="max-w-7xl mx-auto px-4 py-8 my-24">
       <div className="text-center">
         <h1 className="text-4xl text-brown mb-8">All animals for adoption</h1>
@@ -70,6 +58,7 @@ const Animals = () => {
         <div>No Animals Found</div>
       )}
     </main>
+    </>
   );
 };
 
