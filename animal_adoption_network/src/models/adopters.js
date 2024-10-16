@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const adopterSchema = new Schema({
+  userType: {
+    type: String,
+    default: "adopter", // This will automatically set the type for adopters
+  },
   fname: {
     type: String,
     required: true,
@@ -23,9 +27,6 @@ const adopterSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  country: {
-    type: String,
-  },
   province: {
     type: String,
   },
@@ -37,7 +38,6 @@ const adopterSchema = new Schema({
   },
   phone: {
     type: String,
-    required: true,
   },
   adoptionHistory: [
     {

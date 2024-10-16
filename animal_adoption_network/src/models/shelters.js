@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const shelterSchema = new Schema({
+  userType: {
+    type: String,
+    default: "shelter", // This will automatically set the type for shelters
+  },
   name: {
     type: String,
     required: true,

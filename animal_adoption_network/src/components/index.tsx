@@ -63,24 +63,24 @@ export default function Index() {
                   Search for Friend
                 </Link>
                 <Link
-                  href="#"
+                  href="/shelters/register"
                   className="mt-3 text-sm font-semibold leading-6 text-gray-900 hover:text-violet-100"
                 >
-                  Start as a Shelter <span aria-hidden="true">→</span>
+                  Register as a Shelter <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
             <hr className="mt-6 " />
             <div className="mt-6 flex items-center justify-center gap-x-6 ">
               <Link
-                href="#"
+                href="/adopters/register"
                 className="rounded-md bg-gray-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-70"
               >
                 Register
               </Link>
               <p className="text-rg leading-8 text-gray-600">or</p>
               <Link
-                href="#"
+                href="/login"
                 className="rounded-md bg-gray-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-70"
               >
                 Login
