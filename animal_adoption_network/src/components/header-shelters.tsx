@@ -1,14 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import axios from "axios";
+// import router from "next/router";
+//import { useRouter } from "next/router"; // Use useRouter instead
+import parseJwt from "./parseJwt";
 
 export default function HeaderShelters() {
+  // const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [auth, setAuth] = useState(false);
+  const [userName, setUserName] = useState();
+
+  const getToken = async () => {
+    try {
+      const response = await axios.get("/api/token");
+      console.log("API Response:", response.data);
+      const token = response.data.token; // Extract the token from the response
+
+      if (!token) {
+        throw new Error("Token not found in the response");
+      }
+
+      console.log("Token received:", token); // Log the token
+
+      // Decode and access user info
+      const decodedToken = parseJwt(token);
+      console.log(decodedToken?.user?.name);
+      setAuth(response.data.status);
+      setUserName(decodedToken?.user?.name);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await axios.get("/api/logout");
+      setAuth(false);
+
+      // router.push("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Fetch token only once on component mount
+  }, []); // Empty array to ensure useEffect runs once on mount
+
+  useEffect(() => {
+    if (auth) {
+      console.log("Authenticated");
+    }
+  }, [auth]);
 
   return (
     <div className="bg-white">
@@ -55,72 +106,12 @@ export default function HeaderShelters() {
               </svg>
             </button>
           </div>
-          {/* <div className="hidden lg:flex lg:gap-x-8">
-            <Link
-              href="/shelters/dashboard"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/shelters/dashboard",
-                }
-              )}
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/search"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/search",
-                }
-              )}
-            >
-              Search
-            </Link>
-            <Link
-              href="/about"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/about",
-                }
-              )}
-            >
-              About
-            </Link>
-            <Link
-              href="/shelters"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/shelters",
-                }
-              )}
-            >
-              Shelters
-            </Link>
-            <Link
-              href="/adopters"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/adopters",
-                }
-              )}
-            >
-              Adopters
-            </Link>
-          </div> */}
 
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <Link
-              href="#"
+              href="/shelters/profile"
+              // className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
+
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md",
                 {
@@ -129,10 +120,11 @@ export default function HeaderShelters() {
                 }
               )}
             >
-              Shelter Profile
+              {userName} Profile
             </Link>
             <Link
-              href="#"
+              onClick={logout}
+              href="/"
               className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
             >
               Log out <span aria-hidden="true">&rarr;</span>
@@ -191,41 +183,9 @@ export default function HeaderShelters() {
               </div>
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-gray-500/10">
-                  {/* <div className="space-y-2 py-6">
-                    <Link
-                      href="/search"
-                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
-                    >
-                      Dashboard
-                    </Link>
-                    <Link
-                      href="/search"
-                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
-                    >
-                      Search
-                    </Link>
-                    <Link
-                      href="/about"
-                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
-                    >
-                      About
-                    </Link>
-                    <Link
-                      href="/shelters"
-                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
-                    >
-                      Shelters
-                    </Link>
-                    <Link
-                      href="/adopters"
-                      className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
-                    >
-                      Adopters
-                    </Link>
-                  </div> */}
                   <div className="py-6">
                     <Link
-                      href="#"
+                      href="/shelters/profile"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     >
                       Shelter Profile
@@ -233,7 +193,8 @@ export default function HeaderShelters() {
                   </div>
                   <div className="py-6">
                     <Link
-                      href="#"
+                      onClick={logout}
+                      href="/"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     >
                       Log Out

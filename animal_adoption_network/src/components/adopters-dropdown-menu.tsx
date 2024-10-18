@@ -1,14 +1,50 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import clsx from "clsx";
+import axios from "axios";
+import parseJwt from "./parseJwt";
 
 const AdoptersDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null); // Explicitly set the type
-
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+
+  const [auth, setAuth] = useState(false);
+  const [userName, setUserName] = useState();
+
+  const getToken = async () => {
+    try {
+      const response = await axios.get("/api/token");
+      console.log("API Response:", response.data);
+      const token = response.data.token; // Extract the token from the response
+
+      if (!token) {
+        throw new Error("Token not found in the response");
+      }
+
+      console.log("Token received:", token); // Log the token
+
+      // Decode and access user info
+      const decodedToken = parseJwt(token);
+      console.log(decodedToken?.user?.fname);
+      setAuth(response.data.status);
+      setUserName(decodedToken?.user?.fname);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Fetch token only once on component mount
+  }, []); // Empty array to ensure useEffect runs once on mount
+
+  useEffect(() => {
+    if (auth) {
+      console.log("Authenticated");
+    }
+  }, [auth]);
 
   // Function to handle clicks outside of the dropdown NOT WORKING UGH!!!!!
   useEffect(() => {
@@ -39,7 +75,7 @@ const AdoptersDropdown = () => {
           )}
         >
           {/* Adopter Name with Arrow Icon */}
-          <span>Adopter Name</span>
+          <span>{userName}</span>
           {/* Downward Arrow Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"

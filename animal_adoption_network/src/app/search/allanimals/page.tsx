@@ -1,3 +1,4 @@
+// This page is not in use, it is just a simple example to fetch the Api without any filtering queries
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";

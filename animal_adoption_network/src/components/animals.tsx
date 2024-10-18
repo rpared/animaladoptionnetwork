@@ -36,11 +36,46 @@ export type AnimalType = {
 };
 
 // Create AnimalContext
-const AnimalContext = createContext<AnimalType[] | undefined>(undefined);
+interface AnimalContextType {
+  animals: AnimalType[];
+  isLoved: (animalId: string) => boolean;
+  handleLoveToggle: (animalId: string) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  fetchFilteredAnimals: (query: any) => Promise<void>;
+}
+
+// Create AnimalContext
+const AnimalContext = createContext<AnimalContextType | undefined>(undefined);
 
 // Context provider component
 export const AnimalProvider = ({ children }: { children: ReactNode }) => {
   const [animals, setAnimals] = useState<AnimalType[]>([]);
+  const [lovedAnimals, setLovedAnimals] = useState<string[]>([]);
+
+  // Function to handle fetching filtered animals
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const fetchFilteredAnimals = async (query: any) => {
+    try {
+      const response = await axios.get("/api/animals", { params: query });
+      setAnimals(response.data.animals);
+    } catch (error) {
+      console.error("Error fetching filtered animals:", error);
+    }
+  };
+
+  // Toggle the animal in and out of the Lovelist
+  const handleLoveToggle = (animalId: string) => {
+    if (lovedAnimals.includes(animalId)) {
+      setLovedAnimals(lovedAnimals.filter((id) => id !== animalId));
+    } else {
+      setLovedAnimals([...lovedAnimals, animalId]);
+    }
+  };
+
+  // Check if the animal is in the Lovelist
+  const isLoved = (animalId: string) => {
+    return lovedAnimals.includes(animalId);
+  };
 
   useEffect(() => {
     sendGetRequest();
@@ -57,18 +92,31 @@ export const AnimalProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AnimalContext.Provider value={animals}>{children}</AnimalContext.Provider>
+    <AnimalContext.Provider
+      value={{ animals, isLoved, handleLoveToggle, fetchFilteredAnimals }}
+    >
+      {children}
+    </AnimalContext.Provider>
   );
 };
 
-// Custom hook to use the AnimalContext
+// Custom hook to use AnimalContext
 export const useAnimals = () => {
   const context = useContext(AnimalContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error("useAnimals must be used within an AnimalProvider");
   }
   return context;
 };
+
+// Prev Custom hook to use the AnimalContext
+// export const useAnimals = () => {
+//   const context = useContext(AnimalContext);
+//   if (context === undefined) {
+//     throw new Error("useAnimals must be used within an AnimalProvider");
+//   }
+//   return context;
+// };
 
 // AnimalCard component
 const AnimalCard = ({ animal }: { animal: AnimalType }) => {
@@ -117,7 +165,7 @@ const AnimalCard = ({ animal }: { animal: AnimalType }) => {
 
 // Animals component (wrapped with the provider)
 const Animals = () => {
-  const animals = useAnimals();
+  const { animals } = useAnimals(); // Destructure animals from the context
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">

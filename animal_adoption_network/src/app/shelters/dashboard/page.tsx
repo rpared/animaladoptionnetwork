@@ -1,12 +1,12 @@
 "use client";
-
+import { useEffect, useState } from "react";
 import { AnimalProvider, AnimalType } from "@/components/animals";
 import HeaderShelters from "@/components/header-shelters";
+// import getToken from "@/components/header-shelters";
 import Image from "next/image";
+import getUserInfo from "@/components/get-user-info";
 
-// pages/dashboard/index.tsx
 import DashboardLayout from "@/components/shelters-dashboard";
-import { useState } from "react";
 import axios from "axios";
 
 const DashboardHome = () => {
@@ -51,12 +51,43 @@ const DashboardHome = () => {
     }
   };
 
+  // Fetching User Data
+  const [userName, setUserName] = useState<string | null>(null); // State to store user's name
+
+  // const getUserInfo = async () => {
+  //   try {
+  //     const response = await axios.get("../api/userInfo");
+  //     if (response.data.success) {
+  //       console.log(response.data.user.name); // Display user's name
+  //     }
+  //     setUserName(response.data.user.name); // Set the user's name in state
+  //     return response.data.user; // Return the user object
+  //   } catch (err) {
+  //     console.error("Error fetching user info:", err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getUserInfo(); // Fetch user info
+  // }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const user = await getUserInfo(); // Fetch user info
+      if (user) {
+        setUserName(user.name); // Set the user's name in state
+        console.log("The username is: ", user.name);
+      }
+    };
+    fetchUserData(); // Call the function when component mounts
+  }, []);
+
   return (
     <>
       <HeaderShelters />
       <DashboardLayout>
         <h1 className="text-3xl text-brown font-bold mb-6">
-          Manage Animals in Shelter
+          Manage Animals in {userName}
         </h1>
 
         {/* Filters Section */}
