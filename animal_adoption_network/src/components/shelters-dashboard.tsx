@@ -23,7 +23,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Link
                 href="/shelters/dashboard"
                 className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-slate-900 bg-violet-100 p-2 hover:text-slate-900 ":
+                  "opacity-80 bg-violet-100 text-blue-950 p-2 hover:text-blue-950 ":
                     pathname === "/shelters/dashboard",
                 })}
               >
@@ -34,7 +34,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Link
                 href="/shelters/dashboard/upload"
                 className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-slate-900 bg-violet-100 p-2 hover:text-slate-900 ":
+                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
                     pathname === "/shelters/dashboard/upload",
                 })}
               >
@@ -46,11 +46,23 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Link
                 href="/shelters/dashboard/requests"
                 className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-slate-900 bg-violet-100 p-2 hover:text-slate-900 ":
+                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
                     pathname === "/shelters/dashboard/requests",
                 })}
               >
                 Manage Adoption Requests
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href="/shelters/profile"
+                className={clsx("block text-violet-70 hover:text-slate-300", {
+                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
+                    pathname === "/shelters/profile",
+                })}
+              >
+                Shelter Profile
               </Link>
             </li>
           </ul>

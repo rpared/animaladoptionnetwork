@@ -1,15 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import axios from "axios";
 import AdoptersDropdown from "./adopters-dropdown-menu";
+import parseJwt from "./parseJwt";
 
 export default function HeaderAdopters() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [auth, setAuth] = useState(false);
+  const [userName, setUserName] = useState();
+
+  const getToken = async () => {
+    try {
+      const response = await axios.get("/api/token");
+      console.log("API Response:", response.data);
+      const token = response.data.token; // Extract the token from the response
+
+      if (!token) {
+        throw new Error("Token not found in the response");
+      }
+
+      console.log("Token received:", token); // Log the token
+
+      // Decode and access user info
+      const decodedToken = parseJwt(token);
+      console.log(decodedToken?.user?.fname);
+      setAuth(response.data.status);
+      setUserName(decodedToken?.user?.fname);
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await axios.get("/api/logout");
+      setAuth(false);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Fetch token only once on component mount
+  }, []); // Empty array to ensure useEffect runs once on mount
+
+  useEffect(() => {
+    if (auth) {
+      console.log("Authenticated");
+    }
+  }, [auth]);
 
   return (
     <div className="bg-white">
@@ -122,8 +169,9 @@ export default function HeaderAdopters() {
               Adopter Name
             </Link> */}
             <Link
-              href="#"
+              href="/"
               className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
+              onClick={logout}
             >
               Log out <span aria-hidden="true">&rarr;</span>
             </Link>
@@ -192,7 +240,7 @@ export default function HeaderAdopters() {
                         className="-mx-3 block bg-violet-70/10 rounded-sm py-2 px-3 text-md text-gray-700 hover:bg-violet-70 hover:text-gray-100"
                         role="menuitem"
                       >
-                        Profile
+                        {userName}&apos;s Profile
                       </Link>
                       <Link
                         href="/adopters/requests"
@@ -239,7 +287,8 @@ export default function HeaderAdopters() {
 
                   <div className="py-6">
                     <Link
-                      href="#"
+                      onClick={logout}
+                      href="/"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                     >
                       Log Out

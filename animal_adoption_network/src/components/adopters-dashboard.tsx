@@ -17,7 +17,7 @@ export default function AdoptersDashboard() {
                     pathname === "/adopters/requests",
                 })}
               >
-                You have <b>no</b> pending adoption requests
+                You have <b>no</b> pending adoption requests. (Logic pending!)
               </Link>
             </li>
           </ul>

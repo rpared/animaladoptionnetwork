@@ -3,6 +3,7 @@ import Shelters from "@/models/shelters"; // Adjust the import path as needed
 import bcrypt from "bcrypt"; // For hashing passwords
 import { connectDB } from "@/config/connectDB";
 import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
 
 export async function POST(req: Request) {
   // Connect to MongoDB
@@ -37,17 +38,34 @@ export async function POST(req: Request) {
       );
     }
 
-    // If login is successful
-    return NextResponse.json(
-      {
-        success: true,
-        message: `${
-          userType.charAt(0).toUpperCase() + userType.slice(1)
-        } logged in successfully.`,
+    const payload = {
+      user: {
+        // userType: user.type,
+        id: user._id,
+        name: user.name,
+        email: user.email,
         userType: user.userType,
+        fname: user.fname,
       },
-      { status: 200 }
-    );
+    };
+
+    const token = await jwt.sign(payload, process.env.JWT_SECRET!, {
+      expiresIn: 36000,
+    });
+    const response = NextResponse.json({
+      message: "Login successful",
+      success: true,
+      user: user,
+      token: token,
+      userType: user.userType,
+    });
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+    });
+
+    // If login is successful
+    return response;
   } catch (error) {
     console.error("Login error:", error);
     return NextResponse.json(
@@ -56,3 +74,7 @@ export async function POST(req: Request) {
     );
   }
 }
+
+// export interface CustomJwtPayload extends jwt.JwtPayload {
+//   id: string; // or number, depending on your implementation
+// }
