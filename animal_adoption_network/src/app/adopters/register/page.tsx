@@ -19,12 +19,14 @@ const RegisterAdopter = () => {
     otherPetDetails: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [name]: value,
-    });
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -261,13 +263,14 @@ const RegisterAdopter = () => {
                 >
                   Details about other pets
                 </label>
-                <input
+                <textarea
                   id="otherPetDetails"
                   name="otherPetDetails"
-                  type="text"
                   className="w-full p-2 border border-gray-300 rounded-md"
                   value={formData.otherPetDetails}
-                  onChange={handleChange}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    handleChange(e)
+                  }
                 />
               </div>
             )}
