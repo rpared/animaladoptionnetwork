@@ -3,7 +3,7 @@
 import AdoptersDashboard from "@/components/adopters-dashboard";
 import HeaderAdopters from "@/components/header-adopters";
 
-export default function Login() {
+export default function AdoptersSearch() {
   return (
     <>
       <HeaderAdopters />

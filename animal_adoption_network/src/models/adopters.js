@@ -58,8 +58,8 @@ const adopterSchema = new Schema({
   },
   adoptionStatus: {
     type: String,
-    enum: ["Pending", "Approved", "Rejected"],
-    default: "Pending", // track the status of adoption applications
+    enum: ["pending", "approved", "rejected", "no"],
+    default: "no", // track the status of adoption applications
   },
 });
 

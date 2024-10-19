@@ -3,15 +3,15 @@ export interface CustomJwtPayload extends jwt.JwtPayload {
   user: {
     id: string;
     userType: string;
-    name: string;
+    name?: string;
     email: string;
-    administratorLastName: string;
-    administratorFirstName: string;
-    province: string;
-    city: string;
-    address: string;
-    charitableRegistrationNumber: string;
-    operatingLicenseNumber: string;
+    administratorLastName?: string;
+    administratorFirstName?: string;
+    province?: string;
+    city?: string;
+    address?: string;
+    charitableRegistrationNumber?: string;
+    operatingLicenseNumber?: string;
     documentUploads?: {
       legalDocument: {
         url: string;
@@ -20,5 +20,13 @@ export interface CustomJwtPayload extends jwt.JwtPayload {
         uploadedAt: Date;
       };
     };
+    fname?: string;
+    lname?: string;
+    phone?: string;
+    adoptionHistory?: [string];
+    householdSize?: string;
+    hasotherpets?: string;
+    otherPetsDetails?: string;
+    adoptionStatus?: string;
   };
 }

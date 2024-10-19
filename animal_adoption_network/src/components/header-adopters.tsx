@@ -66,7 +66,7 @@ export default function HeaderAdopters() {
           aria-label="Global"
         >
           <div className="flex lg:flex-1">
-            <Link href="/shelters/dashboard" className="-m-1.5 p-1.5">
+            <Link href="/adopters/search" className="-m-1.5 p-1.5">
               <span className="sr-only">Animal Adoption Network</span>
               <Image
                 className="w-auto"
@@ -105,7 +105,7 @@ export default function HeaderAdopters() {
           </div>
           <div className="hidden lg:flex lg:gap-x-8">
             <Link
-              href="/search"
+              href="/adopters/search"
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
@@ -117,7 +117,7 @@ export default function HeaderAdopters() {
               Search
             </Link>
             <Link
-              href="/about"
+              href="/adopters/about"
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
@@ -129,7 +129,7 @@ export default function HeaderAdopters() {
               About
             </Link>
             <Link
-              href="/shelters"
+              href="/adopters/shelters"
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
@@ -156,18 +156,7 @@ export default function HeaderAdopters() {
 
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <AdoptersDropdown />
-            {/* <Link
-              href="#"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/shelters/profile",
-                }
-              )}
-            >
-              Adopter Name
-            </Link> */}
+
             <Link
               href="/"
               className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
@@ -260,19 +249,19 @@ export default function HeaderAdopters() {
                     <div className="-my-6 border-gray-500/20"></div>
 
                     <Link
-                      href="/search"
+                      href="/adopters/search"
                       className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                     >
                       Search
                     </Link>
                     <Link
-                      href="/about"
+                      href="/adopters/about"
                       className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                     >
                       About
                     </Link>
                     <Link
-                      href="/shelters"
+                      href="/adopters/shelters"
                       className="-mx-3 block rounded-sm px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-100"
                     >
                       Shelters

@@ -22,10 +22,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <li>
               <Link
                 href="/shelters/dashboard"
-                className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 bg-violet-100 text-blue-950 p-2 hover:text-blue-950 ":
-                    pathname === "/shelters/dashboard",
-                })}
+                className={clsx(
+                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  {
+                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                      pathname === "/shelters/dashboard",
+                  }
+                )}
               >
                 Manage Animals
               </Link>
@@ -33,10 +36,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <li>
               <Link
                 href="/shelters/dashboard/upload"
-                className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
-                    pathname === "/shelters/dashboard/upload",
-                })}
+                className={clsx(
+                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  {
+                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                      pathname === "/shelters/dashboard/upload",
+                  }
+                )}
               >
                 Upload Animals
               </Link>
@@ -45,10 +51,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <li>
               <Link
                 href="/shelters/dashboard/requests"
-                className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
-                    pathname === "/shelters/dashboard/requests",
-                })}
+                className={clsx(
+                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  {
+                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                      pathname === "/shelters/dashboard/requests",
+                  }
+                )}
               >
                 Manage Adoption Requests
               </Link>
@@ -57,10 +66,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <li>
               <Link
                 href="/shelters/profile"
-                className={clsx("block text-violet-70 hover:text-slate-300", {
-                  "opacity-80 text-blue-950 bg-violet-100 p-2 hover:text-blue-950 ":
-                    pathname === "/shelters/profile",
-                })}
+                className={clsx(
+                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  {
+                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                      pathname === "/shelters/profile",
+                  }
+                )}
               >
                 Shelter Profile
               </Link>
