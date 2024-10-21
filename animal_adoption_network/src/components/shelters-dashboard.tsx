@@ -25,7 +25,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 className={clsx(
                   "pl-2 block text-violet-70 hover:text-slate-300",
                   {
-                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                    " bg-violet-100 text-slate-300 rounded-sm p-2":
                       pathname === "/shelters/dashboard",
                   }
                 )}
@@ -39,7 +39,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 className={clsx(
                   "pl-2 block text-violet-70 hover:text-slate-300",
                   {
-                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                    " bg-violet-100 text-slate-300 rounded-sm p-2":
                       pathname === "/shelters/dashboard/upload",
                   }
                 )}
@@ -54,7 +54,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 className={clsx(
                   "pl-2 block text-violet-70 hover:text-slate-300",
                   {
-                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                    " bg-violet-100 text-slate-300 rounded-sm p-2":
                       pathname === "/shelters/dashboard/requests",
                   }
                 )}
@@ -69,7 +69,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 className={clsx(
                   "pl-2 block text-violet-70 hover:text-slate-300",
                   {
-                    "opacity-80 bg-violet-100 text-gray-100 rounded-sm p-2":
+                    " bg-violet-100 text-slate-300 rounded-sm p-2":
                       pathname === "/shelters/profile",
                   }
                 )}

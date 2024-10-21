@@ -6,6 +6,8 @@ import { connectDB } from "@/config/connectDB";
 import Shelters from "@/models/shelters";
 import { CustomJwtPayload } from "@/types/jwt";
 import Adopters from "@/models/adopters";
+import bcrypt from "bcrypt";
+import { Url } from "next/dist/shared/lib/router/router";
 
 // Replace with your own secret key
 const JWT_SECRET = process.env.JWT_SECRET || "this_is_a_rough_subject";
@@ -68,6 +70,29 @@ export async function GET(req: NextRequest) {
   }
 }
 
+//PUT requests on endpoint to update profile info
+
+// Define interfaces for the shelter and adopter data ...sooo long :(
+interface UserUpdateProps {
+  name?: string;
+  email?: string;
+  password?: string;
+  administratorLastName?: string;
+  administratorFirstName?: string;
+  province?: string;
+  city?: string;
+  address?: string;
+  charitableRegistrationNumber?: string;
+  operatingLicenseNumber?: string;
+  documentUploads?: Url;
+
+  fname?: string;
+  lname?: string;
+  householdSize?: string;
+  hasOtherPets?: boolean;
+  otherPetDetails?: string;
+}
+
 export async function PUT(req: NextRequest) {
   await connectDB();
 
@@ -82,16 +107,80 @@ export async function PUT(req: NextRequest) {
   }
 
   try {
-    // Verify token
     const decoded = jwt.verify(token, JWT_SECRET) as CustomJwtPayload;
-    const { name, email } = await req.json(); // Get data from the request body
 
-    // Update user data
-    const updatedUser = await Shelters.findByIdAndUpdate(
-      decoded.user.id,
-      { name, email }, // Add other fields as necessary
-      { new: true }
-    );
+    // Extract userType and updated data from request
+    const { userType, ...updatedData } = (await req.json()) as {
+      userType: string;
+    } & UserUpdateProps;
+
+    let updateFields: Partial<UserUpdateProps> = {};
+
+    if (userType === "shelter") {
+      // Update shelter fields
+      updateFields = {
+        name: updatedData.name,
+        email: updatedData.email,
+        // password: updatedData.password,
+        administratorLastName: updatedData.administratorLastName,
+        administratorFirstName: updatedData.administratorFirstName,
+        province: updatedData.province,
+        city: updatedData.city,
+        address: updatedData.address,
+        charitableRegistrationNumber: updatedData.charitableRegistrationNumber,
+        operatingLicenseNumber: updatedData.operatingLicenseNumber,
+        documentUploads: updatedData.documentUploads,
+      };
+
+      // Hash the password if provided (only if it changes)
+      if (updatedData.password) {
+        const hashedPassword = await bcrypt.hash(updatedData.password, 10);
+        updateFields.password = hashedPassword;
+      }
+    } else if (userType === "adopter") {
+      // Update adopter fields
+      updateFields = {
+        fname: updatedData.fname,
+        lname: updatedData.lname,
+        email: updatedData.email,
+        // password: updatedData.password,
+        province: updatedData.province,
+        city: updatedData.city,
+        address: updatedData.address,
+        householdSize: updatedData.householdSize,
+        hasOtherPets: updatedData.hasOtherPets,
+        otherPetDetails: updatedData.otherPetDetails,
+      };
+      // Hash the password if provided
+      if (updatedData.password) {
+        const hashedPassword = await bcrypt.hash(updatedData.password, 10);
+        updateFields.password = hashedPassword;
+      }
+    }
+
+    // Remove undefined fields
+    Object.keys(updateFields).forEach((key) => {
+      const fieldKey = key as keyof typeof updateFields;
+      if (updateFields[fieldKey] === undefined) {
+        delete updateFields[fieldKey];
+      }
+    });
+
+    // Update the user profile based on userType
+    let updatedUser;
+    if (userType === "shelter") {
+      updatedUser = await Shelters.findByIdAndUpdate(
+        decoded.user.id,
+        { $set: updateFields },
+        { new: true }
+      );
+    } else if (userType === "adopter") {
+      updatedUser = await Adopters.findByIdAndUpdate(
+        decoded.user.id,
+        { $set: updateFields },
+        { new: true }
+      );
+    }
 
     if (!updatedUser) {
       return NextResponse.json(
@@ -109,3 +198,77 @@ export async function PUT(req: NextRequest) {
     );
   }
 }
+
+//   try {
+//     // Verify token
+//     const decoded = jwt.verify(token, JWT_SECRET) as CustomJwtPayload;
+
+//     // Extract all the fields from the request body
+//     const {
+//       name,
+//       email,
+//       password, // Hash the password !
+//       administratorLastName,
+//       administratorFirstName,
+//       province,
+//       city,
+//       address,
+//       charitableRegistrationNumber,
+//       operatingLicenseNumber,
+//       documentUploads, // Nested object with document data
+//     } = await req.json();
+
+//     // Construct the update data
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//     const updateFields: any = {
+//       name,
+//       email,
+//       administratorLastName,
+//       administratorFirstName,
+//       province,
+//       city,
+//       address,
+//       charitableRegistrationNumber,
+//       operatingLicenseNumber,
+//     };
+
+//     // Hash the password if provided (only if it changes)
+//     if (password) {
+//       const hashedPassword = await bcrypt.hash(password, 10);
+//       updateFields.password = hashedPassword;
+//     }
+
+//     // Add document uploads if available
+//     if (documentUploads?.legalDocument) {
+//       updateFields.documentUploads = {
+//         legalDocument: {
+//           url: documentUploads.legalDocument.url,
+//           fileType: documentUploads.legalDocument.fileType,
+//           fileSize: documentUploads.legalDocument.fileSize,
+//         },
+//       };
+//     }
+
+//     // Update user data in the database
+//     const updatedUser = await Shelters.findByIdAndUpdate(
+//       decoded.user.id,
+//       updateFields,
+//       { new: true }
+//     );
+
+//     if (!updatedUser) {
+//       return NextResponse.json(
+//         { message: "User not found", success: false },
+//         { status: 404 }
+//       );
+//     }
+
+//     return NextResponse.json({ success: true, user: updatedUser });
+//   } catch (error) {
+//     console.error("Error updating user:", error);
+//     return NextResponse.json(
+//       { message: "Invalid token or update failed", success: false },
+//       { status: 403 }
+//     );
+//   }
+// }

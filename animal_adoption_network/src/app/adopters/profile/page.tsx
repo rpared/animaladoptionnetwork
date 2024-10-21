@@ -21,7 +21,6 @@ const UserProfile = () => {
   const [householdSize, setHouseholdSize] = useState(0); // Initial household size
   const [hasOtherPets, setHasOtherPets] = useState(false);
   const [otherPetDetails, setOtherPetDetails] = useState("");
-  const [adoptionStatus, setAdoptionStatus] = useState("no");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -33,7 +32,7 @@ const UserProfile = () => {
         setFname(user.fname);
         setLname(user.lname);
         setEmail(user.email);
-        setPassword(user.password);
+        // setPassword(user.password);
         setProvince(user.province);
         setCity(user.city);
         setAddress(user.address);
@@ -42,7 +41,6 @@ const UserProfile = () => {
         setHouseholdSize(user.householdSize);
         setHasOtherPets(user.hasOtherPets);
         setOtherPetDetails(user.otherPetDetails);
-        setAdoptionStatus(user.adoptionStatus);
         setLoading(false);
       } else {
         setError("Failed to load user data.");
@@ -57,17 +55,18 @@ const UserProfile = () => {
     e.preventDefault();
     try {
       const updatedData = {
+        userType: "adopter",
         fname: fName,
         lname: lName,
         email: email,
-        password: password,
+        // Only send the password if it's not empty
+        ...(password && { password }), // Spread the password only if provided
         province: province,
         city: city,
         address: address,
         householdSize: householdSize,
         hasOtherPets: hasOtherPets,
         otherPetDetails: otherPetDetails,
-        adoptionStatus: adoptionStatus,
       };
 
       const response = await axios.put("/api/userInfo", updatedData);
@@ -143,8 +142,8 @@ const UserProfile = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full mt-1 border border-gray-300 rounded-md pt-2"
-                required
+                className="w-full mt-1 pl-2 border border-gray-300 rounded-md pt-2"
+                placeholder="Enter new password (optional)"
               />
             </div>
             <div>
@@ -220,14 +219,14 @@ const UserProfile = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 p-2">
+              <label className=" text-sm font-medium text-gray-700 p-2 pl-0 mt-2">
                 Other Pets
               </label>
               <input
                 type="checkbox"
                 checked={hasOtherPets}
                 onChange={(e) => setHasOtherPets(e.target.checked)}
-                className="mt-1 border border-gray-300 rounded-md p-2"
+                className=" border border-gray-300 rounded-md p-2 mb-2 mt-2"
               />
             </div>
             {hasOtherPets && (
@@ -248,7 +247,7 @@ const UserProfile = () => {
             )}
             <button
               type="submit"
-              className="bg-violet-100 text-white px-4 py-2 rounded-md"
+              className="bg-violet-100 text-white px-4 py-2 rounded-md mt-2"
             >
               Update Profile
             </button>

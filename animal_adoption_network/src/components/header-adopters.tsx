@@ -159,7 +159,7 @@ export default function HeaderAdopters() {
 
             <Link
               href="/"
-              className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
+              className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 ml-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
               onClick={logout}
             >
               Log out <span aria-hidden="true">&rarr;</span>
