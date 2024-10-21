@@ -122,35 +122,23 @@ export default function HeaderAdopters() {
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
                   "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/about",
+                    pathname === "/adopters/about",
                 }
               )}
             >
               About
             </Link>
             <Link
-              href="/adopters/shelters"
+              href="/adopters/shelterlist"
               className={clsx(
                 "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
                 {
                   "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/shelters",
+                    pathname === "/adopters/shelterlist",
                 }
               )}
             >
-              Shelters
-            </Link>
-            <Link
-              href="/adopters"
-              className={clsx(
-                "text-lg font-semibold leading-6 text-brown hover:text-violet-100 px-4 py-2 rounded-sm",
-                {
-                  "bg-violet-100 opacity-30 text-slate-100":
-                    pathname === "/adopters",
-                }
-              )}
-            >
-              Adopters
+              Shelter List
             </Link>
           </div>
 
