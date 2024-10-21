@@ -21,11 +21,8 @@ const AnimalSearch = () => {
       const user = await getUserInfo();
       if (user) {
         setUserLocation(user.city);
+        // setLocation(user.city); // Auto-populate the location
         console.log("User city is: ", user.city);
-        // setLoading(false);
-      } else {
-        // setError("Failed to load user data.");
-        // setLoading(false);
       }
     };
     fetchUserData();
@@ -40,6 +37,11 @@ const AnimalSearch = () => {
   const [maxWeight, setMaxWeight] = useState(100);
   const [location, setLocation] = useState("");
 
+  // Function to reset location to user's location
+  const handleLocation = () => {
+    setLocation(userLocation); // Set location to user's location
+  };
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -48,7 +50,7 @@ const AnimalSearch = () => {
       gender,
       minWeight,
       maxWeight,
-      location: userLocation,
+      location,
     };
 
     fetchFilteredAnimals(query); // Call context function to fetch animals
@@ -135,6 +137,13 @@ const AnimalSearch = () => {
                   className="block text-lg font-semibold"
                 >
                   Location:
+                  <button
+                    type="button"
+                    onClick={() => handleLocation()}
+                    className="text-sm font-normal border border-gray-300 rounded-md text-violet-100 px-2 m-2 hover:bg-violet-100 hover:text-slate-100"
+                  >
+                    Select my city
+                  </button>
                 </label>
                 <input
                   type="text"
@@ -142,7 +151,7 @@ const AnimalSearch = () => {
                   value={location} // Fallback to userLocation if location is empty
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Enter city or province"
-                  className=" p-2 border rounded-md"
+                  className="p-2 border rounded-md"
                 />
               </div>
 
@@ -198,7 +207,7 @@ const AnimalSearch = () => {
                       )}
                       <button
                         type="button"
-                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20"
+                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20 hover:opacity-80"
                       >
                         Adopt
                       </button>

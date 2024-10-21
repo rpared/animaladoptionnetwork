@@ -23,10 +23,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Link
                 href="/shelters/dashboard"
                 className={clsx(
-                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  "pl-2 block hover:text-slate-300", // Removed text-violet-70
                   {
-                    " bg-violet-100 text-slate-300 rounded-sm p-2":
+                    "bg-violet-100 text-gray-800 rounded-sm p-2":
                       pathname === "/shelters/dashboard",
+                    "text-violet-70": pathname !== "/shelters/dashboard", // Default text color when not active
                   }
                 )}
               >
@@ -35,12 +36,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </li>
             <li>
               <Link
-                href="/shelters/dashboard/upload"
+                href="/shelters/upload"
                 className={clsx(
-                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  "pl-2 block hover:text-slate-300", // Removed text-violet-70
                   {
-                    " bg-violet-100 text-slate-300 rounded-sm p-2":
-                      pathname === "/shelters/dashboard/upload",
+                    "bg-violet-100 text-gray-800 rounded-sm p-2":
+                      pathname === "/shelters/upload",
+                    "text-violet-70": pathname !== "/shelters/upload", // Default text color when not active
                   }
                 )}
               >
@@ -50,12 +52,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
             <li>
               <Link
-                href="/shelters/dashboard/requests"
+                href="/shelters/requests"
                 className={clsx(
-                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  "pl-2 block hover:text-slate-300", // Removed text-violet-70
                   {
-                    " bg-violet-100 text-slate-300 rounded-sm p-2":
-                      pathname === "/shelters/dashboard/requests",
+                    "bg-violet-100 text-gray-800 rounded-sm p-2":
+                      pathname === "/shelters/requests",
+                    "text-violet-70": pathname !== "/shelters/requests", // Default text color when not active
                   }
                 )}
               >
@@ -67,10 +70,11 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <Link
                 href="/shelters/profile"
                 className={clsx(
-                  "pl-2 block text-violet-70 hover:text-slate-300",
+                  "pl-2 block hover:text-slate-300", // Removed text-violet-70
                   {
-                    " bg-violet-100 text-slate-300 rounded-sm p-2":
+                    "bg-violet-100 text-gray-800 rounded-sm p-2":
                       pathname === "/shelters/profile",
+                    "text-violet-70": pathname !== "/shelters/profile", // Default text color when not active
                   }
                 )}
               >
