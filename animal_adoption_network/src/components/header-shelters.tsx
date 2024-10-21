@@ -113,7 +113,7 @@ export default function HeaderShelters() {
               // className="text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md"
 
               className={clsx(
-                "text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 hover:text-violet-100 hover:border-violet-100 border rounded-md",
+                "text-lg font-semibold leading-6 text-brown border-transparent py-1 px-2 mr-2 hover:text-violet-100 hover:border-violet-100 border rounded-md",
                 {
                   "bg-violet-100 opacity-30 text-slate-100":
                     pathname === "/shelters/profile",
