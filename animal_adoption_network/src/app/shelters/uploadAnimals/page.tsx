@@ -292,7 +292,7 @@ const UploadAnimals = () => {
 
   const initialAnimalData = {
     name: "",
-    species: "",
+    species: "Dog", // default to dog
     breed: "",
     age: 0,
     weight: 0,
