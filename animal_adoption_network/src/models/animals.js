@@ -43,7 +43,7 @@ const animalSchema = new Schema(
       required: true, // required field to link to shelter
     },
     dateRescued: { type: Date, default: Date.now },
-    photos: [{ type: String }],
+    photos: [{ path: String, contentType: String }], // Updated structure for storing photo path and content type
   },
   { collection: "animals" }
 );

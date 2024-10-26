@@ -5,8 +5,13 @@ const protectedRoutes = [
   "/adopters/dashboard",
   "/adopters/search",
   "/adopters/profile",
+  "/adopters/about",
+  "/adopters/shelterList",
+  "/adopters/lovelist",
   "/shelters/dashboard",
   "/shelters/profile",
+  "/shelters/upload",
+  "/shelters/requests",
 ];
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;

@@ -4,12 +4,14 @@ import { AnimalProvider, AnimalType } from "@/components/animals";
 import HeaderShelters from "@/components/header-shelters";
 // import getToken from "@/components/header-shelters";
 import Image from "next/image";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import getUserInfo from "@/components/get-user-info";
 
 import DashboardLayout from "@/components/shelters-dashboard";
 import axios from "axios";
 
 const DashboardHome = () => {
+  const [animals, setAnimals] = useState<AnimalType[]>([]); // Specify type here
   const [species, setSpecies] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -34,7 +36,29 @@ const DashboardHome = () => {
     "Rat",
   ];
 
-  const [animals, setAnimals] = useState<AnimalType[]>([]); // Specify type here
+  // Fetching User Data
+  const [userName, setUserName] = useState<string | null>(null); // State to store user's name
+  const [shelterId, setShelterId] = useState<string | null>(null); // State to store user's id
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.get("../api/userInfo");
+      if (response.data.success) {
+        console.log(response.data.user.name); // Display user's name
+        console.log(response.data.user._id); // Display user's id
+        setUserName(response.data.user.name); // Set the user's name in state
+        setShelterId(response.data.user._id); // Set the user's shelterId in state
+      }
+      return response.data.user; // Return the user object
+    } catch (err) {
+      console.error("Error fetching user info:", err);
+    }
+  };
+
+  useEffect(() => {
+    getUserInfo(); // Fetch user info
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleFilter = async () => {
     try {
       const query = {
@@ -42,6 +66,7 @@ const DashboardHome = () => {
         name,
         age,
         gender,
+        shelterId,
       };
       const response = await axios.get("/api/animals", { params: query });
       setAnimals(response.data.animals); // Ensure this matches the expected structure
@@ -51,36 +76,18 @@ const DashboardHome = () => {
     }
   };
 
-  // Fetching User Data
-  const [userName, setUserName] = useState<string | null>(null); // State to store user's name
-
-  // const getUserInfo = async () => {
-  //   try {
-  //     const response = await axios.get("../api/userInfo");
-  //     if (response.data.success) {
-  //       console.log(response.data.user.name); // Display user's name
-  //     }
-  //     setUserName(response.data.user.name); // Set the user's name in state
-  //     return response.data.user; // Return the user object
-  //   } catch (err) {
-  //     console.error("Error fetching user info:", err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getUserInfo(); // Fetch user info
-  // }, []);
-
   useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await getUserInfo(); // Fetch user info
-      if (user) {
-        setUserName(user.name); // Set the user's name in state
-        console.log("The username is: ", user.name);
+    const fetchAnimals = async () => {
+      try {
+        const response = await axios.get(`/api/animals?shelterId=${shelterId}`);
+        setAnimals(response.data.animals);
+      } catch (error) {
+        console.error("Error fetching animals:", error);
       }
     };
-    fetchUserData(); // Call the function when component mounts
-  }, []);
+
+    fetchAnimals();
+  }, [shelterId]);
 
   return (
     <>
@@ -155,17 +162,17 @@ const DashboardHome = () => {
           </button>
         </div>
 
-        {/* List of Animals (Example) */}
+        {/* List of Animals (Example) 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Example Animal Card */}
+          // Example Animal Card 
           <div className="border border-gray-300 p-4 rounded shadow-sm">
             <h3 className="text-xl font-semibold text-brown">Max</h3>
             <p className="text-gray-700">Species: Dog</p>
             <p className="text-gray-700">Age: 3</p>
             <p className="text-gray-700">Gender: Male</p>
           </div>
-          {/* More animal cards go here */}
         </div>
+        */}
         <AnimalProvider>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 text-gray-700">
             {animals.length > 0 ? (
@@ -177,6 +184,7 @@ const DashboardHome = () => {
                   <h3 className="text-2xl font-bold">{animal.name}</h3>
                   <p>Species: {animal.species}</p>
                   <p>Gender: {animal.gender}</p>
+                  <p>Age: {animal.age}</p>
                   <p>Weight: {animal.weight} kg</p>
                   <p>{animal.description}</p>
                   <p>
@@ -192,6 +200,12 @@ const DashboardHome = () => {
                       height={100}
                     />
                   )}
+                  <button className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70">
+                    Edit
+                  </button>
+                  <button className="mt-4 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-red-400">
+                    Delete
+                  </button>
                 </div>
               ))
             ) : (

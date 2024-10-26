@@ -36,13 +36,13 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </li>
             <li>
               <Link
-                href="/shelters/upload"
+                href="/shelters/uploadAnimals"
                 className={clsx(
                   "pl-2 block hover:text-slate-300", // Removed text-violet-70
                   {
                     "bg-violet-100 text-gray-800 rounded-sm p-2":
-                      pathname === "/shelters/upload",
-                    "text-violet-70": pathname !== "/shelters/upload", // Default text color when not active
+                      pathname === "/shelters/uploadAnimals",
+                    "text-violet-70": pathname !== "/shelters/uploadAnimals", // Default text color when not active
                   }
                 )}
               >
