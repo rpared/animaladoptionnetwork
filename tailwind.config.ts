@@ -9,6 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        violet: {
+          100: "#8866BF",
+          70: "#957abf",
+        },
+
+        brown: "#594A42",
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
