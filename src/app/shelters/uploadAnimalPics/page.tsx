@@ -1,28 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HeaderShelters from "@/components/header-shelters";
 import DashboardLayout from "@/components/shelters-dashboard";
 import axios from "axios";
-import getUserInfo from "@/components/get-user-info";
 
 const UploadAnimalPics = () => {
-  const [shelterId, setShelterId] = useState("");
-  const [userName, setUserName] = useState<string | null>(null); // State to store user's name
   const [error, setError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [selectedPhoto, setSelectedPhoto] = useState<File | null>(null); // Single photo
-
-  // Fetch shelter data to retrieve the shelterId
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await getUserInfo();
-      if (user) {
-        setShelterId(user._id);
-        setUserName(user.name); // Set the user's name in state
-      }
-    };
-    fetchUserData();
-  }, []);
 
   // Handle file selection for a single photo
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,22 +30,19 @@ const UploadAnimalPics = () => {
     // Create FormData object to hold the data
     const formData = new FormData();
 
-    // Append shelterId to FormData
-    formData.append("shelter", shelterId); // Add shelter ID
-
-    console.log("The shelter Id is: ", shelterId);
-    console.log("The username is: ", userName);
-
     // Append photo to FormData
     if (selectedPhoto) {
-      formData.append("photo", selectedPhoto); // Add single photo
+      formData.append("photo", selectedPhoto);
       console.log("Selected photo:", selectedPhoto);
+    } else {
+      console.error("No photo selected");
+      return;
     }
 
-    console.log("Form data before submission: ");
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
+    // Log FormData content
+    for (const pair of formData.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
 
     // Submit the form data to the Upload API
     try {
@@ -70,12 +52,10 @@ const UploadAnimalPics = () => {
         },
       });
 
-      if (response.status === 201) {
+      if (response.status === 200 || response.status === 201) {
         alert("Photo uploaded successfully!");
         setStatusMessage("Photo uploaded successfully!");
-
-        // Reset the form fields after successful upload
-        setSelectedPhoto(null); // Reset selected photo
+        setSelectedPhoto(null);
       } else {
         setError("Failed to upload photo.");
       }

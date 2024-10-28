@@ -1,59 +1,70 @@
 import multer from "multer";
-import nextConnect from "next-connect";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/config/connectDB";
-import Animals from "@/models/animals";
+import AnimalPics from "@/models/animalPics";
 
-// Connect to your database
+// Connect to your MongoDB database
 connectDB();
 
-// Multer setup for file upload
-const storage = multer.memoryStorage(); // Use memoryStorage to handle file as buffer
+// Configure multer to store files in memory
+const storage = multer.memoryStorage();
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
-});
-
-// Middleware setup
-const apiRoute = nextConnect({
-  onError(error, req, res) {
-    res
-      .status(501)
-      .json({ error: `Sorry something Happened! ${error.message}` });
-  },
-  onNoMatch(req, res) {
-    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Limit to 5 MB
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ["image/jpeg", "image/png", "image/gif"]; // Add more if needed
+    if (!allowedTypes.includes(file.mimetype)) {
+      return cb(new Error("File type not allowed"), false);
+    }
+    cb(null, true);
   },
 });
 
-apiRoute.use(upload.single("photo")); // Middleware to handle single file upload
+// Middleware wrapper function to handle file uploads manually
+async function handleFileUpload(req) {
+  return new Promise((resolve, reject) => {
+    upload.single("photo")(req, {}, (err) => {
+      if (err) reject(err);
+      else resolve(req.file);
+    });
+  });
+}
 
-// Route handler
-apiRoute.post(async (req, res) => {
+export const config = {
+  api: {
+    bodyParser: false, // Disable body parsing for multer to handle
+  },
+};
+
+export async function POST(req) {
   try {
-    const { file } = req;
+    // Use the helper function to process the upload
+    const file = await handleFileUpload(req);
+    console.log("Uploaded file:", file); // Log the uploaded file for debugging
     if (!file) {
-      return res.status(400).json({ error: "No file uploaded" });
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { originalname, mimetype, buffer } = file;
+    const { mimetype, buffer } = file;
 
-    const newAnimal = new Animals({
-      // Add other fields as needed
-      photo: {
-        data: buffer,
-        contentType: mimetype,
-      },
+    // Save photo data to MongoDB
+    const newAnimalPic = new AnimalPics({
+      photos: [
+        {
+          data: buffer,
+          contentType: mimetype,
+        },
+      ],
     });
 
-    await newAnimal.save();
+    await newAnimalPic.save();
 
-    res
-      .status(200)
-      .json({ message: "Animal saved successfully", animal: newAnimal });
+    return NextResponse.json(
+      { message: "Animal photo saved successfully", animalPic: newAnimalPic },
+      { status: 200 }
+    );
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error uploading photo:", error); // Log any errors
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
-});
-
-export default apiRoute;
+}
