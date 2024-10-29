@@ -7,6 +7,7 @@ import {
   ReactNode,
 } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 // Define ShelterType
 export interface ShelterType {
@@ -15,17 +16,12 @@ export interface ShelterType {
   province: string;
 }
 
-// Define the PhotoType interface
-interface PhotoType {
-  _id: string;
+// Define the PhotoType
+
+export type PhotoType = {
+  data: Buffer;
   contentType: string;
-  data: {
-    $binary: {
-      base64: string;
-      subType: string;
-    };
-  };
-}
+};
 
 // Define AnimalType
 export type AnimalType = {
@@ -158,12 +154,18 @@ const AnimalCard = ({ animal }: { animal: AnimalType }) => {
         </p>
         <p className="text-base mb-2">{animal.description}</p>
       </div>
-      {animal.photos && animal.photos.length > 0 && (
-        <img
+      {animal.photos && animal.photos.length > 0 && animal.photos[0]?.data ? (
+        <Image
           className="h-48 w-full object-cover rounded-lg mt-4"
-          src={animal.photos[0]}
+          src={`data:${animal.photos[0].contentType};base64,${Buffer.from(
+            animal.photos[0].data
+          ).toString("base64")}`}
           alt={animal.name}
+          width={200}
+          height={100}
         />
+      ) : (
+        <div>-No photo available-</div>
       )}
       <button
         type="button"

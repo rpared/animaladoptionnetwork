@@ -194,17 +194,19 @@ const DashboardHome = () => {
 
                   {animal.photos &&
                   animal.photos.length > 0 &&
-                  animal.photos[0]?.data?.$binary?.base64 &&
+                  animal.photos[0]?.data &&
                   animal.photos[0]?.contentType ? (
                     <Image
                       className="h-48 w-full object-cover rounded-lg mt-4"
-                      src={`data:${animal.photos[0].contentType};base64,${animal.photos[0].data.$binary.base64}`}
+                      src={`data:${
+                        animal.photos[0].contentType
+                      };base64,${Buffer.from(animal.photos[0].data)}`}
                       alt={animal.name}
                       width={200}
                       height={100}
                     />
                   ) : (
-                    <div>No photo available</div>
+                    <div>-No photo available-</div>
                   )}
 
                   <button className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70">

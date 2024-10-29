@@ -164,14 +164,23 @@ const AnimalSearch = () => {
                       <p>
                         {animal.shelter?.city}, {animal.shelter?.province}
                       </p>
-                      {animal.photos && animal.photos.length > 0 && (
+                      {animal.photos &&
+                      animal.photos.length > 0 &&
+                      animal.photos[0]?.data &&
+                      animal.photos[0]?.contentType ? (
                         <Image
                           className="h-48 w-full object-cover rounded-lg mt-4"
-                          src={animal.photos[0]}
+                          src={`data:${
+                            animal.photos[0].contentType
+                          };base64,${Buffer.from(animal.photos[0].data)}`}
                           alt={animal.name}
                           width={200}
                           height={100}
                         />
+                      ) : (
+                        <div className="text-sm text-center">
+                          -No photo available-
+                        </div>
                       )}
                       <button
                         type="button"
