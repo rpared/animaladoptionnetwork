@@ -8,6 +8,7 @@
 - Request Notification and management
 - Animal Management, editing and deleting
 - External API integration
+- Uplaoding several pics and Image Array handling \*If we make it ontime
 - Adopter Lovelist \*If we make it ontime
 
 ---
@@ -58,14 +59,14 @@ Shelter/Rescuer Dashboard Management UI
 Task: Build the dashboard UI for shelters to manage their profiles and the animals they publish. **DONE**
 Task: Integrate with the backend to fetch shelter details and manage their data. **DONE (By Sara)**
 Adopting Parent Browsing UI
-Task: Implement UI for browsing animals, including filters (breed, age, etc.). **DONE**
+Task: Implement UI for browsing animals, including filters (species, age, etc.). **DONE**
 Task: Use MongoDB/Mongoose to fetch animals and apply filtering logic on the frontend. **Done Partially**
 
 **Ryan:** Animal Profiles & Database Integration
 Key Focus: Animal profiles, search functionality, and database setup.
 Animal Profiles (Detailed Information with Filtering)
 Task: Create the UI components for displaying animal profiles (e.g., species, breed, images). **Done (By Roger)**
-Task: Implement filtering functionality (size, age, personality, etc.) for adopters. **Done (By Sara)**
+Task: Implement filtering functionality (species, age, location, etc.) for adopters. **Done (By Sara)**
 Backend: Animal Data Storage & Fetching
 Task: Set up MongoDB collections for animals, shelters, and adopters. **DONE**
 Task: Implement Mongoose models for the animals. **DONE**
