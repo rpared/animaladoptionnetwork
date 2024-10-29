@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { AnimalProvider, AnimalType } from "@/components/animals";
+// import PhotoType from "@/components/animals";
 import HeaderShelters from "@/components/header-shelters";
 // import getToken from "@/components/header-shelters";
 import Image from "next/image";
@@ -191,15 +192,21 @@ const DashboardHome = () => {
                     {animal.shelter?.city}, {animal.shelter?.province}
                   </p>
 
-                  {animal.photos && animal.photos.length > 0 && (
+                  {animal.photos &&
+                  animal.photos.length > 0 &&
+                  animal.photos[0]?.data?.$binary?.base64 &&
+                  animal.photos[0]?.contentType ? (
                     <Image
                       className="h-48 w-full object-cover rounded-lg mt-4"
-                      src={animal.photos[0]}
+                      src={`data:${animal.photos[0].contentType};base64,${animal.photos[0].data.$binary.base64}`}
                       alt={animal.name}
                       width={200}
                       height={100}
                     />
+                  ) : (
+                    <div>No photo available</div>
                   )}
+
                   <button className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70">
                     Edit
                   </button>

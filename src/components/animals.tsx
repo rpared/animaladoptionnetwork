@@ -15,6 +15,18 @@ export interface ShelterType {
   province: string;
 }
 
+// Define the PhotoType interface
+interface PhotoType {
+  _id: string;
+  contentType: string;
+  data: {
+    $binary: {
+      base64: string;
+      subType: string;
+    };
+  };
+}
+
 // Define AnimalType
 export type AnimalType = {
   _id: string;
@@ -32,7 +44,7 @@ export type AnimalType = {
     province: string;
   };
   dateRescued: Date;
-  photos: string[];
+  photos: PhotoType[];
 };
 
 // Create AnimalContext

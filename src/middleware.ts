@@ -8,9 +8,10 @@ const protectedRoutes = [
   "/adopters/about",
   "/adopters/shelterList",
   "/adopters/lovelist",
+  "/adopters/requests",
   "/shelters/dashboard",
   "/shelters/profile",
-  "/shelters/upload",
+  "/shelters/uploadAnimals",
   "/shelters/requests",
 ];
 export function middleware(request: NextRequest) {
