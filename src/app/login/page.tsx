@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header";
+import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
@@ -122,6 +123,25 @@ export default function Login() {
               </button>
             </div>
           </form>
+          <div className="mt-10 text-center mb-0">
+            If you dont have an account, please register (it is free!):
+          </div>
+
+          <div className="mt-5 text-center">
+            <Link
+              href="/adopters/register"
+              className="rounded-md border border-violet-100 text-violet-100 mx-2 px-3.5 py-2 text-sm font-semibold shadow-sm hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-70"
+            >
+              Adopter
+            </Link>
+
+            <Link
+              href="/shelters/register"
+              className="rounded-md border border-violet-100 text-violet-100 mx-2 px-3.5 py-2 text-sm font-semibold shadow-sm hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-70"
+            >
+              Shelter
+            </Link>
+          </div>
         </div>
       </main>
     </>

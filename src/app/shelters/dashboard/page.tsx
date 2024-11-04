@@ -6,10 +6,11 @@ import HeaderShelters from "@/components/header-shelters";
 // import getToken from "@/components/header-shelters";
 import Image from "next/image";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import getUserInfo from "@/components/get-user-info";
+// import getUserInfo from "@/components/get-user-info";
 
 import DashboardLayout from "@/components/shelters-dashboard";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const DashboardHome = () => {
   const [animals, setAnimals] = useState<AnimalType[]>([]); // Specify type here
@@ -17,6 +18,7 @@ const DashboardHome = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
+  const router = useRouter();
 
   const speciesOptions = [
     "Dog",
@@ -57,7 +59,6 @@ const DashboardHome = () => {
 
   useEffect(() => {
     getUserInfo(); // Fetch user info
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFilter = async () => {
@@ -89,6 +90,25 @@ const DashboardHome = () => {
 
     fetchAnimals();
   }, [shelterId]);
+
+  // Handle Edit Function
+  const handleEdit = async (animalId: string) => {
+    console.log("Edit animal with ID:", animalId);
+    router.push(`./editAnimal/?id=${animalId}`);
+  };
+
+  // Handle Delete Function
+  const handleDelete = async (animalId: string) => {
+    try {
+      const response = await axios.delete(`/api/animals/?id=${animalId}`);
+      if (response.status === 200) {
+        setAnimals(animals.filter((animal) => animal._id !== animalId)); // Update state after deletion
+        console.log("Animal deleted successfully");
+      }
+    } catch (error) {
+      console.error("Error deleting animal:", error);
+    }
+  };
 
   return (
     <>
@@ -163,17 +183,6 @@ const DashboardHome = () => {
           </button>
         </div>
 
-        {/* List of Animals (Example) 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          // Example Animal Card 
-          <div className="border border-gray-300 p-4 rounded shadow-sm">
-            <h3 className="text-xl font-semibold text-brown">Max</h3>
-            <p className="text-gray-700">Species: Dog</p>
-            <p className="text-gray-700">Age: 3</p>
-            <p className="text-gray-700">Gender: Male</p>
-          </div>
-        </div>
-        */}
         <AnimalProvider>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 text-gray-700">
             {animals.length > 0 ? (
@@ -209,10 +218,17 @@ const DashboardHome = () => {
                     <div>-No photo available-</div>
                   )}
 
-                  <button className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70">
+                  <button
+                    onClick={() => handleEdit(animal._id)}
+                    className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70"
+                  >
                     Edit
                   </button>
-                  <button className="mt-4 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-red-400">
+
+                  <button
+                    onClick={() => handleDelete(animal._id)}
+                    className="mt-4 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-red-400"
+                  >
                     Delete
                   </button>
                 </div>
