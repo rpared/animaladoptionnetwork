@@ -182,12 +182,14 @@ const AnimalSearch = () => {
                           -No photo available-
                         </div>
                       )}
-                      <button
-                        type="button"
-                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20"
-                      >
-                        Adopt
-                      </button>
+                      <div className="mt-10 text-center">
+                        <Link
+                          href="/login"
+                          className="rounded-md bg-violet-100 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-violet-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-70"
+                        >
+                          Adopt
+                        </Link>
+                      </div>
                     </div>
                   ))
                 ) : (
@@ -195,17 +197,18 @@ const AnimalSearch = () => {
                 )}
               </div>
             </div>
+            {/* 
+            <div> */}
 
-            <div>
-              <button
+            {/* <button
                 type="button"
                 className="bg-brown mt-4 text-white px-2 py-1 rounded-md hover:bg-gray-500"
               >
                 <Link href="search/allanimals">
                   Display all animals Example (to be removed)
                 </Link>
-              </button>
-            </div>
+              </button> */}
+            {/* </div> */}
           </div>
         </div>
       </main>

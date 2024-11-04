@@ -15,8 +15,9 @@ interface QueryParams {
     | mongoose.Types.ObjectId
     | { $in: mongoose.Types.ObjectId[] }
     | undefined;
+  animalId?: string;
 }
-
+// Display Animals
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -81,6 +82,45 @@ export async function GET(req: NextRequest) {
     console.error("Error fetching animals:", error);
     return NextResponse.json(
       { message: "Error fetching animals" },
+      { status: 500 }
+    );
+  }
+}
+
+// Delete Animal
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const animalId = searchParams.get("id");
+
+    if (!animalId) {
+      return NextResponse.json(
+        { message: "Animal ID is required" },
+        { status: 400 }
+      );
+    }
+
+    // Attempt to delete the animal
+    const deletedAnimal = await Animals.findByIdAndDelete(
+      new mongoose.Types.ObjectId(animalId)
+    );
+
+    if (!deletedAnimal) {
+      return NextResponse.json(
+        { message: "Animal not found or already deleted" },
+        { status: 404 }
+      );
+    }
+
+    // Successfully deleted
+    return NextResponse.json(
+      { message: "Animal successfully deleted", animalId },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error deleting animal", error);
+    return NextResponse.json(
+      { message: "Error deleting animal" },
       { status: 500 }
     );
   }
