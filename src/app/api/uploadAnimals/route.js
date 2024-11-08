@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // api/uploadAnimals/route.js:
 import { NextResponse } from "next/server";
 import { connectDB } from "@/config/connectDB";
@@ -16,57 +15,13 @@ export async function POST(req) {
 
     console.log(req);
     // console.log("Multer processed file:", req.file);
-=======
-// Latest version that is not working for photos ugh:
-import { NextResponse } from "next/server";
-import multer from "multer";
-import { connectDB } from "@/config/connectDB";
-import Animals from "@/models/animals";
-
-// Connect to your database
-connectDB();
-
-// Multer setup for file upload
-const upload = multer({
-  storage: multer.memoryStorage(), // Use memoryStorage to handle file as buffer
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB limit
-});
-
-const uploadMiddleware = upload.single("photo"); // Middleware to handle single file upload
-
-// Helper function to convert multer to promise (to use async/await)
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
-
-// POST request handler to upload animals
-export async function POST(req) {
-  // Create a new Response object to handle `req` with multer
-  console.log("The Request:", req);
-  const res = new NextResponse();
-  try {
-    // Run the multer middleware to handle file upload
-    await runMiddleware(req, res, uploadMiddleware);
-
-    console.log("Multer processed file:", req.file);
->>>>>>> sara2
 
     // Access form data from the request
     const formData = await req.formData();
 
-<<<<<<< HEAD
     console.log("formData:", formData);
     console.log("Multer processed file:", formData.get("photo"));
 
-=======
->>>>>>> sara2
     // Extract animal data fields from formData
     const name = formData.get("name");
     const species = formData.get("species");
@@ -79,7 +34,6 @@ export async function POST(req) {
     const isAdopted = formData.get("isAdopted");
     const shelter = formData.get("shelter");
 
-<<<<<<< HEAD
     const photoField = formData.get("photo");
 
     // Extract file data and store as Buffer with contentType
@@ -100,15 +54,6 @@ export async function POST(req) {
 
     // Log the uploaded file for debugging
     // console.log('Uploaded file:', [photo]);
-=======
-    // Extract file data and store as Buffer with contentType
-    const photo = req.file
-      ? { data: req.file.buffer, contentType: req.file.mimetype }
-      : null;
-
-    // Log the uploaded file for debugging
-    console.log("Uploaded file:", photo);
->>>>>>> sara2
 
     // Create a new animal entry in the database
     const newAnimal = new Animals({
@@ -122,12 +67,7 @@ export async function POST(req) {
       medicalHistory,
       isAdopted,
       shelter,
-<<<<<<< HEAD
       photos: photo ? [photo] : [], // Ensure photos is an array, even if empty
-=======
-      photos: [photo], // Ensure photos is an array
-      // photos: photo ? [photo] : [], // Ensure photos is an array, even if empty
->>>>>>> sara2
     });
 
     await newAnimal.save(); // Save the animal to MongoDB
@@ -145,7 +85,6 @@ export async function POST(req) {
   }
 }
 
-<<<<<<< HEAD
 // Various versions with libraries that are not working:
 // Multer version that is not working for photos ugh:
 // import { NextResponse } from "next/server";
@@ -247,14 +186,6 @@ export async function POST(req) {
 //     bodyParser: false,
 //   },
 // };
-=======
-// Disable Next.js bodyParser as multer handles it
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
->>>>>>> sara2
 
 //FAiled attempt to store locally
 // import { NextResponse } from "next/server";

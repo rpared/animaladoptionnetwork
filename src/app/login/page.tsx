@@ -2,10 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header";
-<<<<<<< HEAD
 import Link from "next/link";
-=======
->>>>>>> sara2
 
 export default function Login() {
   const router = useRouter();
@@ -126,7 +123,6 @@ export default function Login() {
               </button>
             </div>
           </form>
-<<<<<<< HEAD
           <div className="mt-10 text-center mb-0">
             If you dont have an account, please register (it is free!):
           </div>
@@ -146,8 +142,6 @@ export default function Login() {
               Shelter
             </Link>
           </div>
-=======
->>>>>>> sara2
         </div>
       </main>
     </>

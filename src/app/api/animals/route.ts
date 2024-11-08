@@ -15,14 +15,12 @@ interface QueryParams {
     | mongoose.Types.ObjectId
     | { $in: mongoose.Types.ObjectId[] }
     | undefined;
-<<<<<<< HEAD
   animalId?: string;
+  shelterId?: string;
+  name?: { $regex: string; $options: string };
+  age?:  number;
 }
 // Display Animals
-=======
-}
-
->>>>>>> sara2
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -32,12 +30,24 @@ export async function GET(req: NextRequest) {
     const maxWeight = searchParams.get("maxWeight");
     const location = searchParams.get("location");
     const shelterId = searchParams.get("shelterId");
+    const animalName = searchParams.get("name");
+    const age = searchParams.get("age");
+
 
     // Initialize the query object
     const query: QueryParams = {};
 
     if (species) query.species = species;
     if (gender) query.gender = gender;
+    
+     // Age filtering
+     if (age) query.age = Number(age);
+
+    // Name filtering (case-insensitive)
+    if (animalName) {
+      query.name = { $regex: animalName, $options: "i" }; // Case-insensitive match
+    }
+    
 
     if (minWeight || maxWeight) {
       query.weight = {};
@@ -92,7 +102,6 @@ export async function GET(req: NextRequest) {
   }
 }
 
-<<<<<<< HEAD
 // Delete Animal
 export async function DELETE(req: NextRequest) {
   try {
@@ -132,8 +141,6 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
-=======
->>>>>>> sara2
 //Original working code
 // import { NextRequest, NextResponse } from "next/server";
 // import { connectDB } from "@/config/connectDB";

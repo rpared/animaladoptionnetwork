@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // components/FormComponent.tsx
 import React, { useState } from "react";
 
@@ -6,32 +7,41 @@ interface FormData {
   lname: string;
   email: string;
   phone: string;
+  id: string;
   address: string;
   householdSize: number;
   hasOtherPets: boolean;
+  salaryRange: string;
+  personalReference: string;
+  personalReferencePhone: string;
 }
 
 interface AdoptionRequestFormProps {
   closeModal: () => void;
-  onSubmitForm: (data: unknown) => void;
+  onSubmitForm: (data: Record<string, any>) => Promise<void>;
 }
 
 const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
   props: AdoptionRequestFormProps
 ) => {
+  
   const { closeModal, onSubmitForm } = props;
   const [formData, setFormData] = useState<FormData>({
     fname: "",
     lname: "",
     email: "",
     phone: "",
+    id: "",
     address: "",
     householdSize: 1,
     hasOtherPets: false,
+    salaryRange: "",
+  personalReference: "",
+  personalReferencePhone: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
     setFormData((prevState) => ({
       ...prevState,
       [name]: type === "checkbox" ? checked : value,
@@ -46,12 +56,12 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
       <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h2 className="text-lg font-semibold mb-4">Fill the Form</h2>
+        <h2 className="text-lg font-semibold mb-4">Fill the Form with the adopter data</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="fname"
             type="text"
-            placeholder="First Name"
+            placeholder="First Name *"
             value={formData.fname}
             onChange={handleChange}
             required
@@ -60,7 +70,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
           <input
             name="lname"
             type="text"
-            placeholder="Last Name"
+            placeholder="Last Name *"
             value={formData.lname}
             onChange={handleChange}
             required
@@ -69,7 +79,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
           <input
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="Email *"
             value={formData.email}
             onChange={handleChange}
             required
@@ -78,8 +88,17 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
           <input
             name="phone"
             type="tel"
-            placeholder="Phone"
+            placeholder="Phone *"
             value={formData.phone}
+            onChange={handleChange}
+            required
+            className="w-full p-2 border rounded"
+          />
+          <input
+            name="id"
+            type="text"
+            placeholder="Id or licence number *"
+            value={formData.id}
             onChange={handleChange}
             required
             className="w-full p-2 border rounded"
@@ -87,22 +106,26 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
           <input
             name="address"
             type="text"
-            placeholder="Address"
+            placeholder="Address *"
             value={formData.address}
             onChange={handleChange}
             required
             className="w-full p-2 border rounded"
           />
+          <label className="block">
+          <span className="text-gray-700">Number of People in your Household *</span>
           <input
             name="householdSize"
             type="number"
-            placeholder="Household Size"
+            placeholder="Number of People in your Household"
             value={formData.householdSize}
             onChange={handleChange}
             min={1}
             required
             className="w-full p-2 border rounded"
           />
+          </label>
+          
           <label className="flex items-center">
             <input
               name="hasOtherPets"
@@ -111,8 +134,43 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
               onChange={handleChange}
               className="mr-2"
             />
-            Has Other Pets
+            I Have Other Pets
           </label>
+          <label className="block">
+              <span className="text-gray-700">Salary Range *</span>
+              <select
+                name="salaryRange"
+                value={formData.salaryRange}
+                onChange={handleChange}
+                required
+                className="w-full p-2 border rounded mt-1"
+              >
+                <option value="" disabled>Select Yearly Salary Range</option>
+                <option value="Below $30,000">Below $30,000</option>
+                <option value="$30,000 - $50,000">$30,000 - $50,000</option>
+                <option value="$50,000 - $80,000">$50,000 - $80,000</option>
+                <option value="Above $80,000">Above $80,000</option>
+              </select>
+            </label>
+        <input
+          name="personalReference"
+          type="text"
+          placeholder="Personal Reference *"
+          value={formData.personalReference}
+          onChange={handleChange}
+          required
+          className="w-full p-2 border rounded"
+        />
+        <input
+          name="personalReferencePhone"
+          type="tel"
+          placeholder="Personal Reference Phone *"
+          value={formData.personalReferencePhone}
+          onChange={handleChange}
+          required
+          className="w-full p-2 border rounded"
+        />
+
           <div className="flex justify-end space-x-2">
             <button
               type="button"

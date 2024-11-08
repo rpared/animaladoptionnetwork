@@ -164,7 +164,6 @@ const AnimalSearch = () => {
                       <p>
                         {animal.shelter?.city}, {animal.shelter?.province}
                       </p>
-<<<<<<< HEAD
                       {animal.photos &&
                       animal.photos.length > 0 &&
                       animal.photos[0]?.data &&
@@ -174,17 +173,10 @@ const AnimalSearch = () => {
                           src={`data:${
                             animal.photos[0].contentType
                           };base64,${Buffer.from(animal.photos[0].data)}`}
-=======
-                      {animal.photos && animal.photos.length > 0 && (
-                        <Image
-                          className="h-48 w-full object-cover rounded-lg mt-4"
-                          src={animal.photos[0]}
->>>>>>> sara2
                           alt={animal.name}
                           width={200}
                           height={100}
                         />
-<<<<<<< HEAD
                       ) : (
                         <div className="text-sm text-center">
                           -No photo available-
@@ -198,15 +190,6 @@ const AnimalSearch = () => {
                           Adopt
                         </Link>
                       </div>
-=======
-                      )}
-                      <button
-                        type="button"
-                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20"
-                      >
-                        Adopt
-                      </button>
->>>>>>> sara2
                     </div>
                   ))
                 ) : (
@@ -214,29 +197,18 @@ const AnimalSearch = () => {
                 )}
               </div>
             </div>
-<<<<<<< HEAD
             {/* 
             <div> */}
 
             {/* <button
-=======
-
-            <div>
-              <button
->>>>>>> sara2
                 type="button"
                 className="bg-brown mt-4 text-white px-2 py-1 rounded-md hover:bg-gray-500"
               >
                 <Link href="search/allanimals">
                   Display all animals Example (to be removed)
                 </Link>
-<<<<<<< HEAD
               </button> */}
             {/* </div> */}
-=======
-              </button>
-            </div>
->>>>>>> sara2
           </div>
         </div>
       </main>

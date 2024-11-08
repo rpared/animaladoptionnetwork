@@ -108,7 +108,7 @@ const UserProfile = () => {
               </label>
               <input
                 type="text"
-                value={fName}
+                value={fName|| ''}
                 onChange={(e) => setFname(e.target.value)}
                 className="w-full mt-1 border border-gray-300 rounded-md p-2"
                 required
@@ -120,7 +120,7 @@ const UserProfile = () => {
               </label>
               <input
                 type="text"
-                value={lName}
+                value={lName || ''}
                 onChange={(e) => setLname(e.target.value)}
                 className="w-full mt-1 border border-gray-300 rounded-md p-2"
                 required
@@ -132,7 +132,7 @@ const UserProfile = () => {
               </label>
               <input
                 type="email"
-                value={email}
+                value={email || ''}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full mt-1 border border-gray-300 rounded-md p-2"
                 required
@@ -144,10 +144,11 @@ const UserProfile = () => {
               </label>
               <input
                 type="password"
-                value={password}
+                value={password || ''}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full mt-1 pl-2 border border-gray-300 rounded-md pt-2"
                 placeholder="Enter new password (optional)"
+               
               />
             </div>
             <div>
