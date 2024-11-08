@@ -3,15 +3,19 @@ import { useEffect, useState } from "react";
 import AdoptersDashboard from "@/components/adopters-dashboard";
 import HeaderAdopters from "@/components/header-adopters";
 import getUserInfo from "@/components/get-user-info";
-// import axios from "axios";
+import axios from "axios";
 
-import { AnimalProvider, useAnimals } from "@/components/animals"; // Custom hook to access the context
+import { AnimalProvider, AnimalType, useAnimals } from "@/components/animals"; // Custom hook to access the context
 import Image from "next/image";
 import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
+import AdoptionRequestForm from "@/components/adoption-request";
+// import { set } from "mongoose";
 
 const AnimalSearch = () => {
   const [userLocation, setUserLocation] = useState("");
+  const [userId, setUserId] = useState<unknown>();
+  // const [userFname, setUserFName] = useState();
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState("");
 
@@ -20,9 +24,13 @@ const AnimalSearch = () => {
     const fetchUserData = async () => {
       const user = await getUserInfo();
       if (user) {
+        setUserId(user._id);
+        // setUserFName(user.fname);
         setUserLocation(user.city);
         // setLocation(user.city); // Auto-populate the location
         console.log("User city is: ", user.city);
+        console.log("User id is: ", user._id);
+        
       }
     };
     fetchUserData();
@@ -36,6 +44,11 @@ const AnimalSearch = () => {
   const [minWeight, setMinWeight] = useState(0);
   const [maxWeight, setMaxWeight] = useState(100);
   const [location, setLocation] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAnimal, setSelectedAnimal] = useState<AnimalType>();
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   // Function to reset location to user's location
   const handleLocation = () => {
@@ -56,6 +69,84 @@ const AnimalSearch = () => {
     fetchFilteredAnimals(query); // Call context function to fetch animals
   };
 
+  const speciesOptions = [
+    "Dog",
+    "Cat",
+    "Rabbit",
+    "Bird",
+    "Raccoon",
+    "Ferret",
+    "Pig",
+    "Goat",
+    "Duck",
+    "Chicken",
+    "Turkey",
+    "Possum",
+    "Guinea Pig",
+    "Hamster",
+    "Mouse",
+    "Rat",
+  ];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmitClick = async (data: Record<string, any>) => {
+    // Destructure form data
+    const {
+      fname,
+      lname,
+      email,
+      phone,
+      id,
+      address,
+      householdSize,
+      hasOtherPets,
+      salaryRange,
+      personalReference,
+      personalReferencePhone,
+    } = data;
+  
+    // Construct the JSON payload
+    const jsonData = {
+      animalId: selectedAnimal?._id,
+      adopterId: userId,
+      fname,
+      lname,
+      email,
+      phone,
+      id,
+      address,
+      householdSize,
+      hasOtherPets,
+      salaryRange,
+      personalReference,
+      personalReferencePhone,
+      status: "pending",
+    };
+  
+    try {
+      const response = await axios.post("/api/adoptionRequest", jsonData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response.data);
+      onModalClose();
+    } catch (error) {
+      console.error("Error submitting adoption request:", error);
+    }
+  };
+  
+
+  const onModalClose = () => {
+    closeModal();
+    setSelectedAnimal(undefined);
+  }
+
+  const onAdoptionClick = (animal: AnimalType) => {
+    setSelectedAnimal(animal);
+    openModal();
+  }
+
   return (
     <>
       <HeaderAdopters />
@@ -67,6 +158,7 @@ const AnimalSearch = () => {
         <div className=" mx-auto px-8 relative isolate flex flex-col gap-4 md:flex-row ">
           <div>
             <form onSubmit={handleSearch}>
+
               {/* Species Dropdown */}
               <div className="mb-4 flex items-center gap-2">
                 <label
@@ -75,19 +167,20 @@ const AnimalSearch = () => {
                 >
                   Species:
                 </label>
-                <select
-                  id="species"
-                  className=" p-2 border rounded-md"
-                  value={species}
-                  onChange={(e) => setSpecies(e.target.value)}
-                >
-                  <option value="">All Species</option>
-                  <option value="Dog">Dog</option>
-                  <option value="Cat">Cat</option>
-                  <option value="Rabbit">Rabbit</option>
-                  <option value="Bird">Bird</option>
-                </select>
-              </div>
+              <select
+                className="p-2 border rounded-md"
+                value={species}
+                onChange={(e) => setSpecies(e.target.value)}
+              >
+                <option value="">All Species</option>
+                {speciesOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+
 
               {/* Gender Dropdown */}
               <div className="mb-4 flex items-center gap-2">
@@ -212,9 +305,11 @@ const AnimalSearch = () => {
                       ) : (
                         <div>-No photo available-</div>
                       )}
+                      
                       <button
                         type="button"
                         className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20 hover:opacity-80"
+                        onClick={() => onAdoptionClick(animal)}
                       >
                         Adopt
                       </button>
@@ -227,6 +322,12 @@ const AnimalSearch = () => {
             </div>
           </div>
         </div>
+        {isOpen && (
+          <AdoptionRequestForm
+            onSubmitForm={onSubmitClick}
+            closeModal={onModalClose}
+          />
+        )}
       </main>
     </>
   );

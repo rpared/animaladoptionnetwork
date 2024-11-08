@@ -23,7 +23,7 @@ const UploadAnimals = () => {
 
   const initialAnimalData = {
     name: "",
-    species: "",
+    species: "Dog", // default to dog
     breed: "",
     age: 0,
     weight: 0,
@@ -286,7 +286,7 @@ const UploadAnimals = () => {
 
               {/* File upload field for photos */}
               <div className="mb-4">
-                <label htmlFor="photo">Upload Photo:</label>
+                <label htmlFor="photo">Upload Photo * (mandatory):</label>
                 <input
                   type="file"
                   name="photo"

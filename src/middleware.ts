@@ -8,7 +8,7 @@ const protectedRoutes = [
   "/adopters/about",
   "/adopters/shelterList",
   "/adopters/lovelist",
-  "/adopters/requests",
+  // "/adopters/requests",
   "/shelters/dashboard",
   "/shelters/profile",
   "/shelters/uploadAnimals",

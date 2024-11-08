@@ -80,6 +80,11 @@ const DashboardHome = () => {
 
   useEffect(() => {
     const fetchAnimals = async () => {
+      if (!shelterId) {
+        console.log("No valid shelter ID available, skipping fetch.");
+        return;
+      }
+      console.log("Fetching animals for shelter ID:", shelterId);
       try {
         const response = await axios.get(`/api/animals?shelterId=${shelterId}`);
         setAnimals(response.data.animals);

@@ -16,6 +16,9 @@ interface QueryParams {
     | { $in: mongoose.Types.ObjectId[] }
     | undefined;
   animalId?: string;
+  shelterId?: string;
+  name?: { $regex: string; $options: string };
+  age?:  number;
 }
 // Display Animals
 export async function GET(req: NextRequest) {
@@ -27,12 +30,24 @@ export async function GET(req: NextRequest) {
     const maxWeight = searchParams.get("maxWeight");
     const location = searchParams.get("location");
     const shelterId = searchParams.get("shelterId");
+    const animalName = searchParams.get("name");
+    const age = searchParams.get("age");
+
 
     // Initialize the query object
     const query: QueryParams = {};
 
     if (species) query.species = species;
     if (gender) query.gender = gender;
+    
+     // Age filtering
+     if (age) query.age = Number(age);
+
+    // Name filtering (case-insensitive)
+    if (animalName) {
+      query.name = { $regex: animalName, $options: "i" }; // Case-insensitive match
+    }
+    
 
     if (minWeight || maxWeight) {
       query.weight = {};
