@@ -15,9 +15,14 @@ interface QueryParams {
     | mongoose.Types.ObjectId
     | { $in: mongoose.Types.ObjectId[] }
     | undefined;
+<<<<<<< HEAD
   animalId?: string;
 }
 // Display Animals
+=======
+}
+
+>>>>>>> sara2
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -87,6 +92,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
+<<<<<<< HEAD
 // Delete Animal
 export async function DELETE(req: NextRequest) {
   try {
@@ -126,6 +132,8 @@ export async function DELETE(req: NextRequest) {
   }
 }
 
+=======
+>>>>>>> sara2
 //Original working code
 // import { NextRequest, NextResponse } from "next/server";
 // import { connectDB } from "@/config/connectDB";

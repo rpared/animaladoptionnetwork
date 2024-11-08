@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import AdoptersDashboard from "@/components/adopters-dashboard";
 import HeaderAdopters from "@/components/header-adopters";
 import getUserInfo from "@/components/get-user-info";
+<<<<<<< HEAD
 // import axios from "axios";
 
 import { AnimalProvider, useAnimals } from "@/components/animals"; // Custom hook to access the context
@@ -12,6 +13,19 @@ import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 
 const AnimalSearch = () => {
   const [userLocation, setUserLocation] = useState("");
+=======
+import axios from "axios";
+
+import { AnimalProvider, AnimalType, useAnimals } from "@/components/animals"; // Custom hook to access the context
+import Image from "next/image";
+import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
+import AdoptionRequestForm from "@/components/adoption-request";
+
+const AnimalSearch = () => {
+  const [userLocation, setUserLocation] = useState("");
+  const [user, setUser] = useState<unknown>();
+>>>>>>> sara2
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState("");
 
@@ -23,6 +37,10 @@ const AnimalSearch = () => {
         setUserLocation(user.city);
         // setLocation(user.city); // Auto-populate the location
         console.log("User city is: ", user.city);
+<<<<<<< HEAD
+=======
+        setUser(user);
+>>>>>>> sara2
       }
     };
     fetchUserData();
@@ -36,6 +54,14 @@ const AnimalSearch = () => {
   const [minWeight, setMinWeight] = useState(0);
   const [maxWeight, setMaxWeight] = useState(100);
   const [location, setLocation] = useState("");
+<<<<<<< HEAD
+=======
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedAnimal, setSelectedAnimal] = useState<AnimalType>();
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+>>>>>>> sara2
 
   // Function to reset location to user's location
   const handleLocation = () => {
@@ -56,6 +82,35 @@ const AnimalSearch = () => {
     fetchFilteredAnimals(query); // Call context function to fetch animals
   };
 
+<<<<<<< HEAD
+=======
+  const onSubmitClick = async (data: unknown) => {
+    const jsonData = {
+      animalId: selectedAnimal?._id,
+      adopterId: user._id,
+      data: data,
+      status: "pending"
+    }
+    const response = await axios.post("/api/adoptionRequest", jsonData, {
+      headers: {
+        "Content-Type": "application/json", // Set content type to JSON
+      },
+    });
+      console.log(response.data);
+    onModalClose();
+  };
+
+  const onModalClose = () => {
+    closeModal();
+    setSelectedAnimal(undefined);
+  }
+
+  const onAdoptionClick = (animal: AnimalType) => {
+    setSelectedAnimal(animal);
+    openModal();
+  }
+
+>>>>>>> sara2
   return (
     <>
       <HeaderAdopters />
@@ -196,6 +251,7 @@ const AnimalSearch = () => {
                       <p>
                         {animal.shelter?.city}, {animal.shelter?.province}
                       </p>
+<<<<<<< HEAD
                       {animal.photos &&
                       animal.photos.length > 0 &&
                       animal.photos[0]?.data &&
@@ -215,6 +271,21 @@ const AnimalSearch = () => {
                       <button
                         type="button"
                         className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20 hover:opacity-80"
+=======
+                      <Image
+                        className="h-48 w-full object-cover rounded-lg mt-4"
+                        src={`data:${
+                          animal.photos[0].contentType
+                        };base64,${Buffer.from(animal.photos[0].data.data)}`}
+                        alt={animal.name}
+                        width={200}
+                        height={100}
+                      />
+                      <button
+                        type="button"
+                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20 hover:opacity-80"
+                        onClick={() => onAdoptionClick(animal)}
+>>>>>>> sara2
                       >
                         Adopt
                       </button>
@@ -227,6 +298,15 @@ const AnimalSearch = () => {
             </div>
           </div>
         </div>
+<<<<<<< HEAD
+=======
+        {isOpen && (
+          <AdoptionRequestForm
+            onSubmitForm={onSubmitClick}
+            closeModal={onModalClose}
+          />
+        )}
+>>>>>>> sara2
       </main>
     </>
   );

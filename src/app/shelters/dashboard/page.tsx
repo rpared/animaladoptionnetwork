@@ -1,16 +1,26 @@
 "use client";
 import { useEffect, useState } from "react";
 import { AnimalProvider, AnimalType } from "@/components/animals";
+<<<<<<< HEAD
 // import PhotoType from "@/components/animals";
+=======
+>>>>>>> sara2
 import HeaderShelters from "@/components/header-shelters";
 // import getToken from "@/components/header-shelters";
 import Image from "next/image";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+<<<<<<< HEAD
 // import getUserInfo from "@/components/get-user-info";
 
 import DashboardLayout from "@/components/shelters-dashboard";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+=======
+import getUserInfo from "@/components/get-user-info";
+
+import DashboardLayout from "@/components/shelters-dashboard";
+import axios from "axios";
+>>>>>>> sara2
 
 const DashboardHome = () => {
   const [animals, setAnimals] = useState<AnimalType[]>([]); // Specify type here
@@ -18,7 +28,10 @@ const DashboardHome = () => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
+<<<<<<< HEAD
   const router = useRouter();
+=======
+>>>>>>> sara2
 
   const speciesOptions = [
     "Dog",
@@ -59,6 +72,10 @@ const DashboardHome = () => {
 
   useEffect(() => {
     getUserInfo(); // Fetch user info
+<<<<<<< HEAD
+=======
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+>>>>>>> sara2
   }, []);
 
   const handleFilter = async () => {
@@ -91,6 +108,7 @@ const DashboardHome = () => {
     fetchAnimals();
   }, [shelterId]);
 
+<<<<<<< HEAD
   // Handle Edit Function
   const handleEdit = async (animalId: string) => {
     console.log("Edit animal with ID:", animalId);
@@ -110,6 +128,8 @@ const DashboardHome = () => {
     }
   };
 
+=======
+>>>>>>> sara2
   return (
     <>
       <HeaderShelters />
@@ -183,6 +203,20 @@ const DashboardHome = () => {
           </button>
         </div>
 
+<<<<<<< HEAD
+=======
+        {/* List of Animals (Example) 
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          // Example Animal Card 
+          <div className="border border-gray-300 p-4 rounded shadow-sm">
+            <h3 className="text-xl font-semibold text-brown">Max</h3>
+            <p className="text-gray-700">Species: Dog</p>
+            <p className="text-gray-700">Age: 3</p>
+            <p className="text-gray-700">Gender: Male</p>
+          </div>
+        </div>
+        */}
+>>>>>>> sara2
         <AnimalProvider>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8 text-gray-700">
             {animals.length > 0 ? (
@@ -201,6 +235,7 @@ const DashboardHome = () => {
                     {animal.shelter?.city}, {animal.shelter?.province}
                   </p>
 
+<<<<<<< HEAD
                   {animal.photos &&
                   animal.photos.length > 0 &&
                   animal.photos[0]?.data &&
@@ -210,10 +245,17 @@ const DashboardHome = () => {
                       src={`data:${
                         animal.photos[0].contentType
                       };base64,${Buffer.from(animal.photos[0].data)}`}
+=======
+                  {animal.photos && animal.photos.length > 0 && (
+                    <Image
+                      className="h-48 w-full object-cover rounded-lg mt-4"
+                      src={animal.photos[0]}
+>>>>>>> sara2
                       alt={animal.name}
                       width={200}
                       height={100}
                     />
+<<<<<<< HEAD
                   ) : (
                     <div>-No photo available-</div>
                   )}
@@ -229,6 +271,13 @@ const DashboardHome = () => {
                     onClick={() => handleDelete(animal._id)}
                     className="mt-4 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-red-400"
                   >
+=======
+                  )}
+                  <button className="mt-4 mr-2 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-violet-70">
+                    Edit
+                  </button>
+                  <button className="mt-4 bg-violet-100 text-white py-2 px-4 rounded-md hover:bg-red-400">
+>>>>>>> sara2
                     Delete
                   </button>
                 </div>

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
+<<<<<<< HEAD
 const photoSchema = new mongoose.Schema({
   data: {
     type: Buffer,
@@ -12,6 +13,8 @@ const photoSchema = new mongoose.Schema({
   },
 });
 
+=======
+>>>>>>> sara2
 const animalSchema = new Schema(
   {
     name: { type: String, required: true },
@@ -54,8 +57,23 @@ const animalSchema = new Schema(
       required: true, // required field to link to shelter
     },
     dateRescued: { type: Date, default: Date.now },
+<<<<<<< HEAD
 
     photos: [photoSchema], // Ensure photos is an array of photoSchema
+=======
+    photos: [
+      {
+        data: {
+          type: Buffer,
+          default: null,
+        },
+        contentType: {
+          type: String,
+          default: null,
+        },
+      },
+    ], // Updated structure for storing photo path and content type
+>>>>>>> sara2
   },
   { collection: "animals" }
 );
