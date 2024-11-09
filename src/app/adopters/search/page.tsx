@@ -285,7 +285,7 @@ const AnimalSearch = () => {
                       <p>Species: {animal.species}</p>
                       <p>Gender: {animal.gender}</p>
                       <p>Weight: {animal.weight} kg</p>
-                      <p>{animal.description}</p>
+                      {/* <p>{animal.description}</p> */}
                       <p>
                         {animal.shelter?.city}, {animal.shelter?.province}
                       </p>
@@ -306,13 +306,15 @@ const AnimalSearch = () => {
                         <div>-No photo available-</div>
                       )}
                       
-                      <button
-                        type="button"
-                        className="bg-violet-100 mx-auto text-white mt-3 px-4 py-2 rounded-md block w-20 hover:opacity-80"
-                        onClick={() => onAdoptionClick(animal)}
-                      >
-                        Adopt
-                      </button>
+                      <div className="flex justify-center">
+                        <button
+                          type="button"
+                          className="bg-violet-100 text-white mt-3 px-4 py-2 rounded-md hover:opacity-80"
+                          onClick={() => onAdoptionClick(animal)}
+                        >
+                          Visit-Adopt
+                        </button>
+                      </div>
                     </div>
                   ))
                 ) : (

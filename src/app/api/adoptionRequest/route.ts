@@ -57,3 +57,70 @@ export async function POST(req: Request) {
     );
   }
 }
+
+export async function GET() {
+  // Connect to MongoDB
+  await connectDB();
+
+  try {
+    // Fetch all adoption requests from the database
+    const requests = await AdoptionRequest.find();
+
+    return NextResponse.json({ success: true, requests });
+  } catch (error) {
+    console.error("Error fetching adoption requests:", error);
+    return NextResponse.json(
+      { success: false, message: "An error occurred while fetching adoption requests." },
+      { status: 500 }
+    );
+  }
+}
+
+
+
+// PUT request to update the adoption request status and replyMessage
+export async function PUT(req: Request) {
+  await connectDB();
+
+  try {
+    // Get the request ID, status, and replyMessage from the request body
+    const { id, status, replyMessage } = await req.json();
+
+    if (!id || !status) {
+      return NextResponse.json(
+        { success: false, message: "Missing required fields: id, status" },
+        { status: 400 }
+      );
+    }
+
+    // Find the adoption request by ID
+    const adoptionRequest = await AdoptionRequest.findById(id);
+
+    if (!adoptionRequest) {
+      return NextResponse.json(
+        { success: false, message: "Adoption request not found" },
+        { status: 404 }
+      );
+    }
+
+    // Update the adoption request's status and replyMessage
+    adoptionRequest.status = status;
+    adoptionRequest.replyMessage = replyMessage || "No reply message provided"; // Default message if none is provided
+
+    // Save the updated adoption request
+    await adoptionRequest.save();
+
+    return NextResponse.json({
+      success: true,
+      message: "Adoption request updated successfully",
+      adoptionRequest,
+    });
+  } catch (error) {
+    console.error("Error updating adoption request:", error);
+    return NextResponse.json(
+      { success: false, message: "An error occurred while updating the adoption request." },
+      { status: 500 }
+    );
+  }
+}
+

@@ -1,4 +1,4 @@
-// api/animals/individualAnimal/route.ts
+// api/updateAdoptionStatus/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/config/connectDB";
 import Animals from "@/models/animals";
@@ -6,7 +6,8 @@ import mongoose from "mongoose";
 
 connectDB();
 
-export async function GET(req: NextRequest) {
+// PUT request handler for updating isAdopted status
+export async function PUT(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const animalId = searchParams.get("animalId");
@@ -18,20 +19,29 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const animal = await Animals.findById(animalId);
+    const { isAdopted } = await req.json(); // Expecting a JSON body with { isAdopted: true|false }
 
-    if (!animal) {
+    const updatedAnimal = await Animals.findByIdAndUpdate(
+      animalId,
+      { isAdopted },
+      { new: true }
+    );
+
+    if (!updatedAnimal) {
       return NextResponse.json(
         { message: "Animal not found" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(animal);
+    return NextResponse.json({
+      message: `Animal's adoption status updated successfully`,
+      animal: updatedAnimal,
+    });
   } catch (error) {
-    console.error("Error fetching animal:", error);
+    console.error("Error updating adoption status:", error);
     return NextResponse.json(
-      { message: "Error fetching animal" },
+      { message: "Failed to update adoption status", error: (error as Error).message },
       { status: 500 }
     );
   }
