@@ -171,7 +171,13 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
           className="w-full p-2 border rounded"
         />
 
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-center space-x-2">
+          <button
+              type="submit"
+              className="px-4 py-2 bg-violet-100 text-white rounded"
+            >
+              Submit
+            </button>
             <button
               type="button"
               onClick={closeModal}
@@ -179,12 +185,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
             >
               Cancel
             </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Submit
-            </button>
+            
           </div>
         </form>
       </div>
