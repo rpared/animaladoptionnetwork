@@ -16,6 +16,8 @@ export default function HeaderShelters() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useState(false);
   const [userName, setUserName] = useState();
+  const [pendingRequestsNumber, setPendingRequestsNumber] = useState();
+  // const [error, setError] = useState<string | null>(null);
 
   const getToken = async () => {
     try {
@@ -61,6 +63,26 @@ export default function HeaderShelters() {
     }
   }, [auth]);
 
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await axios.get("/api/adoptionRequest");
+        const requests = response.data.requests;
+        const pendingRequests = requests.filter((request: { status: string }) => request.status === "pending");
+
+        // Set the number of pending requests
+        setPendingRequestsNumber(pendingRequests.length);
+
+    } catch (error) {
+      // setError("Failed to fetch adoption requests.");
+      console.log(error);
+    };
+  };
+    fetchRequests();
+  }, []);
+
+
+
   return (
     <div className="bg-white">
       <header className="absolute inset-x-0 top-0 z-50 bg-slate-100  shadow-md">
@@ -82,7 +104,11 @@ export default function HeaderShelters() {
                 alt="Animal Adoption Network Logo"
               />
             </Link>
+            <Link href="/shelters/requests">
+          <div className="text-brown m-3"> <b className="text-lg">{pendingRequestsNumber}</b> Pending Adoption Request(s) </div>
+          </Link>
           </div>
+          
           <div className="flex lg:hidden">
             <button
               type="button"
