@@ -65,6 +65,10 @@ const adoptionRequestSchema = new Schema({
     type: String,
     required: true,
   },
+  replyMessage: {
+    type: String,
+    default: "",
+  },
 });
 
 

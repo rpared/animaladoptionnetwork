@@ -160,7 +160,7 @@ const AnimalSearch = () => {
                       <p>Species: {animal.species}</p>
                       <p>Gender: {animal.gender}</p>
                       <p>Weight: {animal.weight} kg</p>
-                      <p>{animal.description}</p>
+                      {/* <p>{animal.description}</p> */}
                       <p>
                         {animal.shelter?.city}, {animal.shelter?.province}
                       </p>

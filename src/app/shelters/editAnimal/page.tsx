@@ -63,7 +63,7 @@ const EditAnimal = () => {
   const fetchAnimalData = async (animalId: string) => {
     try {
       const response = await axios.get(
-        `/api/animals/individualAnimal/?id=${animalId}`
+        `/api/animals/individualAnimal/?animalId=${animalId}`
       );
       if (response.status === 200) {
         setAnimalData(response.data);
@@ -81,14 +81,15 @@ const EditAnimal = () => {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target as HTMLInputElement;
+    const checked = (e.target as HTMLInputElement).checked;
     setAnimalData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
       shelter: shelterId, // Ensure shelter is always set as the string shelterId
     }));
   };
-
+  
   // Handle file selection for a single photo
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -140,12 +141,16 @@ const EditAnimal = () => {
         }
       );
       if (response.status === 200) {
+        // Scroll to the top of the page
+      window.scrollTo({ top: 0, behavior: "smooth" });
         setStatusMessage("Animal updated successfully!");
       } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
         setError("Failed to update animal data.");
       }
     } catch (error) {
       console.error("Error updating animal:", error);
+      window.scrollTo({ top: 0, behavior: "smooth" });
       setError("Error updating animal.");
     }
 
@@ -173,7 +178,7 @@ const EditAnimal = () => {
           <div className=" max-w-[600px] relative isolate pt-6 px-8">
             {/* <div className="p-6 text-gray-800"> */}
             <h1 className="text-4xl mb-4 font-semibold text-brown">
-              Upload Animals
+              Edit Animal
             </h1>
             {error && <p className="text-red-500">{error}</p>}
             {statusMessage && (
@@ -314,6 +319,19 @@ const EditAnimal = () => {
                   onChange={handleChange}
                   className="w-full p-2 border rounded-md"
                 />
+              </div>
+              {/* isAdopted */}
+              <div>
+                <label className="block text-sm font-medium">
+                  <input
+                    type="checkbox"
+                    name="isAdopted"
+                    checked={animalData.isAdopted}
+                    onChange={handleChange}
+                    className="p-2 border rounded-md m-2"
+                  />
+                  Adopted
+                </label>
               </div>
 
               {animalData.photos &&

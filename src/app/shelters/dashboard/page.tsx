@@ -119,7 +119,7 @@ const DashboardHome = () => {
     <>
       <HeaderShelters />
       <DashboardLayout>
-        <h1 className="text-3xl text-brown font-bold mb-6">
+        <h1 className="text-4xl mb-4 font-semibold text-brown">
           Manage Animals in {userName}
         </h1>
 
@@ -201,7 +201,7 @@ const DashboardHome = () => {
                   <p>Gender: {animal.gender}</p>
                   <p>Age: {animal.age}</p>
                   <p>Weight: {animal.weight} kg</p>
-                  <p>{animal.description}</p>
+                  {/* <p>{animal.description}</p> */}
                   <p>
                     {animal.shelter?.city}, {animal.shelter?.province}
                   </p>
