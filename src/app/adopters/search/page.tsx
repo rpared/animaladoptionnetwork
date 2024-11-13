@@ -150,6 +150,16 @@ const AnimalSearch = () => {
 
   return (
     <>
+    {isOpen && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <AdoptionRequestForm
+              onSubmitForm={onSubmitClick}
+              closeModal={onModalClose}
+            />
+          </div>
+        </div>
+      )}
       <HeaderAdopters />
       <AdoptersDashboard />
       <main className="bg-white mb-16 text-gray-700 ">
@@ -327,12 +337,7 @@ const AnimalSearch = () => {
             </div>
           </div>
         </div>
-        {isOpen && (
-          <AdoptionRequestForm
-            onSubmitForm={onSubmitClick}
-            closeModal={onModalClose}
-          />
-        )}
+        
       </main>
     </>
   );

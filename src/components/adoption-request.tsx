@@ -55,8 +55,8 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
-      <div className="bg-white p-6 rounded shadow-lg w-96">
-        <h2 className="text-lg font-semibold mb-4">Fill the Form with the adopter data</h2>
+      <div className="bg-white p-6 rounded shadow-lg w-96 text-gray-700">
+        <h2 className="text-lg font-semibold mb-4">Fill the Form with the adopter&apos;s data</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             name="fname"
@@ -113,7 +113,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
             className="w-full p-2 border rounded"
           />
           <label className="block">
-          <span className="text-gray-700">Number of People in your Household *</span>
+          <span className="text-gray-700">Number of People in the Household *</span>
           <input
             name="householdSize"
             type="number"
@@ -134,7 +134,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
               onChange={handleChange}
               className="mr-2"
             />
-            I Have Other Pets
+            The adopter has other Pets
           </label>
           <label className="block">
               <span className="text-gray-700">Salary Range *</span>
@@ -181,7 +181,7 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
             <button
               type="button"
               onClick={closeModal}
-              className="px-4 py-2 bg-gray-300 rounded"
+              className="px-4 py-2 bg-gray-500 rounded text-gray-100"
             >
               Cancel
             </button>
