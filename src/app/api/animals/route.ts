@@ -23,7 +23,22 @@ interface QueryParams {
 // Display Animals
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
+    const { searchParams, pathname } = new URL(req.url);
+    const pathParts = pathname.split('/');
+    const animalId = pathParts[pathParts.length - 1];
+    console.log("Received request for animal ID:", animalId);
+
+    if (mongoose.Types.ObjectId.isValid(animalId)) {
+      // Fetch individual animal details by ID
+      const animal = await Animals.findById(animalId);
+      if (!animal) {
+        return NextResponse.json({ error: "Animal not found" }, { status: 404 });
+      }
+      return NextResponse.json(animal);
+    }
+
+   // If no valid ID is provided, handle other query parameters
+    
     const species = searchParams.get("species");
     const gender = searchParams.get("gender");
     const minWeight = searchParams.get("minWeight");

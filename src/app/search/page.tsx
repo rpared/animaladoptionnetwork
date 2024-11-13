@@ -144,7 +144,10 @@ const AnimalSearch = () => {
                     >
                       <div className="flex justify-between w-full">
                         {/* Animal Name */}
+                        <Link
+                          href="/login">
                         <h3 className="text-2xl font-bold">{animal.name}</h3>
+                        </Link>
                         {/* Heart Button */}
                         <button
                           onClick={() => handleLoveToggle(animal._id)}
@@ -187,7 +190,7 @@ const AnimalSearch = () => {
                           href="/login"
                           className="rounded-md bg-violet-100 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-violet-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-70"
                         >
-                          Adopt
+                          View Details
                         </Link>
                       </div>
                     </div>
