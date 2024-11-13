@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
@@ -255,8 +255,13 @@ const onSubmitClick = async (data: Record<string, any>) => {
     </>
   );
 };
+  const IndividualAnimalDetailsPage = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <IndividualAnimalDetails />
+    </Suspense>
+  );
 
-export default IndividualAnimalDetails;
+export default IndividualAnimalDetailsPage;
 
 // const WrappedIndividualAnimalDetails = () => (
 //   <AnimalProvider>
