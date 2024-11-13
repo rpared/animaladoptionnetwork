@@ -96,8 +96,6 @@ useEffect(() => {
 
 //Adoption Request
 
-
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSubmitClick = async (data: Record<string, any>) => {
   // Destructure form data
@@ -160,6 +158,16 @@ const onSubmitClick = async (data: Record<string, any>) => {
 
   return (
     <>
+    {isOpen && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <AdoptionRequestForm
+              onSubmitForm={onSubmitClick}
+              closeModal={onModalClose}
+            />
+          </div>
+        </div>
+      )}
       <HeaderAdopters />
       <main className="bg-white mb-16 text-gray-700 max-w-screen-xl mx-auto">
         <div className="container mx-auto px-4 py-10">
@@ -245,12 +253,7 @@ const onSubmitClick = async (data: Record<string, any>) => {
           </div>
           
         </div>
-        {isOpen && (
-          <AdoptionRequestForm
-            onSubmitForm={onSubmitClick}
-            closeModal={onModalClose}
-          />
-        )}
+        
       </main>
     </>
   );
