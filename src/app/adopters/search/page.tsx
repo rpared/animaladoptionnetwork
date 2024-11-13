@@ -10,6 +10,7 @@ import Image from "next/image";
 import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 import AdoptionRequestForm from "@/components/adoption-request";
+import Link from "next/link";
 // import { set } from "mongoose";
 
 const AnimalSearch = () => {
@@ -269,7 +270,9 @@ const AnimalSearch = () => {
                     >
                       <div className="flex justify-between w-full">
                         {/* Animal Name */}
-                        <h3 className="text-2xl font-bold">{animal.name}</h3>
+                        <Link href={`/adopters/individualAnimalDetails?id=${animal._id}`}>
+                          <h3 className="text-2xl font-bold">{animal.name}</h3>
+                        </Link>
                         {/* Heart Button */}
                         <button
                           onClick={() => handleLoveToggle(animal._id)}
