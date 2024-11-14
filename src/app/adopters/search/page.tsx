@@ -10,6 +10,7 @@ import Image from "next/image";
 import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
 import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 import AdoptionRequestForm from "@/components/adoption-request";
+import Link from "next/link";
 // import { set } from "mongoose";
 
 const AnimalSearch = () => {
@@ -149,6 +150,16 @@ const AnimalSearch = () => {
 
   return (
     <>
+    {isOpen && (
+        <div className="fixed inset-0 z-60 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <AdoptionRequestForm
+              onSubmitForm={onSubmitClick}
+              closeModal={onModalClose}
+            />
+          </div>
+        </div>
+      )}
       <HeaderAdopters />
       <AdoptersDashboard />
       <main className="bg-white mb-16 text-gray-700 ">
@@ -269,7 +280,9 @@ const AnimalSearch = () => {
                     >
                       <div className="flex justify-between w-full">
                         {/* Animal Name */}
-                        <h3 className="text-2xl font-bold">{animal.name}</h3>
+                        <Link href={`/adopters/individualAnimalDetails?id=${animal._id}`}>
+                          <h3 className="text-2xl font-bold">{animal.name}</h3>
+                        </Link>
                         {/* Heart Button */}
                         <button
                           onClick={() => handleLoveToggle(animal._id)}
@@ -324,12 +337,7 @@ const AnimalSearch = () => {
             </div>
           </div>
         </div>
-        {isOpen && (
-          <AdoptionRequestForm
-            onSubmitForm={onSubmitClick}
-            closeModal={onModalClose}
-          />
-        )}
+        
       </main>
     </>
   );
