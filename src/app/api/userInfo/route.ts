@@ -85,6 +85,8 @@ interface UserUpdateProps {
   charitableRegistrationNumber?: string;
   operatingLicenseNumber?: string;
   documentUploads?: Url;
+  latitude?: number;
+  longitude?: number;
 
   fname?: string;
   lname?: string;
@@ -130,6 +132,8 @@ export async function PUT(req: NextRequest) {
         charitableRegistrationNumber: updatedData.charitableRegistrationNumber,
         operatingLicenseNumber: updatedData.operatingLicenseNumber,
         documentUploads: updatedData.documentUploads,
+        latitude: updatedData.latitude,
+        longitude: updatedData.longitude,
       };
 
       // Hash the password if provided (only if it changes)

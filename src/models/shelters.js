@@ -73,6 +73,14 @@ const shelterSchema = new Schema({
       },
     },
   },
+  latitude: {
+  type: Number,
+  
+  },
+  longitude: {
+    type: Number,
+    
+  },
 });
 
 const Shelters =
