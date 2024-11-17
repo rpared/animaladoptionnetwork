@@ -20,6 +20,8 @@ export async function POST(req: Request) {
       address,
       charitableRegistrationNumber,
       operatingLicenseNumber,
+      latitude,
+      longitude,
     } = body;
 
     // Hash the password before saving
@@ -37,6 +39,8 @@ export async function POST(req: Request) {
       address,
       charitableRegistrationNumber,
       operatingLicenseNumber,
+      latitude,
+      longitude,
     });
 
     await newShelter.save();

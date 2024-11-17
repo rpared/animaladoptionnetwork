@@ -3,7 +3,9 @@ import HeaderShelters from "@/components/header-shelters";
 import DashboardLayout from "@/components/shelters-dashboard";
 import { useEffect, useState } from "react";
 import axios from "axios";
-// import { set } from "mongoose";
+
+import getUserInfo from "@/components/get-user-info";
+
 
 interface AdoptionRequest {
     _id: string;
@@ -37,9 +39,13 @@ interface AdoptionRequest {
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
     const [disableButtons, setDisableButtons] = useState<{ [key: string]: boolean }>({});
+    // const [latitude, setLatitude] = useState<number>(0);
+    // const [longitude, setLongitude] = useState<number>(0);
     // const [disableButtons, setDisableButtons] = useState<string>("enabled");
     
-    
+  
+
+      
   
     useEffect(() => {
       const fetchRequests = async () => {
@@ -129,18 +135,54 @@ interface AdoptionRequest {
         console.log('Adoption Requests Updated:', adoptionRequests);
       }, [adoptionRequests]);
 
+// Fetch Shelter data to include in Reply
 
+const [shelterId, setShelterId] = useState<string>("");
+const [shelterName, setShelterName] = useState<string>("");
+const [shelterEmail, setShelterEmail] = useState<string>("");
+const [shelterAddress, setShelterAddress] = useState<string>("");
+const [shelterLatitude, setShelterLatitude] = useState<number>(0);
+const [shelterLongitude, setShelterLongitude] = useState<number>(0);
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    const user = await getUserInfo();
+    if (user) {
+      setShelterId(user._id);
+      setShelterName(user.name);
+      setShelterEmail(user.email);
+      setShelterAddress(user.address);
+      setShelterLatitude(user.latitude);
+      setShelterLongitude(user.longitude);
+
+    } else {
+      setError("Failed to load user data.");
+      setLoading(false);
+    }
+  };
+  fetchUserData();
+}, []);
 
 
       // Event Handlers
   
-      const handleApprove = async (id: string, animalId: string, animalName: string, message: string) => {
+      const handleApprove = async (id: string, animalId: string, animalName: string, message: string ) => {
         try {
           // Determine the default message
           const defaultMessage = `You are eligible to adopt ${animalName}. ${animalName} is available, contact us to book a visit. Please notice that the animal will be reserved for you once you confirm the visit.`;
       
           // Use the provided message or the default message
           const replyMessage = message || defaultMessage;
+
+          // Log shelter properties
+      console.log("Shelter Properties:", {
+        shelterId,
+        shelterName,
+        shelterEmail,
+        shelterAddress,
+        shelterLatitude,
+        shelterLongitude,
+      });
       
           // Step 1: Update the adoption status (approve the adoption) disabled for now as this should be done after the visit
         //   const statusResponse = await axios.put(`/api/updateAdoptionStatus?animalId=${animalId}`, { isAdopted: true });
@@ -156,6 +198,12 @@ interface AdoptionRequest {
               id, // The ID of the adoption request
               status: 'approved', // Set status to "approved"
               replyMessage, // Include the replyMessage for the adopter
+              shelterId,
+              shelterName,
+              shelterEmail,
+              shelterAddress,
+              shelterLatitude,
+              shelterLongitude,
             }),
           });
       

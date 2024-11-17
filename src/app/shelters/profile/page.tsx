@@ -7,6 +7,7 @@ import axios from "axios";
 import DashboardLayout from "@/components/shelters-dashboard";
 import getUserInfo from "@/components/get-user-info";
 import HeaderShelters from "@/components/header-shelters";
+import Geocoding from "@/components/geocoding";
 
 const UserProfile = () => {
   const [userName, setUserName] = useState("");
@@ -29,6 +30,9 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+
   // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,6 +48,7 @@ const UserProfile = () => {
         setAddress(user.address);
         setCharitableRegistrationNumber(user.charitableRegistrationNumber);
         setOperatingLicenseNumber(user.operatingLicenseNumber);
+        
 
         // Optional legal document fields
         if (user.documentUploads?.legalDocument) {
@@ -63,6 +68,11 @@ const UserProfile = () => {
     };
     fetchUserData();
   }, []);
+
+  const handleGeolocationFetch = (lat: number, lng: number) => {
+    setLatitude(lat);
+    setLongitude(lng);
+  };
 
   // Update user profile PUT request
   const handleUpdateProfile = async (e: { preventDefault: () => void }) => {
@@ -89,12 +99,10 @@ const UserProfile = () => {
             // fileSize: legalDocumentFileSize,
           },
         },
+        latitude, // Include latitude
+        longitude, // Include longitude
       };
 
-      // Only add the password if the user has entered a value
-      // if (password.trim() !== "") {
-      //   updatedData.password = password;
-      // }
 
       const response = await axios.put("/api/userInfo", updatedData);
       if (response.data.success) {
@@ -264,7 +272,8 @@ const UserProfile = () => {
                 Update Profile
               </button>
             </form>
-          </div>
+            <Geocoding address={address} onGeolocationFetch={handleGeolocationFetch} />
+            </div>
         </main>
       </DashboardLayout>
     </>
