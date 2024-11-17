@@ -69,6 +69,31 @@ const adoptionRequestSchema = new Schema({
     type: String,
     default: "",
   },
+  shelterId: {
+    type: Schema.Types.ObjectId,
+    ref: "shelters",
+
+  },
+  shelterName: {
+    type: String,
+    default: "",
+  },
+  shelterEmail: {
+    type: String,
+    default: "",
+  },
+  shelterAddress: {
+    type: String,
+    default: "",
+  },
+  shelterLatitude: {
+    type: Number,
+    default: "",
+  },
+  shelterLongitude: {
+    type: Number,
+    default: "",
+  }
 });
 
 
