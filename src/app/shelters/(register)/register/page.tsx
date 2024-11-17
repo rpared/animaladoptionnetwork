@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import Header from "@/components/header";
 import { useRouter } from "next/navigation"; // Use next/navigation for app directory
+import Geocoding from "@/components/geocoding";
 
 function ShelterRegistrationForm() {
   const router = useRouter(); // Initialize useRouter
@@ -24,6 +25,12 @@ function ShelterRegistrationForm() {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  //Geolocation
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
+
+
+
   // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -33,6 +40,11 @@ function ShelterRegistrationForm() {
       ...prevFormData,
       [name]: value,
     }));
+  };
+
+  const handleGeolocationFetch = (lat: number, lng: number) => {
+    setLatitude(lat);
+    setLongitude(lng);
   };
 
   // Handle form submission
@@ -45,6 +57,8 @@ function ShelterRegistrationForm() {
       // Prepare the data as a JSON object
       const jsonData = {
         ...formData, // Spread the form data
+        latitude, // Include latitude
+        longitude, // Include longitude
         // The legalDocument upload will need to be handled differently
       };
 
@@ -272,6 +286,7 @@ function ShelterRegistrationForm() {
               </button>
             </div>
           </form>
+          <Geocoding address={formData.address} onGeolocationFetch={handleGeolocationFetch} />
         </div>
       </main>
     </>

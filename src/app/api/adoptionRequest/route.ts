@@ -84,7 +84,7 @@ export async function PUT(req: Request) {
 
   try {
     // Get the request ID, status, and replyMessage from the request body
-    const { id, status, replyMessage } = await req.json();
+    const { id, status, replyMessage, shelterId, shelterName, shelterEmail, shelterAddress, shelterLatitude, shelterLongitude } = await req.json();
 
     if (!id || !status) {
       return NextResponse.json(
@@ -106,6 +106,12 @@ export async function PUT(req: Request) {
     // Update the adoption request's status and replyMessage
     adoptionRequest.status = status;
     adoptionRequest.replyMessage = replyMessage || "No reply message provided"; // Default message if none is provided
+    adoptionRequest.shelterId = shelterId;
+    adoptionRequest.shelterName = shelterName;
+    adoptionRequest.shelterEmail = shelterEmail;
+    adoptionRequest.shelterAddress = shelterAddress;
+    adoptionRequest.shelterLatitude = shelterLatitude;
+    adoptionRequest.shelterLongitude = shelterLongitude;
 
     // Save the updated adoption request
     await adoptionRequest.save();
