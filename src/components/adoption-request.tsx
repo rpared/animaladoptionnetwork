@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// components/FormComponent.tsx
 import React, { useState } from "react";
 
 interface FormData {
@@ -24,7 +23,6 @@ interface AdoptionRequestFormProps {
 const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
   props: AdoptionRequestFormProps
 ) => {
-  
   const { closeModal, onSubmitForm } = props;
   const [formData, setFormData] = useState<FormData>({
     fname: "",
@@ -36,8 +34,8 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
     householdSize: 1,
     hasOtherPets: false,
     salaryRange: "",
-  personalReference: "",
-  personalReferencePhone: "",
+    personalReference: "",
+    personalReferencePhone: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -55,137 +53,167 @@ const AdoptionRequestForm: React.FC<AdoptionRequestFormProps> = (
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
-      <div className="bg-white p-6 rounded shadow-lg w-96 text-gray-700">
-        <h2 className="text-lg font-semibold mb-4">Fill the Form with the adopter&apos;s data</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            name="fname"
-            type="text"
-            placeholder="First Name *"
-            value={formData.fname}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            name="lname"
-            type="text"
-            placeholder="Last Name *"
-            value={formData.lname}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            name="email"
-            type="email"
-            placeholder="Email *"
-            value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            name="phone"
-            type="tel"
-            placeholder="Phone *"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            name="id"
-            type="text"
-            placeholder="Id or licence number *"
-            value={formData.id}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <input
-            name="address"
-            type="text"
-            placeholder="Address *"
-            value={formData.address}
-            onChange={handleChange}
-            required
-            className="w-full p-2 border rounded"
-          />
-          <label className="block">
-          <span className="text-gray-700">Number of People in the Household *</span>
-          <input
-            name="householdSize"
-            type="number"
-            placeholder="Number of People in your Household"
-            value={formData.householdSize}
-            onChange={handleChange}
-            min={1}
-            required
-            className="w-full p-2 border rounded"
-          />
-          </label>
-          
-          <label className="flex items-center">
+      <div className="bg-white p-6 rounded-xl shadow-xl w-full sm:w-96 md:w-1/2 lg:w-1/3 text-gray-700 overflow-auto max-h-[80vh]">
+        <h2 className="text-2xl font-semibold mb-6 text-center text-violet-100">
+          Adoption Request Form
+        </h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Name Fields */}
+          <div className="flex gap-4">
+            <input
+              name="fname"
+              type="text"
+              placeholder="First Name *"
+              value={formData.fname}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              name="lname"
+              type="text"
+              placeholder="Last Name *"
+              value={formData.lname}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Contact Info */}
+          <div className="flex gap-4">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email *"
+              value={formData.email}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              name="phone"
+              type="tel"
+              placeholder="Phone *"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* ID & Address */}
+          <div>
+            <input
+              name="id"
+              type="text"
+              placeholder="ID or License Number *"
+              value={formData.id}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <input
+              name="address"
+              type="text"
+              placeholder="Address *"
+              value={formData.address}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Household Size */}
+          <div>
+            <label className="text-gray-700 mb-1" htmlFor="householdSize">
+              Number of People in the Household *
+            </label>
+            <input
+              name="householdSize"
+              type="number"
+              placeholder="Household Size"
+              value={formData.householdSize}
+              onChange={handleChange}
+              min={1}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Has Other Pets */}
+          <div className="flex items-center space-x-2 text-gray-700">
             <input
               name="hasOtherPets"
               type="checkbox"
               checked={formData.hasOtherPets}
               onChange={handleChange}
-              className="mr-2"
+              className="h-5 w-5"
             />
-            The adopter has other Pets
-          </label>
-          <label className="block">
-              <span className="text-gray-700">Salary Range *</span>
-              <select
-                name="salaryRange"
-                value={formData.salaryRange}
-                onChange={handleChange}
-                required
-                className="w-full p-2 border rounded mt-1"
-              >
-                <option value="" disabled>Select Yearly Salary Range</option>
-                <option value="Below $30,000">Below $30,000</option>
-                <option value="$30,000 - $50,000">$30,000 - $50,000</option>
-                <option value="$50,000 - $80,000">$50,000 - $80,000</option>
-                <option value="Above $80,000">Above $80,000</option>
-              </select>
-            </label>
-        <input
-          name="personalReference"
-          type="text"
-          placeholder="Personal Reference *"
-          value={formData.personalReference}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
-        <input
-          name="personalReferencePhone"
-          type="tel"
-          placeholder="Personal Reference Phone *"
-          value={formData.personalReferencePhone}
-          onChange={handleChange}
-          required
-          className="w-full p-2 border rounded"
-        />
+            <span>The adopter has other pets</span>
+          </div>
 
-          <div className="flex justify-center space-x-2">
-          <button
-              type="submit"
-              className="px-4 py-2 bg-violet-100 text-white rounded"
+          {/* Salary Range */}
+          <div>
+            <label className="text-gray-700 mb-1" htmlFor="salaryRange">
+              Salary Range *
+            </label>
+            <select
+              name="salaryRange"
+              value={formData.salaryRange}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              Submit
+              <option value="" disabled>Select Yearly Salary Range</option>
+              <option value="Below $30,000">Below $30,000</option>
+              <option value="$30,000 - $50,000">$30,000 - $50,000</option>
+              <option value="$50,000 - $80,000">$50,000 - $80,000</option>
+              <option value="Above $80,000">Above $80,000</option>
+            </select>
+          </div>
+
+          {/* Personal Reference */}
+          <div>
+            <input
+              name="personalReference"
+              type="text"
+              placeholder="Personal Reference *"
+              value={formData.personalReference}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div>
+            <input
+              name="personalReferencePhone"
+              type="tel"
+              placeholder="Personal Reference Phone *"
+              value={formData.personalReferencePhone}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-center space-x-4 mt-6">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-violet-100 text-white rounded-lg hover:bg-violet-70 transition"
+            >
+              Submit Request
             </button>
             <button
               type="button"
               onClick={closeModal}
-              className="px-4 py-2 bg-gray-500 rounded text-gray-100"
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-400 transition"
             >
               Cancel
             </button>
-            
           </div>
         </form>
       </div>
