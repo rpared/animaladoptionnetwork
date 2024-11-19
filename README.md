@@ -7,12 +7,9 @@ https://animaladoptionnetwork.vercel.app/
 
 **Pending Tasks**
 
-- Adoption Requests
-- Request Notification and management
-- Animal Management, editing and deleting
-- External API integration
-- Uplaoding several pics and Image Array handling \*If we make it ontime
-- Adopter Lovelist \*If we make it ontime
+- Adoption Request fetching & management in the Adopters end
+- Uplaoding several pics and Image Array handling (only one is being uploaded) \*If we make it ontime
+- Adopter Lovelist \*New feature we came up with on the way
 
 ---
 
@@ -35,6 +32,8 @@ The primary target audience for the Animal Adoption Network comprehends 2 groups
 Frontend: React / Next.js / Tailwind
 Backend: Next.js / MongoDB +
 Bcrypt / Mongoose / JWT (amongst others)
+
+External Apis: Google Maps
 
 **Key Features:**
 User Profiles / Authorization
@@ -73,13 +72,13 @@ User Profiles / Authorization
 - Animal Profiles (Detailed Information with Filtering)
   Task: Create the UI components for displaying animal profiles (e.g., species, breed, images). **Done (By Roger)**
   Task: Implement filtering functionality (species, age, location, etc.) for adopters. **Done (By Sara)**
-- Backend: Animal Data Storage & Fetching
+- Backend: Animal Data Storage & Fetching 
   Task: Set up MongoDB collections for animals, shelters, and adopters. **DONE**
   Task: Implement Mongoose models for the animals. **DONE**
-  Task: Implement API routes to fetch animal data and handle filtering queries. **Done PARTIALLY**
-  Task: Enabling management of animals editing/deleting. **Pending**
+  Task: Implement API routes to fetch animal data and handle filtering queries. **DONE**
+  Task: Enabling management of animals editing/deleting. ****DONE****
 - Image Upload
-  Task: Implement image upload for animal profiles. **Done PARTIALLY**
+  Task: Implement image upload for animal profiles. **DONE PARTIALLY**
 
 **Saraben:** Adoption Applications & API Integrations
 
@@ -87,11 +86,12 @@ User Profiles / Authorization
 - Adoption Application Form
   Task: Build a form for adopters to submit their adoption applications. **DONE**
   Task: Set up validation to ensure all necessary fields are filled in. **DONE**
-  Task: Integrate the form with MongoDB to save applications. **Pending**
-- Shelter Notifications for Adoption Applications
-  Task: Implement logic to notify shelters when a new adoption application is submitted (email or in-app notification). **Pending**
+  Task: Integrate the form with MongoDB to save applications. **DONE**
+- Shelter and Adopter Notifications for Adoption Applications
+  Task: Implement logic to notify shelters when a new adoption application is submitted (email or in-app notification). **DONE**
+  Task: Implement logic to notify adopters of replies and display their adoption requests with status.
 - API Integrations (Google Maps, Educational APIs)
-  Task: Integrate Google Maps API for animal location display or an educational APIs for breed info and animal news. Display API data in relevant parts of the app (e.g., on the animal profile or shelter page). **Pending**
+  Task: Integrate Google Maps API for animal location display or an educational APIs for breed info and animal news. Display API data in relevant parts of the app (e.g., on the animal profile or shelter page). **DONE (By Roger)**
 
 **Additional Coordination & Shared Tasks:**
 Mobile Responsiveness:
@@ -99,7 +99,7 @@ Task: All developers should ensure their components and pages are mobile-respons
 Testing & Debugging:
 Task: Share testing and debugging tasks to ensure all features work well together.
 LoveList:
-Task: Popullating an Adopter list with selected animals. **Pending**
+Task: Populating an Adopter list with selected animals. **Pending**
 
 **Business Case:**
-The app will be totally free for shelters, rescuers and adopting parents. Revenue will be obtained through advertising. Google AdMob or Meta Audience Network spots will be placed in the UI of the app.
+The app will be totally free for shelters, rescuers and adopting parents. Revenue will be obtained through advertising. Google AdMob or Meta Audience Network spots will be placed in the UI of the app. **Pending**
