@@ -7,7 +7,6 @@ https://animaladoptionnetwork.vercel.app/
 
 **Pending Tasks**
 
-- Adoption Request fetching & management in the Adopters end
 - Uplaoding several pics and Image Array handling (only one is being uploaded) \*If we make it ontime
 - Adopter Lovelist \*New feature we came up with on the way
 
@@ -64,7 +63,7 @@ User Profiles / Authorization
   Task: Integrate with the backend to fetch shelter details and manage their data. **DONE (By Sara)**
 - Adopting Parent Browsing UI
   Task: Implement UI for browsing animals, including filters (species, age, etc.). **DONE**
-  Task: Use MongoDB/Mongoose to fetch animals and apply filtering logic on the frontend. **Done Partially**
+  Task: Use MongoDB/Mongoose to fetch animals and apply filtering logic on the frontend. **DONE**
 
 **Ryan:** Animal Profiles & Database Integration
 
@@ -99,7 +98,7 @@ Task: All developers should ensure their components and pages are mobile-respons
 Testing & Debugging:
 Task: Share testing and debugging tasks to ensure all features work well together.
 LoveList:
-Task: Populating an Adopter list with selected animals. **Pending**
+Task: Populating an Adopter list with selected animals. **DONE**
 
 **Business Case:**
 The app will be totally free for shelters, rescuers and adopting parents. Revenue will be obtained through advertising. Google AdMob or Meta Audience Network spots will be placed in the UI of the app. **Pending**
