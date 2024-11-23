@@ -113,6 +113,8 @@ const UserProfile = () => {
     } catch (err) {
       setError("Error updating profile: " + err);
     }
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
   };
 
   if (loading) {
@@ -253,7 +255,7 @@ const UserProfile = () => {
                   required
                 />
               </div>
-              <div>
+              {/* <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Legal Document URL (Optional)
                 </label>
@@ -263,7 +265,7 @@ const UserProfile = () => {
                   onChange={(e) => setLegalDocumentUrl(e.target.value)}
                   className="w-full mt-1 border border-gray-300 rounded-md p-2"
                 />
-              </div>
+              </div> */}
 
               <button
                 type="submit"
