@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+
+
 const Schema = mongoose.Schema;
 
 const adopterSchema = new Schema({
@@ -61,6 +63,19 @@ const adopterSchema = new Schema({
     enum: ["pending", "approved", "rejected", "no"],
     default: "no", // track the status of adoption applications
   },
+  // unreadAdoptionReplies: {
+  //   type: Number,
+  //   default: 0, // track the number of unread adoption replies that are NOT pending, they must be approved or rejected
+  // },
+  // pendingAdoptionRequests: {
+  //   type: Number,
+  //   default: 0, // track the number of pending adoption requests
+  // },
+  // adoptionRequestsArray: [{
+  //   type: Schema.Types.ObjectId,
+  //   ref: "adoptionRequest",
+  // }],
+
 });
 
 const Adopters =

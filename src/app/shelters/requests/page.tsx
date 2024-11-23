@@ -7,7 +7,7 @@ import axios from "axios";
 import getUserInfo from "@/components/get-user-info";
 
 
-interface AdoptionRequest {
+export interface AdoptionRequest {
     _id: string;
     adopter: string;
     animal: string;
@@ -26,6 +26,14 @@ interface AdoptionRequest {
     requestDate: string;
     animalName?: string;
     animalIsAdopted?: boolean;
+    replyMessage?:string;
+    shelterId?:string;
+    shelterName?:string;
+    shelterEmail?:string;
+    shelterAddress?:string;
+    shelterLatitude?:number;
+    shelterLongitude?:number;
+    isArchived?:boolean;
   }
   
   const ShelterRequests = () => {

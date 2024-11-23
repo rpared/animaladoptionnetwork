@@ -10,8 +10,11 @@ import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
 export default function AdoptersDashboard() {
   const pathname = usePathname();
   const [auth, setAuth] = useState(false);
-  const [userFname, setUserName] = useState();
-  const [adoptionStatus, setAdoptionStatus] = useState();
+  const [userFname, setUserFName] = useState();
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [pendingCount, setPendingCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const getToken = async () => {
     try {
@@ -41,31 +44,57 @@ export default function AdoptersDashboard() {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const user = await getUserInfo();
-      if (user) {
-        setUserName(user.fname);
-        setAdoptionStatus(user.adoptionStatus);
+      try {
+        const user = await getUserInfo();
+        if (user) {
+          setUserFName(user.fname);
+
+          // Fetch adoption requests for the adopter
+          const response = await axios.get("/api/adoptionRequest", {
+            params: { adopter: user._id },
+          });
+
+          const requests = response.data.requests;
+
+          // Calculate unread and pending counts
+          const unreadCount = requests.filter((req: { isArchived: boolean, status: string; }) => !req.isArchived && req.status !== "pending").length;
+          const pendingCount = requests.filter((req: { status: string; }) => req.status === "pending").length;
+
+          setUnreadCount(unreadCount);
+          setPendingCount(pendingCount);
+        } else {
+          setError("Failed to load user data.");
+        }
+      } catch (error) {
+        setError("Failed to fetch data.");
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchUserData();
   }, []);
 
-  return (
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
+return (
     <div className=" flex flex-col ">
       <div className="mt-20 flex flex-1 flex-col md:flex-row">
         <div className="w-full  bg-gray-800 block md:flex-none flex p-0 justify-between">
           <Link
             href="/adopters/requests"
             className={clsx(
-              "block text-violet-70 hover:text-slate-300 p-3 pt-4",
+              "block text-violet-70 hover:text-slate-900 p-3 pt-4",
               {
-                "opacity-80 text-slate-900 bg-violet-100 p-2 pt-4 hover:text-slate-900 ":
+                " text-slate-200 p-2 pt-4":
                   pathname === "/adopters/requests",
               }
             )}
           >
-            Hi {userFname}, you have <b>{adoptionStatus}</b> adoption requests.
-            (Request Form and logic pending!)
+            Hi {userFname}, you have <b>{unreadCount}</b> unread adoption requests, and <b>{pendingCount}</b> pending.
+            
           </Link>
           <Link
             href="/adopters/lovelist"

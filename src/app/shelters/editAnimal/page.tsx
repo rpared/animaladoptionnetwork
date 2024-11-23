@@ -159,6 +159,8 @@ const EditAnimal = () => {
     formData.forEach((value, key) => {
       console.log(`${key}: ${value}`);
     });
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
   };
   // Helper function to read file as ArrayBuffer
   // const readFileAsArrayBuffer = (file: File): Promise<ArrayBuffer> => {

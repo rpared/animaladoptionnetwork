@@ -1,6 +1,7 @@
 import AdoptionRequest from "@/models/adoptionRequest";
 import { connectDB } from "@/config/connectDB";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 
 export async function POST(req: Request) {
   // Connect to MongoDB
@@ -58,23 +59,24 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
-  // Connect to MongoDB
-  await connectDB();
+//Original Get request to fetch all adoption requests
+// export async function GET() {
+//   // Connect to MongoDB
+//   await connectDB();
 
-  try {
-    // Fetch all adoption requests from the database
-    const requests = await AdoptionRequest.find();
+//   try {
+//     // Fetch all adoption requests from the database
+//     const requests = await AdoptionRequest.find();
 
-    return NextResponse.json({ success: true, requests });
-  } catch (error) {
-    console.error("Error fetching adoption requests:", error);
-    return NextResponse.json(
-      { success: false, message: "An error occurred while fetching adoption requests." },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({ success: true, requests });
+//   } catch (error) {
+//     console.error("Error fetching adoption requests:", error);
+//     return NextResponse.json(
+//       { success: false, message: "An error occurred while fetching adoption requests." },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 
 
@@ -130,3 +132,79 @@ export async function PUT(req: Request) {
   }
 }
 
+// Combined GET request to handle fetching all requests and filtering by Adopter ID
+export async function GET(req: NextRequest) {
+  // Connect to MongoDB
+  await connectDB();
+
+  try {
+    const { searchParams } = new URL(req.url);
+    const adopterId = searchParams.get("adopter");
+
+    let requests;
+
+    if (adopterId) {
+      if (!mongoose.Types.ObjectId.isValid(adopterId)) {
+        return NextResponse.json({ error: "Invalid Adopter ID" }, { status: 400 });
+      }
+
+      // Fetch adoption requests filtered by the adopter ID
+      requests = await AdoptionRequest.find({ adopter: adopterId });
+    } else {
+      // Fetch all adoption requests from the database
+      requests = await AdoptionRequest.find();
+    }
+
+    return NextResponse.json({ success: true, requests });
+  } catch (error) {
+    console.error("Error fetching adoption requests:", error);
+    return NextResponse.json(
+      { success: false, message: "An error occurred while fetching adoption requests." },
+      { status: 500 }
+    );
+  }
+}
+
+// New route for archiving the adoption request
+export async function archiveRequest(req: NextRequest) {
+  await connectDB();
+
+  try {
+    const { id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json(
+        { success: false, message: "Missing required field: id" },
+        { status: 400 }
+      );
+    }
+
+    // Find the adoption request by ID
+    const adoptionRequest = await AdoptionRequest.findById(id);
+
+    if (!adoptionRequest) {
+      return NextResponse.json(
+        { success: false, message: "Adoption request not found" },
+        { status: 404 }
+      );
+    }
+
+    // Archive the adoption request
+    adoptionRequest.isArchived = true;
+
+    // Save the updated adoption request
+    await adoptionRequest.save();
+
+    return NextResponse.json({
+      success: true,
+      message: "Adoption request archived successfully",
+      adoptionRequest,
+    });
+  } catch (error) {
+    console.error("Error archiving adoption request:", error);
+    return NextResponse.json(
+      { success: false, message: "An error occurred while archiving the adoption request." },
+      { status: 500 }
+    );
+  }
+}
