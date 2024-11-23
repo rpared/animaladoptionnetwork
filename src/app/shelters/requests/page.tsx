@@ -47,18 +47,42 @@ export interface AdoptionRequest {
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
     const [disableButtons, setDisableButtons] = useState<{ [key: string]: boolean }>({});
-    // const [latitude, setLatitude] = useState<number>(0);
-    // const [longitude, setLongitude] = useState<number>(0);
-    // const [disableButtons, setDisableButtons] = useState<string>("enabled");
-    
-  
+// Fetch Shelter data to include in Reply
+
+const [shelterId, setShelterId] = useState<string>("");
+const [shelterName, setShelterName] = useState<string>("");
+const [shelterEmail, setShelterEmail] = useState<string>("");
+const [shelterAddress, setShelterAddress] = useState<string>("");
+const [shelterLatitude, setShelterLatitude] = useState<number>(0);
+const [shelterLongitude, setShelterLongitude] = useState<number>(0);
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    const user = await getUserInfo();
+    if (user) {
+      setShelterId(user._id);
+      setShelterName(user.name);
+      setShelterEmail(user.email);
+      setShelterAddress(user.address);
+      setShelterLatitude(user.latitude);
+      setShelterLongitude(user.longitude);
+
+    } else {
+      setError("Failed to load user data.");
+      setLoading(false);
+    }
+  };
+  fetchUserData();
+}, []);
 
       
   
     useEffect(() => {
       const fetchRequests = async () => {
         try {
-          const response = await axios.get("/api/adoptionRequest");
+          const response = await axios.get("/api/adoptionRequest/shelter", {
+            params: { shelterId },
+          });
           const requests = response.data.requests;
           setAdoptionRequests(requests);
 
@@ -108,8 +132,10 @@ export interface AdoptionRequest {
       }
     };
   
+    if (shelterId) {
       fetchRequests();
-    }, []);
+    }
+  }, [shelterId]);
   
     // Filter adoption requests based on status and date
     useEffect(() => {
@@ -143,33 +169,6 @@ export interface AdoptionRequest {
         console.log('Adoption Requests Updated:', adoptionRequests);
       }, [adoptionRequests]);
 
-// Fetch Shelter data to include in Reply
-
-const [shelterId, setShelterId] = useState<string>("");
-const [shelterName, setShelterName] = useState<string>("");
-const [shelterEmail, setShelterEmail] = useState<string>("");
-const [shelterAddress, setShelterAddress] = useState<string>("");
-const [shelterLatitude, setShelterLatitude] = useState<number>(0);
-const [shelterLongitude, setShelterLongitude] = useState<number>(0);
-
-useEffect(() => {
-  const fetchUserData = async () => {
-    const user = await getUserInfo();
-    if (user) {
-      setShelterId(user._id);
-      setShelterName(user.name);
-      setShelterEmail(user.email);
-      setShelterAddress(user.address);
-      setShelterLatitude(user.latitude);
-      setShelterLongitude(user.longitude);
-
-    } else {
-      setError("Failed to load user data.");
-      setLoading(false);
-    }
-  };
-  fetchUserData();
-}, []);
 
 
       // Event Handlers

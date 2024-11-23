@@ -86,7 +86,7 @@ return (
           <Link
             href="/adopters/requests"
             className={clsx(
-              "block text-violet-70 hover:text-slate-900 p-3 pt-4",
+              "block text-violet-70 hover:text-slate-200 p-3 pt-4",
               {
                 " text-slate-200 p-2 pt-4":
                   pathname === "/adopters/requests",

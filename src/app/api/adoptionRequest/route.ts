@@ -3,6 +3,7 @@ import { connectDB } from "@/config/connectDB";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 
+//Create the request
 export async function POST(req: Request) {
   // Connect to MongoDB
   await connectDB();
@@ -166,45 +167,45 @@ export async function GET(req: NextRequest) {
 }
 
 // New route for archiving the adoption request
-export async function archiveRequest(req: NextRequest) {
-  await connectDB();
+// export async function archiveRequest(req: NextRequest) {
+//   await connectDB();
 
-  try {
-    const { id } = await req.json();
+//   try {
+//     const { id } = await req.json();
 
-    if (!id) {
-      return NextResponse.json(
-        { success: false, message: "Missing required field: id" },
-        { status: 400 }
-      );
-    }
+//     if (!id) {
+//       return NextResponse.json(
+//         { success: false, message: "Missing required field: id" },
+//         { status: 400 }
+//       );
+//     }
 
-    // Find the adoption request by ID
-    const adoptionRequest = await AdoptionRequest.findById(id);
+//     // Find the adoption request by ID
+//     const adoptionRequest = await AdoptionRequest.findById(id);
 
-    if (!adoptionRequest) {
-      return NextResponse.json(
-        { success: false, message: "Adoption request not found" },
-        { status: 404 }
-      );
-    }
+//     if (!adoptionRequest) {
+//       return NextResponse.json(
+//         { success: false, message: "Adoption request not found" },
+//         { status: 404 }
+//       );
+//     }
 
-    // Archive the adoption request
-    adoptionRequest.isArchived = true;
+//     // Archive the adoption request
+//     adoptionRequest.isArchived = true;
 
-    // Save the updated adoption request
-    await adoptionRequest.save();
+//     // Save the updated adoption request
+//     await adoptionRequest.save();
 
-    return NextResponse.json({
-      success: true,
-      message: "Adoption request archived successfully",
-      adoptionRequest,
-    });
-  } catch (error) {
-    console.error("Error archiving adoption request:", error);
-    return NextResponse.json(
-      { success: false, message: "An error occurred while archiving the adoption request." },
-      { status: 500 }
-    );
-  }
-}
+//     return NextResponse.json({
+//       success: true,
+//       message: "Adoption request archived successfully",
+//       adoptionRequest,
+//     });
+//   } catch (error) {
+//     console.error("Error archiving adoption request:", error);
+//     return NextResponse.json(
+//       { success: false, message: "An error occurred while archiving the adoption request." },
+//       { status: 500 }
+//     );
+//   }
+// }
