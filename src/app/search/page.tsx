@@ -5,10 +5,10 @@ import { useState } from "react";
 import { AnimalProvider, useAnimals } from "@/components/animals"; // Custom hook to access the context
 import Image from "next/image";
 import { HeartIcon as HeartOutlineIcon } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
+// import { HeartIcon as HeartSolidIcon } from "@heroicons/react/24/solid";
 
 const AnimalSearch = () => {
-  const { animals, isLoved, handleLoveToggle, fetchFilteredAnimals } =
+  const { animals, fetchFilteredAnimals } =
     useAnimals(); // Consume context
 
   const [species, setSpecies] = useState("");
@@ -149,16 +149,16 @@ const AnimalSearch = () => {
                         <h3 className="text-2xl font-bold">{animal.name}</h3>
                         </Link>
                         {/* Heart Button */}
+                        <Link href="/login">
                         <button
-                          onClick={() => handleLoveToggle(animal._id)}
+                          // onClick={() => handleLoveToggle(animal._id)}
                           className="mr-2 text-2xl p-1"
                         >
-                          {isLoved(animal._id) ? (
-                            <HeartSolidIcon className="h-6 w-6 text-violet-100" />
-                          ) : (
+                          
                             <HeartOutlineIcon className="h-6 w-6 text-violet-100" />
-                          )}
+                          
                         </button>
+                        </Link>
                       </div>
                       <p>Species: {animal.species}</p>
                       <p>Gender: {animal.gender}</p>

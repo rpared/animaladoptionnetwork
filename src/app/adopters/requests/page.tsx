@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import AdoptersDashboard from "@/components/adopters-dashboard";
 import HeaderAdopters from "@/components/header-adopters";
@@ -17,11 +17,12 @@ const RequestList = () => {
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [readFilter, setReadFilter] = useState("unread");
+  const [showMap, setShowMap] = useState(false);
 
   const ApiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
   // const shelterLatitude = 43.668331;
   // const shelterLongitude = -79.39060;
-  const URI = "https://www.google.com/maps/embed/v1/place?key="+ ApiKey + "&q=" + latitude +","+ longitude;
+  // const URI = "https://www.google.com/maps/embed/v1/place?key="+ ApiKey + "&q=" + latitude +","+ longitude;
 
 
   useEffect(() => {
@@ -71,6 +72,8 @@ const RequestList = () => {
             ...req,
             animalName: animalNameMap[req.animal] || "Unknown Animal",
             isArchived: req.status === "pending" ? false : req.isArchived, // Ensure isArchived is false for pending requests
+            shelterLatitude: req.shelterLatitude, // Include these in your schema if not present
+  shelterLongitude: req.shelterLongitude,
           }));
 
 
@@ -78,8 +81,9 @@ const RequestList = () => {
 
           setAdoptionRequests(updatedRequests);
           setFilteredRequests(updatedRequests);
-          setLatitude(updatedRequests.shelterLatitude);
-          setLongitude(updatedRequests.shelterLongitude);
+          // setLatitude(updatedRequests.shelterLatitude);
+          // setLongitude(updatedRequests.shelterLongitude);
+          console.log("Latitude: ", latitude);
         } catch (error) {
           setError("Failed to fetch requests.");
           console.error(error);
@@ -131,47 +135,68 @@ const RequestList = () => {
     }
   };
 
+  // Set the initial map location on page load
+  useEffect(() => {
+    if (filteredRequests.length > 0) {
+      setLatitude(filteredRequests[0].shelterLatitude ?? 0);
+      setLongitude(filteredRequests[0].shelterLongitude ?? 0);
+    }
+  }, [filteredRequests]);
+
+  const handleToggleMap = (lat: SetStateAction<number> | undefined, lng: SetStateAction<number> | undefined) => {
+    if (lat !== undefined && lng !== undefined) {
+      setLatitude(lat);
+      setLongitude(lng);
+    }
+    setShowMap(!showMap);
+  };
+
+
+
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
+
+    
 
   return (
     <>
       <HeaderAdopters />
       <AdoptersDashboard />
-        <main className="bg-white my-2 text-gray-600">
-          <div className="p-6">
-            <h1 className="text-4xl mb-4 font-semibold text-brown">My Adoption Requests</h1>
-            {/* Status Filter */}
-            <div className="mb-4">
-              <label className="text-gray-700 mr-1">Filter by Status:</label>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="border rounded p-2"
-              >
-                <option value="all">All</option>
-                <option value="pending">Pending</option>
-                <option value="approved">Approved</option>
-                <option value="rejected">Rejected</option>
-                
-              </select>
-            </div>
+      <main className="bg-white my-2 text-gray-600">
+        <div className="p-6">
+          <h1 className="text-4xl mb-4 font-semibold text-brown">My Adoption Requests</h1>
 
-            {/* Read Filter */}
-            <div className="mb-4">
-              <label className="text-gray-700 mr-1">Filter by Read/Unread:</label>
-              <select
-                value={readFilter}
-                onChange={(e) => setReadFilter(e.target.value)}
-                className="border rounded p-2"
-              >
-                <option value="unread">Unread</option>
-                <option value="read">Read</option>
-              </select>
-            </div>
+          {/* Status Filter */}
+          <div className="mb-4">
+            <label className="text-gray-700 mr-1">Filter by Status:</label>
+            <select
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value)}
+              className="border rounded p-2"
+            >
+              <option value="all">All</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
 
-            {/* Requests List */}
-            <div className="grid gap-4 grid-cols-1">
+          {/* Read Filter */}
+          <div className="mb-4">
+            <label className="text-gray-700 mr-1">Filter by Read/Unread:</label>
+            <select
+              value={readFilter}
+              onChange={(e) => setReadFilter(e.target.value)}
+              className="border rounded p-2"
+            >
+              <option value="unread">Unread</option>
+              <option value="read">Read</option>
+            </select>
+          </div>
+
+          {/* Requests List */}
+          <div className="grid gap-4 grid-cols-1">
             {filteredRequests.map((request) => (
               <div
                 key={request._id}
@@ -180,61 +205,76 @@ const RequestList = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
                   <div className="space-y-2">
                     <p className="text-brown p-1">
-                      <b>Animal Name:</b> <br /> <span className="text-2xl">{request.animalName}</span>
+                      <b>Animal Name:</b> <br />
+                      <span className="text-2xl">{request.animalName}</span>
                     </p>
                     <p>
                       <strong>Status:</strong> {request.status}
                     </p>
                     <p>
-                      <strong>Request date:</strong> {new Date(request.requestDate).toLocaleDateString()}
+                      <strong>Request Date:</strong>{" "}
+                      {new Date(request.requestDate).toLocaleDateString()}
                     </p>
-                    {request.status !== "pending" && request.status !== "rejected" && (
+                    {request.status !== "pending" && (
                       <>
-                      <p>
-                        <strong>Message:</strong> {request.replyMessage}
-                      </p>
-                      <button
-                      onClick={() => handleArchiveToggle(request._id, request.isArchived ?? false)}
-                      className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
-                    >
-                      {request.isArchived ? "Mark as Unread" : "Mark as Read"}
-                    </button>
-                    </>
+                        <p>
+                          <strong>Message:</strong> {request.replyMessage}
+                        </p>
+                        <button
+                          onClick={() =>
+                            handleArchiveToggle(
+                              request._id,
+                              request.isArchived ?? false
+                            )
+                          }
+                          className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-700"
+                        >
+                          {request.isArchived ? "Mark as Unread" : "Mark as Read"}
+                        </button>
+                      </>
                     )}
                   </div>
                   <div className="space-y-2">
-                    {request.status !== "pending" && request.status !== "rejected" && (
+                    {request.shelterName && (
                       <>
                         <p>
                           <strong>Shelter:</strong> {request.shelterName}
                         </p>
                         <p>
-                          <strong>Email:</strong> {request.shelterEmail}
-                        </p>
-                        <p>
                           <strong>Address:</strong> {request.shelterAddress}
                         </p>
-                        <div id="Shelter's Google Maps Location">
-                          <iframe
-                            className="w-full h-64"
-                            referrerPolicy="no-referrer-when-downgrade"
-                            src={URI}
-                            allowFullScreen
-                          >
-                          </iframe>
-                        </div>
-                        
+                        <button
+                          onClick={() =>
+                            handleToggleMap(
+                              request.shelterLatitude,
+                              request.shelterLongitude
+                            )
+                          }
+                          className="bg-violet-100 text-white px-4 py-2 rounded hover:bg-violet-70"
+                        >
+                          {showMap && latitude === request.shelterLatitude
+                            ? "Hide Map"
+                            : "View Map"}
+                        </button>
+                        {showMap && latitude === request.shelterLatitude && (
+                          <div id="Shelter's Google Maps Location" className="mt-4">
+                            <iframe
+                              className="w-full h-60 rounded"
+                              loading="lazy"
+                              referrerPolicy="no-referrer-when-downgrade"
+                              src={`https://www.google.com/maps/embed/v1/place?key=${ApiKey}&q=${latitude},${longitude}`}
+                            ></iframe>
+                          </div>
+                        )}
                       </>
                     )}
                   </div>
                 </div>
               </div>
             ))}
-            </div>
           </div>
-          
-        </main>
-      
+        </div>
+      </main>
     </>
   );
 };

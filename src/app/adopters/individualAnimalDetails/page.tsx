@@ -171,10 +171,7 @@ const onSubmitClick = async (data: Record<string, any>) => {
       <HeaderAdopters />
       <main className="bg-white mb-16 text-gray-700 max-w-screen-xl mx-auto">
         <div className="container mx-auto px-4 py-10">
-          <h1 className="text-4xl font-semibold text-brown mb-4">
-            {animal.name}
-          </h1>
-          
+         
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex-1">
             {animal.photos &&
