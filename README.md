@@ -7,8 +7,10 @@ https://animaladoptionnetwork.vercel.app/
 
 **Pending Tasks**
 
-- Uplaoding several pics and Image Array handling (only one is being uploaded) \*If we make it ontime
-- Adopter Lovelist \*New feature we came up with on the way
+- Uploading several pics and Image Array handling (only one is being uploaded).
+- Optimize repetitive api calls.
+- Encapsulate several functionalities into separate components.
+- Remove all the debugging logs.
 
 ---
 
@@ -31,7 +33,6 @@ The primary target audience for the Animal Adoption Network comprehends 2 groups
 Frontend: React / Next.js / Tailwind
 Backend: Next.js / MongoDB +
 Bcrypt / Mongoose / JWT (amongst others)
-
 External Apis: Google Maps
 
 **Key Features:**
@@ -54,8 +55,9 @@ User Profiles / Authorization
 
 - Key Focus: User profiles, authentication, and role-based access.
 - User Registration and Login (Shelters and Adopting Parents)
-  Task: Implement user registration and login pages. **DONE**
-  Task: Set up user roles (shelters and adopting parents). **DONE (Ryan and Roger)**
+  Task: Implement user registration and login pages for Adopters. **DONE (by Ryan)**
+  Task: Implement user registration and login pages for Shelters.**DONE**
+  Task: Set up user roles (shelters and adopting parents). **DONE (by Ryan and Roger)**
   Task: Use Bcrypt for password hashing, implement authentication and authorization logic. **DONE**
   Task: Set up session management, JWT tokens for authentication. **DONE**
 - Shelter/Rescuer Dashboard Management UI
@@ -64,6 +66,7 @@ User Profiles / Authorization
 - Adopting Parent Browsing UI
   Task: Implement UI for browsing animals, including filters (species, age, etc.). **DONE**
   Task: Use MongoDB/Mongoose to fetch animals and apply filtering logic on the frontend. **DONE**
+- Implementing Lovelist to hold prefered animals **DONE**
 
 **Ryan:** Animal Profiles & Database Integration
 
@@ -75,9 +78,9 @@ User Profiles / Authorization
   Task: Set up MongoDB collections for animals, shelters, and adopters. **DONE**
   Task: Implement Mongoose models for the animals. **DONE**
   Task: Implement API routes to fetch animal data and handle filtering queries. **DONE**
-  Task: Enabling management of animals editing/deleting. ****DONE****
+  Task: Enabling management of animals editing/deleting.***DONE**
 - Image Upload
-  Task: Implement image upload for animal profiles. **DONE PARTIALLY**
+  Task: Implement image upload for animal profiles. **DONE for 1 pic (by Roger)**
 
 **Saraben:** Adoption Applications & API Integrations
 
@@ -88,15 +91,15 @@ User Profiles / Authorization
   Task: Integrate the form with MongoDB to save applications. **DONE**
 - Shelter and Adopter Notifications for Adoption Applications
   Task: Implement logic to notify shelters when a new adoption application is submitted (email or in-app notification). **DONE**
-  Task: Implement logic to notify adopters of replies and display their adoption requests with status.
+  Task: Implement logic to notify adopters of replies and display their adoption requests with status. **DONE**
 - API Integrations (Google Maps, Educational APIs)
   Task: Integrate Google Maps API for animal location display or an educational APIs for breed info and animal news. Display API data in relevant parts of the app (e.g., on the animal profile or shelter page). **DONE (By Roger)**
 
 **Additional Coordination & Shared Tasks:**
 Mobile Responsiveness:
-Task: All developers should ensure their components and pages are mobile-responsive using Tailwind.
+Task: All developers should ensure their components and pages are mobile-responsive using Tailwind. **DONE Partially**
 Testing & Debugging:
-Task: Share testing and debugging tasks to ensure all features work well together.
+Task: Share testing and debugging tasks to ensure all features work well together. **Pending**
 LoveList:
 Task: Populating an Adopter list with selected animals. **DONE**
 

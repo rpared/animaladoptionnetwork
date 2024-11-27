@@ -26,7 +26,7 @@ export default function About() {
                 A world where all animals are respected, where humans either
                 take care of them if they are urban or stray or do not interfere
                 in their natural dynamics if they are wild. No abandoned,
-                enslaved, nor instrumentalized anmals.
+                enslaved, nor instrumentalized animals.
               </p>
             </div>
           </div>
