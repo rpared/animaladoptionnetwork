@@ -1,7 +1,7 @@
 "use client";
 import HeaderAdopters from "@/components/header-adopters";
 import AdoptersDashboard from "@/components/adopters-dashboard";
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useAnimals, AnimalType, AnimalProvider } from '@/components/animals'; // Custom hook to access the context
 import { HeartButton } from "@/components/heart";
 import Link from "next/link";
@@ -214,9 +214,11 @@ const Lovelist: React.FC = () => {
 };
 
 const WrappedAnimalSearch = () => (
-  <AnimalProvider>
-    <Lovelist />
-  </AnimalProvider>
+  <Suspense fallback={<div>Loading...</div>}>
+    <AnimalProvider>
+      <Lovelist />
+    </AnimalProvider>
+  </Suspense>
 );
 
 export default WrappedAnimalSearch;

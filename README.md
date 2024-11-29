@@ -3,16 +3,6 @@
 Deployed in:
 https://animaladoptionnetwork.vercel.app/
 
----
-
-**Pending Tasks**
-
-- Uploading several pics and Image Array handling (only one is being uploaded).
-- Optimize repetitive api calls.
-- Encapsulate several functionalities into separate components.
-- Remove all the debugging logs.
-
----
 
 A NextJS - MongoDB project
 The Animal Adoption Network is a dedicated platform that connects loving animals with their forever homes.
@@ -21,7 +11,7 @@ The Animal Adoption Network is a dedicated platform that connects loving animals
 A web application to help find homes for animals in shelters and rescue homes.
 
 **Brief Description:**
-A web application designed to help animals in shelters and rescue homes find new families. The platform will support two types of users: shelters/rescuers and adopting parents. Shelters can create profiles, publish animals for adoption, and manage their dashboards, while adopting parents can browse and filter animals based on characteristics like breed, age, and personality. Key features include user authentication, animal profiles with images, adoption applications, and mobile responsiveness.
+A web application designed to help animals in shelters and rescue homes find new families. The platform will support two types of users: shelters/rescuers and adopting parents. Shelters can create profiles, publish animals for adoption, and manage their dashboards, while adopting parents can browse and filter animals based on characteristics like species, gender and location. Key features include user authentication and authorization, animal profiles, adoption applications, custom lists and mobile responsiveness.
 
 **Target Audience:**
 The primary target audience for the Animal Adoption Network comprehends 2 groups:
@@ -46,8 +36,9 @@ User Profiles / Authorization
 - Adoption Applications:
   Creating a form for users to submit their information.
   Storing application data in the database, and notifying shelters.
-  APIs Integration:
-  Google maps for animal locations or educational APIs like info about breeds and news about animals.
+- APIs Integration:
+  Google maps for shelter locations.
+
 
 **Work Breakdown Structure**
 
@@ -105,3 +96,18 @@ Task: Populating an Adopter list with selected animals. **DONE**
 
 **Business Case:**
 The app will be totally free for shelters, rescuers and adopting parents. Revenue will be obtained through advertising. Google AdMob or Meta Audience Network spots will be placed in the UI of the app. **Pending**
+
+
+---
+
+**Pending IMprovements and Expansion**
+
+- Uploading several animal pics and Image Array handling (only one pic is being uploaded).
+- Encapsulate several functionalities into separate components.
+- Implementing Lazy loading and Suspense for asynchronous operations.
+- Optimize repetitive uneeded api calls.
+- Remove all the debugging logs.
+- Implementing google maps api for adopter location.
+- Implementing a scheduling tool to visit animals at shelters.
+
+---
