@@ -92,6 +92,7 @@ useEffect(() => {
           return acc;
         }, {});
         setDisableButtons(initialDisableButtons)
+        setFilteredRequests(requests); // Initialize filtered requests
   
           // Fetch animal names for all requests concurrently
           const animalIds = requests.map((req: AdoptionRequest) => req.animal);
@@ -124,8 +125,9 @@ useEffect(() => {
           // Apply the initial status filter
         const initialFilteredRequests = updatedRequests.filter((request: { status: string; }) => request.status === statusFilter);
         setFilteredRequests(initialFilteredRequests);
+        setError(null); // Clear any previous error
       } catch (err) {
-        setError("Failed to fetch adoption requests.");
+        setError("Either failed to fetch or there are no adoption requests.");
         console.error(err);
       } finally {
         setLoading(false);
@@ -325,7 +327,7 @@ useEffect(() => {
       
   
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    // if (error) return <div>{error}</div>;
 
   return (
     <>
@@ -334,6 +336,7 @@ useEffect(() => {
         <main className="bg-white my-2 text-gray-600">
           <div className="p-6">
           <h1 className="text-4xl mb-4 font-semibold text-brown">Adoption Requests</h1>
+       
             {/* Date Range Filters */}
             <div className="mb-4">
               <label className=" text-gray-700 mr-1">Start Date:</label>
@@ -367,7 +370,13 @@ useEffect(() => {
               </select>
             </div>
 
-            {filteredRequests.length === 0 ? (
+            {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : adoptionRequests.length === 0 ? (
+          <p className="text-gray-500">No adoption requests found.</p>
+        ) : filteredRequests.length === 0 ? (
               <p>No adoption requests found.</p>
             ) : (
                 <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">

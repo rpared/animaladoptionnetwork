@@ -100,14 +100,15 @@ The app will be totally free for shelters, rescuers and adopting parents. Revenu
 
 ---
 
-**Pending IMprovements and Expansion**
-
-- Uploading several animal pics and Image Array handling (only one pic is being uploaded).
+**Pending Improvements and Expansion**
+- Refactor the api/uploadAnimals/route.js into a typescript file
+- Upload several animal pics and Image Array handle (only one pic is being uploaded).
 - Encapsulate several functionalities into separate components.
-- Implementing Lazy loading and Suspense for asynchronous operations.
+- Implement Lazy loading, Suspense for asynchronous operations and loading of the layout skeleton .
 - Optimize repetitive uneeded api calls.
-- Remove all the debugging logs.
-- Implementing google maps api for adopter location.
-- Implementing a scheduling tool to visit animals at shelters.
+- Remove all debugging logs.
+- Implement google maps api for adopter location (it only works for shelters).
+- Catch conditionals or falloff logic for addresses not found by google maps.
+- Implement a scheduling tool to visit animals at shelters.
 
 ---

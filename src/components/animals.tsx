@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // contexts/AnimalContext.tsx
 "use client";
 import {
@@ -52,12 +53,9 @@ interface AnimalContextType {
   lovelist: AnimalType[];
   setLovelist: React.Dispatch<React.SetStateAction<AnimalType[]>>;
   fetchLovelist: (adopterId: string) => Promise<AnimalType[]>;
-  // isLoved: (animalId: string) => boolean;
   handleLoveToggle: (animalId: string, adopterId: string, isLoading: (value: boolean) => void) => void;
   addToLovelist: (animal: AnimalType, adopterId: string) => void;
   removeFromLovelist: (animalId: string, adopterId: string) => void;
-  // fetchLovelist: (adopterId: string) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fetchFilteredAnimals: (query: any) => Promise<void>;
   isLoved2: (animalId: string, adopterId: string) => Promise<boolean>;
 }
