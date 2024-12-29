@@ -64,7 +64,7 @@ export default function Login() {
     {showModal && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-4 rounded shadow-lg text-gray-600 ">
-            <p>If you don't feel like registering as a new user you may test the adopter interface with this placeholder account:</p>
+            <p>If you do not feel like registering as a new user you may test the adopter interface with this placeholder account:</p>
             <p>email: my_name@mail.com</p>
             <p>password: my_name1</p>
             <button onClick={handleCloseModal} className="mt-4 bg-gray-500 text-white px-4 py-2 rounded">
