@@ -121,6 +121,10 @@ const UploadAnimals = () => {
       console.error("Error uploading animal:", error);
       setError("Error uploading animal.");
     }
+    
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
+    
   };
 
   // Helper function to read file as ArrayBuffer

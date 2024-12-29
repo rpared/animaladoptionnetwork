@@ -65,6 +65,10 @@ const adoptionRequestSchema = new Schema({
     type: String,
     required: true,
   },
+  animalName: {
+    type: String,
+    default: "",
+  },
   replyMessage: {
     type: String,
     default: "",
@@ -93,7 +97,8 @@ const adoptionRequestSchema = new Schema({
   shelterLongitude: {
     type: Number,
     default: "",
-  }
+  },
+  isArchived: { type: Boolean, default: false }, // New field for archiving
 });
 
 

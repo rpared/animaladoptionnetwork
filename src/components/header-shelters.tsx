@@ -9,6 +9,10 @@ import axios from "axios";
 // import router from "next/router";
 //import { useRouter } from "next/router"; // Use useRouter instead
 import parseJwt from "./parseJwt";
+// import getUserInfo from "./get-user-info";
+
+
+
 
 export default function HeaderShelters() {
   // const router = useRouter();
@@ -16,8 +20,21 @@ export default function HeaderShelters() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [auth, setAuth] = useState(false);
   const [userName, setUserName] = useState();
-  const [pendingRequestsNumber, setPendingRequestsNumber] = useState();
-  // const [error, setError] = useState<string | null>(null);
+  const [pendingRequestsNumber, setPendingRequestsNumber] = useState<number>(0);
+  const [shelterId, setShelterId] = useState<string | null>(null);
+
+  //  useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     const user = await getUserInfo();
+  //     if (user) {
+  //       setShelterId(user.shelterId); // Assuming the user object contains the shelterId
+        
+  //     } else {
+  //       console.log("Failed to load user data.");
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, []);
 
   const getToken = async () => {
     try {
@@ -33,10 +50,10 @@ export default function HeaderShelters() {
 
       // Decode and access user info
       const decodedToken = parseJwt(token);
-      console.log(decodedToken?.user?.name);
       setAuth(response.data.status);
       setUserName(decodedToken?.user?.name);
-    } catch (err) {
+      setShelterId(decodedToken?.user?.id);
+      } catch (err) {
       console.error("Error:", err);
     }
   };
@@ -62,11 +79,18 @@ export default function HeaderShelters() {
       console.log("Authenticated");
     }
   }, [auth]);
-
+  console.log("Info from the header", shelterId, userName);
   useEffect(() => {
     const fetchRequests = async () => {
+      if (!shelterId) {
+        console.log("Shelter ID is not set");
+        return;
+      }
       try {
-        const response = await axios.get("/api/adoptionRequest");
+        const response = await axios.get("/api/adoptionRequest/shelter", {
+          params: { shelterId },
+        });
+
         const requests = response.data.requests;
         const pendingRequests = requests.filter((request: { status: string }) => request.status === "pending");
 
@@ -78,8 +102,10 @@ export default function HeaderShelters() {
       console.log(error);
     };
   };
+  if (shelterId) {
     fetchRequests();
-  }, []);
+  }
+}, [shelterId]);
 
 
 

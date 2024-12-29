@@ -97,6 +97,8 @@ function ShelterRegistrationForm() {
       // Handle errors
       setError(err.response?.data?.message || "Error registering shelter");
     }
+    // Scroll to the top of the page
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -269,14 +271,14 @@ function ShelterRegistrationForm() {
               className="p-2 border border-gray-300 rounded"
             />
 
-            <label htmlFor="legalDocument">Legal Document (Optional)</label>
+            {/* <label htmlFor="legalDocument">Legal Document (Optional)</label>
             <input
               type="file"
               id="legalDocument"
               name="legalDocument"
               onChange={handleChange}
               className="p-2 border border-gray-300 rounded"
-            />
+            /> */}
             <div className="mt-10 text-center">
               <button
                 type="submit"

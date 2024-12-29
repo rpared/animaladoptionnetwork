@@ -7,7 +7,7 @@ import axios from "axios";
 import getUserInfo from "@/components/get-user-info";
 
 
-interface AdoptionRequest {
+export interface AdoptionRequest {
     _id: string;
     adopter: string;
     animal: string;
@@ -26,6 +26,14 @@ interface AdoptionRequest {
     requestDate: string;
     animalName?: string;
     animalIsAdopted?: boolean;
+    replyMessage?:string;
+    shelterId?:string;
+    shelterName?:string;
+    shelterEmail?:string;
+    shelterAddress?:string;
+    shelterLatitude?:number;
+    shelterLongitude?:number;
+    isArchived?:boolean;
   }
   
   const ShelterRequests = () => {
@@ -39,18 +47,42 @@ interface AdoptionRequest {
     const [startDate, setStartDate] = useState<string>("");
     const [endDate, setEndDate] = useState<string>("");
     const [disableButtons, setDisableButtons] = useState<{ [key: string]: boolean }>({});
-    // const [latitude, setLatitude] = useState<number>(0);
-    // const [longitude, setLongitude] = useState<number>(0);
-    // const [disableButtons, setDisableButtons] = useState<string>("enabled");
-    
-  
+// Fetch Shelter data to include in Reply
+
+const [shelterId, setShelterId] = useState<string>("");
+const [shelterName, setShelterName] = useState<string>("");
+const [shelterEmail, setShelterEmail] = useState<string>("");
+const [shelterAddress, setShelterAddress] = useState<string>("");
+const [shelterLatitude, setShelterLatitude] = useState<number>(0);
+const [shelterLongitude, setShelterLongitude] = useState<number>(0);
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    const user = await getUserInfo();
+    if (user) {
+      setShelterId(user._id);
+      setShelterName(user.name);
+      setShelterEmail(user.email);
+      setShelterAddress(user.address);
+      setShelterLatitude(user.latitude);
+      setShelterLongitude(user.longitude);
+
+    } else {
+      setError("Failed to load user data.");
+      setLoading(false);
+    }
+  };
+  fetchUserData();
+}, []);
 
       
   
     useEffect(() => {
       const fetchRequests = async () => {
         try {
-          const response = await axios.get("/api/adoptionRequest");
+          const response = await axios.get("/api/adoptionRequest/shelter", {
+            params: { shelterId },
+          });
           const requests = response.data.requests;
           setAdoptionRequests(requests);
 
@@ -60,6 +92,7 @@ interface AdoptionRequest {
           return acc;
         }, {});
         setDisableButtons(initialDisableButtons)
+        setFilteredRequests(requests); // Initialize filtered requests
   
           // Fetch animal names for all requests concurrently
           const animalIds = requests.map((req: AdoptionRequest) => req.animal);
@@ -92,16 +125,19 @@ interface AdoptionRequest {
           // Apply the initial status filter
         const initialFilteredRequests = updatedRequests.filter((request: { status: string; }) => request.status === statusFilter);
         setFilteredRequests(initialFilteredRequests);
+        setError(null); // Clear any previous error
       } catch (err) {
-        setError("Failed to fetch adoption requests.");
+        setError("Either failed to fetch or there are no adoption requests.");
         console.error(err);
       } finally {
         setLoading(false);
       }
     };
   
+    if (shelterId) {
       fetchRequests();
-    }, []);
+    }
+  }, [shelterId]);
   
     // Filter adoption requests based on status and date
     useEffect(() => {
@@ -135,33 +171,6 @@ interface AdoptionRequest {
         console.log('Adoption Requests Updated:', adoptionRequests);
       }, [adoptionRequests]);
 
-// Fetch Shelter data to include in Reply
-
-const [shelterId, setShelterId] = useState<string>("");
-const [shelterName, setShelterName] = useState<string>("");
-const [shelterEmail, setShelterEmail] = useState<string>("");
-const [shelterAddress, setShelterAddress] = useState<string>("");
-const [shelterLatitude, setShelterLatitude] = useState<number>(0);
-const [shelterLongitude, setShelterLongitude] = useState<number>(0);
-
-useEffect(() => {
-  const fetchUserData = async () => {
-    const user = await getUserInfo();
-    if (user) {
-      setShelterId(user._id);
-      setShelterName(user.name);
-      setShelterEmail(user.email);
-      setShelterAddress(user.address);
-      setShelterLatitude(user.latitude);
-      setShelterLongitude(user.longitude);
-
-    } else {
-      setError("Failed to load user data.");
-      setLoading(false);
-    }
-  };
-  fetchUserData();
-}, []);
 
 
       // Event Handlers
@@ -318,7 +327,7 @@ useEffect(() => {
       
   
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
+    // if (error) return <div>{error}</div>;
 
   return (
     <>
@@ -327,6 +336,7 @@ useEffect(() => {
         <main className="bg-white my-2 text-gray-600">
           <div className="p-6">
           <h1 className="text-4xl mb-4 font-semibold text-brown">Adoption Requests</h1>
+       
             {/* Date Range Filters */}
             <div className="mb-4">
               <label className=" text-gray-700 mr-1">Start Date:</label>
@@ -360,7 +370,13 @@ useEffect(() => {
               </select>
             </div>
 
-            {filteredRequests.length === 0 ? (
+            {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
+        ) : adoptionRequests.length === 0 ? (
+          <p className="text-gray-500">No adoption requests found.</p>
+        ) : filteredRequests.length === 0 ? (
               <p>No adoption requests found.</p>
             ) : (
                 <div className="grid gap-4 grid-cols-1 lg:grid-cols-2">
