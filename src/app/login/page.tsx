@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header";
 import Link from "next/link";
@@ -10,6 +10,16 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(true);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  useEffect(() => {
+    setShowModal(true);
+  }, []);
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,6 +61,18 @@ export default function Login() {
 
   return (
     <>
+    {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-4 rounded shadow-lg text-gray-600 ">
+            <p>If you do not feel like registering as a new user you may test the adopter interface with this placeholder account:</p>
+            <p>email: my_name@mail.com</p>
+            <p>password: my_name1</p>
+            <button onClick={handleCloseModal} className="mt-4 bg-gray-500 text-white px-4 py-2 rounded">
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <Header />
       <main className="bg-white my-16 text-gray-600">
         <div className="mx-auto max-w-[800px] relative isolate pt-14 px-8">
@@ -62,7 +84,7 @@ export default function Login() {
             onSubmit={handleSubmit}
           >
             {errorMessage && (
-              <p className="text-red-500 mb-4 text-center">{errorMessage}</p>
+              <p className="text-red-500 mb-4 text-center">{errorMessage} Remember to select user type.</p>
             )}
             <div className="mb-4 flex items-center gap-4">
               <div className="flex items-center">
